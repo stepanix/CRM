@@ -18,6 +18,7 @@ export class PlaceComponent implements OnInit {
   PlaceModel : any = {};
   placeId : any = "0";
   status : any[] = [];
+  reps : any[] = [];
   
 
   constructor(
