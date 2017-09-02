@@ -25,8 +25,9 @@
              </fieldset>
 
              <fieldset class="form-group">
-                 <button type="button"  class="btn btn-sm btn-danger" [disabled]="parsePlaceid() === ''">Add Representative</button>
+                 <button type="button"  class="btn btn-sm btn-danger" (click)="showRepList()" [disabled]="parsePlaceid() === ''">Add Representative</button>
              </fieldset>
+
 
              <!-- Representatives List Table -->
               <p-dataTable [value]="reps" [rows]="15" [immutable]="false"  [paginator]="true"  #dt>
@@ -56,19 +57,20 @@
 
     <!-- Add Representative Dialog -->
 
-    <p-dialog header="Add Representative" [(visible)]="displayReplist" modal="modal" width="300" positionTop="80" [style]="{'background-color':'#ffffff'}" [responsive]="true">
-            
-            
-            <fieldset class="form-group">
-                    <!-- <p-multiSelect [options]="cities" [(ngModel)]="RepPlaceModel"></p-multiSelect> -->
-            </fieldset>
+    <p-dialog header="Add Representative" [(visible)]="displayReplist" modal="modal" width="300"   positionTop="80"  [responsive]="true">
+           
+            <p-listbox [options]="users" [(ngModel)]="SelectedUsers" multiple="multiple" checkbox="checkbox" filter="filter">
+                    <ng-template let-user pTemplate="body">
+                            <span style="font-size:14px;">{{user.label}}</span>
+                    </ng-template>
+            </p-listbox>
 
             <p-footer>
-                <button type="button" class="btn btn-sm btn-danger" (click)="saveAnswerData()">Save</button>
+                <button type="button" class="btn btn-sm btn-danger" (click)="saveAssignedRepsApi()">Save</button>
                 <button type="button" (click)="hideSelectionListDialog()" class="btn btn-sm btn-danger">Cancel</button>
             </p-footer>
 
-          </p-dialog>
+    </p-dialog>
 
       <!-- End Representative Dialog -->
      <p></p>

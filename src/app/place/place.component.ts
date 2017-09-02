@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute,Router} from '@angular/router';
 import { routerTransition } from '../router.animations';
-import {DialogModule,SharedModule,DataTableModule,MultiSelectModule} from 'primeng/primeng';
-import {PlaceServiceApi,StatusServiceApi,RepPlaceServiceApi} from '../shared/shared';
-import {Message} from 'primeng/primeng';
+import {DialogModule,SharedModule,DataTableModule,ListboxModule} from 'primeng/primeng';
+import {PlaceServiceApi,StatusServiceApi,RepPlaceServiceApi,UserServiceApi} from '../shared/shared';
+
+import {SelectItem} from 'primeng/primeng';
 
 @Component({
     selector: 'app-place',
@@ -18,11 +19,16 @@ export class PlaceComponent implements OnInit {
     placeId : any = "0";
     status : any[] = [];
     reps : any[] = [];
-    RepPlaceModel : any = {};
+    
     RepPlaceDtoIn : any[] =[];
+    users : SelectItem[] = [];
+    SelectedUsers : any[] = [];
+
+    displayReplist : boolean = false;
 
   constructor(private router: Router,
     private route:ActivatedRoute,
+    private userServiceApi : UserServiceApi,
     private repPlaceServiceApi : RepPlaceServiceApi,
     private placeServiceApi : PlaceServiceApi,
     private statusServiceApi:StatusServiceApi) {
@@ -45,8 +51,6 @@ export class PlaceComponent implements OnInit {
       this.PlaceModel.Email = "";
       this.PlaceModel.Website = "";
 
-      this.RepPlaceModel.UserId = "";
-
       if (this.placeId !== Number("0")) {
           this.getPlaceApi();
       }
@@ -56,6 +60,11 @@ export class PlaceComponent implements OnInit {
   ngOnInit() {
     this.loadStatusApi();
   }
+
+
+   showRepList(){     
+     this.displayReplist= true;
+   }
 
   parsePlaceid():string {
       if (this.placeId==="0") {
@@ -97,6 +106,7 @@ export class PlaceComponent implements OnInit {
             this.PlaceModel.Email = res.email;
             this.PlaceModel.Website = res.webSite;
             this.listRepPlacesApi();
+            this.listUnAssignedRepPlacesApi();
          },err => {
            console.log(err.message);
            return;
@@ -177,7 +187,7 @@ export class PlaceComponent implements OnInit {
     this.router.navigate(['/viewplaces']);
   }
 
-  //List Reps from Remote Database
+  //List Assigned Reps from Remote Database
   listRepPlacesApi(){
     this.repPlaceServiceApi.getRepByPlaceId(this.placeId)
     .subscribe(
@@ -189,6 +199,26 @@ export class PlaceComponent implements OnInit {
             })
           }
         },err => {          
+          console.log(err.message);
+          return;
+      });
+  }
+
+  //List UnAssigned Reps from Remote Database
+  listUnAssignedRepPlacesApi(){
+    this.users = [];
+    this.userServiceApi.getUnAssignedReps(this.placeId)
+    .subscribe(
+        res => {
+          for(var i=0;i<res.length;i++){
+            this.users.push({
+               value: res[i].id,
+               label: res[i].firstName + "  " + res[i].surname
+            })
+          }
+          
+          console.log(JSON.stringify(this.users));
+        },err => {
           console.log(err.message);
           return;
       });
@@ -206,6 +236,10 @@ export class PlaceComponent implements OnInit {
           console.log(err.message);
           return;
       });
+  }
+
+  saveAssignedRepsApi(){
+    console.log(JSON.stringify(this.SelectedUsers));
   }
   
 
