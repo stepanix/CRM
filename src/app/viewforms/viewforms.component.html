@@ -1,0 +1,52 @@
+<div [@routerTransition]>
+  
+      <app-page-header [heading]="'View Forms'" [icon]="'fa-edit'"></app-page-header>
+
+      <a [routerLink] ="['/form','0']"><button type="button"  class="btn btn-sm btn-danger">Add New Form</button></a>
+      
+      <p></p>
+
+      <!-- Forms List Table -->
+      <p-dataTable [value]="forms" [rows]="15" [immutable]="false"  [paginator]="true"  #dt>
+                  <p-column field="title" header="Title" [sortable]="true">
+                      <ng-template let-col let-form="rowData" pTemplate="body">
+                          <span [style.color]="form[col.field]">{{form[col.field]}}</span>
+                      </ng-template>
+                  </p-column>
+
+                  <p-column field="description" header="Description" [sortable]="true">
+                      <ng-template let-col let-form="rowData" pTemplate="body">
+                          <span [style.color]="form[col.field]">{{form[col.field]}}</span>
+                      </ng-template>
+                  </p-column>
+
+                  <p-column styleClass="col-button">
+                        <ng-template pTemplate="header">
+                        </ng-template>
+                        <ng-template let-form="rowData" pTemplate="body">
+                            <div align="center">
+                                <a [routerLink] ="['/form',form.id]">
+                                    <button type="button"  class="btn btn-sm btn-danger">
+                                        <i class="fa fa-pencil-square" aria-hidden="true"></i>
+                                    </button>
+                                </a>
+                            </div>
+                         </ng-template>
+                   </p-column>
+
+                  <p-column styleClass="col-button">
+                      <ng-template pTemplate="header">
+                      </ng-template>
+                      <ng-template let-form="rowData" pTemplate="body">
+                           <div align="center">
+                              <button type="button" class="btn btn-sm btn-danger" (click)="deleteForm(form)">
+                                 <i class="fa fa-trash" aria-hidden="true"></i>
+                             </button>
+                           </div>
+                      </ng-template>
+                  </p-column>
+              </p-dataTable>
+       <!-- End Forms List Table -->
+  
+  
+  </div>

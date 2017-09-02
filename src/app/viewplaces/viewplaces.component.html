@@ -1,0 +1,60 @@
+<div [@routerTransition]>
+  
+      <app-page-header [heading]="'View Places'" [icon]="'fa-edit'"></app-page-header>
+
+      <a [routerLink] ="['/place','0']"><button type="button"  class="btn btn-sm btn-danger">Add New Place</button></a>
+      
+      <p></p>
+
+      <!-- Place List Table -->
+      <p-dataTable [value]="places" [rows]="15" [immutable]="false"  [paginator]="true"  #dt>
+              <p-column field="name" header="Name" [sortable]="true">
+                  <ng-template let-col let-place="rowData" pTemplate="body">
+                      <span [style.color]="place[col.field]">{{place[col.field]}}</span>
+                  </ng-template>
+              </p-column>
+
+              <p-column field="streetAddress" header="StreetAddress" [sortable]="true">
+                <ng-template let-col let-place="rowData" pTemplate="body">
+                    <span [style.color]="place[col.field]">{{place[col.field]}}</span>
+                </ng-template>
+              </p-column>
+
+              <p-column field="city" header="City" [sortable]="true">
+                <ng-template let-col let-place="rowData" pTemplate="body">
+                    <span [style.color]="place[col.field]">{{place[col.field]}}</span>
+                </ng-template>
+             </p-column>
+
+            <p-column field="state" header="State" [sortable]="true">
+                <ng-template let-col let-place="rowData" pTemplate="body">
+                    <span [style.color]="place[col.field]">{{place[col.field]}}</span>
+                </ng-template>
+            </p-column>
+
+            <p-column styleClass="col-button">
+                <ng-template pTemplate="header">
+                </ng-template>
+                <ng-template let-place="rowData" pTemplate="body">
+                    <div align="center">
+                        <button type="button" (click)="editPlace(place)" class="btn btn-sm btn-danger">
+                            <i class="fa fa-pencil-square" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                  </ng-template>
+              </p-column>
+
+              <p-column styleClass="col-button">
+                      <ng-template pTemplate="header">
+                      </ng-template>
+                      <ng-template let-place="rowData" pTemplate="body">
+                           <div align="center">
+                              <button type="button" class="btn btn-sm btn-danger" (click)="deletePlace(place)">
+                                 <i class="fa fa-trash" aria-hidden="true"></i>
+                             </button>
+                           </div>
+                     </ng-template>
+                  </p-column>
+             </p-dataTable>
+       <!-- End Place List Table -->
+  </div>
