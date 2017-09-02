@@ -4,8 +4,8 @@ import { CommonModule } from '@angular/common';
 import { PlaceRoutingModule } from './place-routing.module';
 import { PlaceComponent } from './place.component';
 import { PageHeaderModule } from './../shared';
-import {DialogModule,DropdownModule,DataTableModule,SharedModule} from 'primeng/primeng';
-import {PlaceServiceApi,StatusServiceApi} from '../shared/shared';
+import {DialogModule,DropdownModule,DataTableModule,SharedModule,MultiSelectModule} from 'primeng/primeng';
+import {PlaceServiceApi,StatusServiceApi,RepPlaceServiceApi} from '../shared/shared';
 import {GlobalApi} from '../shared/global-functions';
 import {GooglePlaceModule} from 'ng2-google-place-autocomplete';
 
@@ -21,9 +21,10 @@ import {GooglePlaceModule} from 'ng2-google-place-autocomplete';
         DropdownModule,
         DataTableModule,
         SharedModule,
+        MultiSelectModule,
         GooglePlaceModule        
     ],
     declarations: [PlaceComponent],
-    providers: [PlaceServiceApi,StatusServiceApi,GlobalApi]
+    providers: [PlaceServiceApi,StatusServiceApi,GlobalApi,RepPlaceServiceApi]
 })
 export class PlaceModule { }
