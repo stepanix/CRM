@@ -5,7 +5,7 @@
         <div class="col-lg-6">
             <fieldset class="form-group">
                 <label>Name</label>
-                <input class="form-control"  placeholder="Title" [(ngModel)]="PlaceModel.Name">
+                <input class="form-control"  placeholder="Name" [(ngModel)]="PlaceModel.Name">
             </fieldset>
 
             <fieldset class="form-group">
@@ -17,10 +17,16 @@
         </div>
 
         <div class="col-lg-5">
+
             <fieldset class="form-group">
                 <h4>Representatives</h4>
              </fieldset>
-            <!-- Representatives List Table -->
+
+             <fieldset class="form-group">
+                 <button type="button"  class="btn btn-sm btn-danger" [disabled]="parsePlaceid() === ''">Add Representative</button>
+             </fieldset>
+
+             <!-- Representatives List Table -->
               <p-dataTable [value]="reps" [rows]="15" [immutable]="false"  [paginator]="true"  #dt>
                   <p-column field="name" header="Name" [sortable]="true">
                       <ng-template let-col let-rep="rowData" pTemplate="body">
@@ -131,10 +137,11 @@
             </fieldset>
         </div>
 
-
     </div>
 
-    
+    <button type="button"  class="btn btn-sm btn-danger" [disabled]="PlaceModel.Name===''">Save Place</button>
+
+    <button type="button"  class="btn btn-sm btn-danger">Cancel</button>
 
 
 </div>

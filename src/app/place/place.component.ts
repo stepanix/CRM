@@ -19,15 +19,59 @@ export class PlaceComponent implements OnInit {
 
   constructor(private placeServiceApi : PlaceServiceApi,
     private statusServiceApi:StatusServiceApi) {
+      
       this.PlaceModel.Name = "";
       this.PlaceModel.SelectedStatus = -1;
       this.PlaceModel.City = "";
       this.PlaceModel.State = "";
       this.PlaceModel.Zip = "";
       this.PlaceModel.Country = "";
+      this.PlaceModel.CountryCode = "";
+      
+      this.PlaceModel.ContactName = "";
+      this.PlaceModel.ContactTitle = "";
+      this.PlaceModel.Phone = "";
+      this.PlaceModel.CellPhone = "";
+      this.PlaceModel.Email = "";
+      this.PlaceModel.Website = "";
+
     }
 
   ngOnInit() {
+    this.loadStatusApi();
+  }
+
+  parsePlaceid():string {
+      if (this.placeId==="0") {
+        return "";
+      }else{
+        return this.placeId;
+      }
+  }
+
+  //Load Status From Remote Database
+  loadStatusApi() {
+    this.status = [];
+    this.statusServiceApi.getStatuses()
+    .subscribe(
+         res => {
+           this.status = res;
+         },err => {
+           console.log(err.message);
+           return;
+       });
+  }
+
+  savePlaceApi(){
+
+  }
+
+  addNewPlaceApi(){
+
+  }
+
+  updatePlaceApi(){
+    
   }
 
 }
