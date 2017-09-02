@@ -61,9 +61,13 @@ export class PlaceComponent implements OnInit {
     this.loadStatusApi();
   }
 
-
-   showRepList(){     
+   showRepList(){
+     this.listUnAssignedRepPlacesApi();
      this.displayReplist= true;
+   }
+
+   hideRepList(){
+    this.displayReplist= false;
    }
 
   parsePlaceid():string {
@@ -106,7 +110,6 @@ export class PlaceComponent implements OnInit {
             this.PlaceModel.Email = res.email;
             this.PlaceModel.Website = res.webSite;
             this.listRepPlacesApi();
-            this.listUnAssignedRepPlacesApi();
          },err => {
            console.log(err.message);
            return;
@@ -226,10 +229,18 @@ export class PlaceComponent implements OnInit {
 
   //Add list of Reps to Remote Database
   addRepPlaceListApi() {
-
+    this.RepPlaceDtoIn = [];
+    for(var i=0; i<this.SelectedUsers.length;i++){
+      this.RepPlaceDtoIn.push({
+         userId: this.SelectedUsers[0],
+         placeId: this.placeId
+      });
+    }
+    console.log(JSON.stringify(this.RepPlaceDtoIn));
     this.repPlaceServiceApi.addRepPlaceList(this.RepPlaceDtoIn)
     .subscribe(
         res => {
+          this.hideRepList();
           this.listRepPlacesApi();
             //console.log(JSON.stringify(res));
         },err => {
@@ -238,9 +249,7 @@ export class PlaceComponent implements OnInit {
       });
   }
 
-  saveAssignedRepsApi(){
-    console.log(JSON.stringify(this.SelectedUsers));
-  }
+  
   
 
 }

@@ -31,6 +31,7 @@ export class RepPlaceServiceApi {
         .map((response: Response) => response.json())
         .catch((error:any) => Observable.throw(error.json() || 'Server error'));
      }
+     
 
      addRepPlace (repPlaceModel: any): Observable<any> {
         return this.http.post(crmBaseUrl + "RepresentativePlace", repPlaceModel) // ...using post request
