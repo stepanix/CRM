@@ -1,7 +1,9 @@
 <div [@routerTransition]>
     <app-page-header [heading]="'Forms'" [icon]="'fa-edit'"></app-page-header>
+    
 
     <div class="row">
+        
         <div class="col-lg-6">
             <fieldset class="form-group">
                 <label>Name</label>
@@ -139,9 +141,9 @@
 
     </div>
 
-    <button type="button"  class="btn btn-sm btn-danger" [disabled]="PlaceModel.Name===''">Save Place</button>
+    <button type="button"  class="btn btn-sm btn-danger" (click)="savePlaceApi()" [disabled]="PlaceModel.Name===''">Save Place</button>
 
-    <button type="button"  class="btn btn-sm btn-danger">Cancel</button>
+    <button type="button"  class="btn btn-sm btn-danger" (click)="cancel()">Cancel</button>
 
 
 </div>

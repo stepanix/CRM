@@ -1,13 +1,12 @@
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { PlaceRoutingModule } from './place-routing.module';
-import { PlaceComponent } from './place.component';
+import { FormRoutingModule } from './form-routing.module';
+import { FormComponent } from './form.component';
 import { PageHeaderModule } from './../shared';
 import {DialogModule,DropdownModule,DataTableModule,SharedModule} from 'primeng/primeng';
-import {PlaceServiceApi,StatusServiceApi} from '../shared/shared';
+import {FormServiceApi,QuestionTypeApi} from '../shared/shared';
 import {GlobalApi} from '../shared/global-functions';
-import {GooglePlaceModule} from 'ng2-google-place-autocomplete';
 
 
 @NgModule({
@@ -15,15 +14,14 @@ import {GooglePlaceModule} from 'ng2-google-place-autocomplete';
         ReactiveFormsModule,
         FormsModule,
         CommonModule,
-        PlaceRoutingModule,
+        FormRoutingModule,
         PageHeaderModule,
         DialogModule,
         DropdownModule,
         DataTableModule,
-        SharedModule,
-        GooglePlaceModule        
+        SharedModule
     ],
-    declarations: [PlaceComponent],
-    providers: [PlaceServiceApi,StatusServiceApi,GlobalApi]
+    declarations: [FormComponent],
+    providers: [FormServiceApi,QuestionTypeApi,GlobalApi]
 })
-export class PlaceModule { }
+export class RepresentativeModule { }

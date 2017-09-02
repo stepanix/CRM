@@ -37,9 +37,11 @@
                 </ng-template>
                 <ng-template let-place="rowData" pTemplate="body">
                     <div align="center">
-                        <button type="button" (click)="editPlace(place)" class="btn btn-sm btn-danger">
-                            <i class="fa fa-pencil-square" aria-hidden="true"></i>
-                        </button>
+                            <a [routerLink] ="['/place',place.id]">
+                                <button type="button"  class="btn btn-sm btn-danger">
+                                    <i class="fa fa-pencil-square" aria-hidden="true"></i>
+                                </button>
+                            </a>
                     </div>
                   </ng-template>
               </p-column>

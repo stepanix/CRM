@@ -17,19 +17,25 @@ export class ViewPlacesComponent implements OnInit {
   
   
 
-  constructor(private placeServiceAPi:PlaceServiceApi,statusServiceApi:StatusServiceApi) {
+  constructor(private placeServiceAPi:PlaceServiceApi) {
     
   }
 
   ngOnInit() {
+    this.loadPlacesApi();
   }
 
-  showPlaceDialog(){
-
-  }
-
-  hidePlaceDialog(){
-    
+  //Load Status From Remote Database
+  loadPlacesApi() {
+    this.places = [];
+    this.placeServiceAPi.getPlaces()
+    .subscribe(
+         res => {
+           this.places = res;
+         },err => {
+           console.log(err.message);
+           return;
+       });
   }
 
 }

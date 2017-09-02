@@ -38,8 +38,8 @@ export class FormComponent implements OnInit {
     FormId : any = 0;
 
     constructor(
-              private router: Router,
-              private route:ActivatedRoute,
+               private router: Router,
+               private route:ActivatedRoute,
                private formServiceApi:FormServiceApi,
                private questionTypeApi:QuestionTypeApi,
                private globalApi : GlobalApi) {
