@@ -9,6 +9,7 @@ const routes: Routes = [
                 // { path: 'charts', loadChildren: './charts/charts.module#ChartsModule' },
                 // { path: 'tables', loadChildren: './tables/tables.module#TablesModule' },
                 { path: 'dashboard', loadChildren: './dashboard/dashboard.module#DashboardModule' },
+                { path: 'viewusers', loadChildren: '../viewusers/viewusers.module#ViewUsersModule' },
                 { path: 'viewproducts', loadChildren: '../viewproducts/viewproducts.module#ViewProductsModule' },
                 { path: 'viewstatus', loadChildren: '../viewstatus/viewstatus.module#ViewStatusModule' },
                 { path: 'viewforms', loadChildren: '../viewforms/viewforms.module#ViewFormsModule' },

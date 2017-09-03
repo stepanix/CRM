@@ -7,7 +7,11 @@
       <p></p>
 
       <!-- Product List Table -->
-      <p-dataTable [value]="products" [rows]="15" [immutable]="false"  [paginator]="true"  #dt>
+      <div class="ui-widget-header" style="padding:4px 10px;border-bottom: 0 none">
+            <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
+            <input #search type="text" pInputText size="50" placeholder="Global Filter">
+      </div>
+      <p-dataTable [value]="products" [rows]="15" [immutable]="false"  [paginator]="true" [globalFilter]="search"  #dt>
                   <p-column field="name" header="Name" [sortable]="true">
                       <ng-template let-col let-product="rowData" pTemplate="body">
                           <span [style.color]="product[col.field]">{{product[col.field]}}</span>

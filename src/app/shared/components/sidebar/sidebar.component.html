@@ -11,6 +11,10 @@
           <i class="fa fa-fw fa-dashboard"></i>&nbsp;{{ 'dashboard' | translate }}
         </a>
 
+        <a [routerLink]="['/viewusers']" [routerLinkActive]="['router-link-active']" class="list-group-item">
+            <i class="fa fa-fw fa-users"></i>&nbsp;{{ 'Manage Users' | translate }}
+          </a>
+
         <a [routerLink]="['/viewproducts']" [routerLinkActive]="['router-link-active']" class="list-group-item">
           <i class="fa fa-fw fa-cube"></i>&nbsp;{{ 'Manage Products' | translate }}
         </a>

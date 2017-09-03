@@ -9,41 +9,42 @@ import 'rxjs/add/operator/catch';
 
 
 @Injectable()
-export class UserServiceApi {
+export class TenantServiceApi {
 
-     constructor(private http:Http) {
+     constructor(private http:Http){
         
      }
 
-     getUsers() : Observable<any[]> {
-          return  this.http.get(crmBaseUrl + "User")
+     getTenants() : Observable<any[]> {
+          return  this.http.get(crmBaseUrl + "Tenant")
           .map((response: Response) => response.json())
           .catch((error:any) => Observable.throw(error.json() || 'Server error'));
      }
 
-     getUser(id:string) : Observable<any> {
-        return  this.http.get(crmBaseUrl + "User/"+ id)
+     getTenant(id:number) : Observable<any> {
+        return  this.http.get(crmBaseUrl + "Tenant/" + id)
         .map((response: Response) => response.json())
         .catch((error:any) => Observable.throw(error.json() || 'Server error'));
      }
 
-     getUnAssignedReps(placeid:number) : Observable<any[]> {
-         console.log(crmBaseUrl + "User/UnAssignedReps?placeId=" + placeid);
-        return  this.http.get(crmBaseUrl + "User/UnAssignedReps?placeId=" + placeid)
-        .map((response: Response) => response.json())
-        .catch((error:any) => Observable.throw(error.json() || 'Server error'));
-     }
-
-     addUser (UserModel: any): Observable<any> {
-        return this.http.post(crmBaseUrl + "Account/Register", UserModel) // ...using post request
+     addTenant (TenantModel: any): Observable<any> {
+        return this.http.post(crmBaseUrl + "Tenant", TenantModel) // ...using post request
                          .map((res:Response) => res.json()) // ...and calling .json() on the response to return data
                          .catch((error:any) => Observable.throw(error.json() || 'Server error')); //...errors if any
      }
 
-     updateTenant (UserModel: any): Observable<any> {
-        return this.http.put(crmBaseUrl + "UserModel", UserModel) // ...using post request
+     updateTenant (TenantModel: any): Observable<any> {
+        return this.http.put(crmBaseUrl + "Tenant", TenantModel) // ...using post request
                          .map((res:Response) => res.json()) // ...and calling .json() on the response to return data
                          .catch((error:any) => Observable.throw(error.json() || 'Server error')); //...errors if any
      }
+    
+     
+     deleteTenant (id: any): Observable<any> {
+        return this.http.delete(crmBaseUrl + "Tenant/" + id) // ...using post request
+                         .map((res:Response) => res.json()) // ...and calling .json() on the response to return data
+                         .catch((error:any) => Observable.throw(error.json() || 'Server error')); //...errors if any
+     }
+   
      
 }
