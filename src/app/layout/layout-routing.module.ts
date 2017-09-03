@@ -10,6 +10,7 @@ const routes: Routes = [
                 // { path: 'tables', loadChildren: './tables/tables.module#TablesModule' },
                 { path: 'dashboard', loadChildren: './dashboard/dashboard.module#DashboardModule' },
                 { path: 'viewproducts', loadChildren: '../viewproducts/viewproducts.module#ViewProductsModule' },
+                { path: 'viewstatus', loadChildren: '../viewstatus/viewstatus.module#ViewStatusModule' },
                 { path: 'viewforms', loadChildren: '../viewforms/viewforms.module#ViewFormsModule' },
                 { path: 'form/:formid', loadChildren: '../form/form.module#FormModule' },
                 { path: 'viewplaces', loadChildren: '../viewplaces/viewplaces.module#ViewPlacesModule' },

@@ -15,6 +15,10 @@
           <i class="fa fa-fw fa-cube"></i>&nbsp;{{ 'Manage Products' | translate }}
         </a>
 
+        <a [routerLink]="['/viewstatus']" [routerLinkActive]="['router-link-active']" class="list-group-item">
+            <i class="fa fa-fw fa-filter"></i>&nbsp;{{ 'Manage Status' | translate }}
+          </a>
+
         <a [routerLink]="['/viewplaces']" [routerLinkActive]="['router-link-active']" class="list-group-item">
             <i class="fa fa-fw fa-building"></i>&nbsp;{{ 'Manage Places' | translate }}
         </a>
