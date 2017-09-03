@@ -56,96 +56,100 @@
     </div>
 
     <!-- Add Representative Dialog -->
+        <p-dialog header="Add Representative" [(visible)]="displayReplist" modal="modal" width="300"   positionTop="80"  [responsive]="true">
 
-    <p-dialog header="Add Representative" [(visible)]="displayReplist" modal="modal" width="300"   positionTop="80"  [responsive]="true">
-           
-            <p-listbox [options]="users" [(ngModel)]="SelectedUsers" multiple="multiple" checkbox="checkbox" filter="filter">
-                    <ng-template let-user pTemplate="body">
-                            <span style="font-size:14px;">{{user.label}}</span>
-                    </ng-template>
-            </p-listbox>
+                <p-listbox [options]="users" [(ngModel)]="SelectedUsers" multiple="multiple" checkbox="checkbox" filter="filter">
+                        <ng-template let-user pTemplate="body">
+                                <span style="font-size:14px;">{{user.label}}</span>
+                        </ng-template>
+                </p-listbox>
+
+                <p-footer>
+                    <button type="button" class="btn btn-sm btn-danger" [disabled]="SelectedUsers.length<1" (click)="addRepPlaceListApi()">Save</button>
+                    <button type="button" (click)="hideRepList()" class="btn btn-sm btn-danger">Cancel</button>
+                </p-footer>
+
+
+        </p-dialog>
+    <!-- End Representative Dialog -->
+
+     <p></p>
+     <p></p>
+
+
+      <!-- Google Maps  Dialog -->
+      <!-- <p-dialog header="Search Address" [(visible)]="displayAddress" modal="modal" width="600"   positionTop="80"  [responsive]="true">
+            
+            <div class="container">
+                <div class="form-group">
+                <input placeholder="search for location" autocorrect="off" autocapitalize="off" spellcheck="off" type="text" class="form-control" #search [formControl]="searchControl">
+                </div>
+                <sebm-google-map [latitude]="latitude" [longitude]="longitude" [scrollwheel]="false" [zoom]="zoom">
+                <sebm-google-map-marker [latitude]="latitude" [longitude]="longitude"></sebm-google-map-marker>
+                </sebm-google-map>
+            </div>
 
             <p-footer>
-                <button type="button" class="btn btn-sm btn-danger" (click)="addRepPlaceListApi()">Save</button>
+                <button type="button" class="btn btn-sm btn-danger">Continue</button>
                 <button type="button" (click)="hideRepList()" class="btn btn-sm btn-danger">Cancel</button>
             </p-footer>
+            
+       </p-dialog> -->
+       <!-- End Google Maps Dialog -->
 
-    </p-dialog>
-
-      <!-- End Representative Dialog -->
-     <p></p>
-     <p></p>
-
-    <div class="row">
+      <div class="row">
         
-        <div class="col-lg-6">
-            <fieldset class="form-group">
-                <h4>Address Info</h4>
-             </fieldset>
-            <fieldset class="form-group">
-                <label>Address</label>
-                <input class="form-control"  placeholder="Address" [(ngModel)]="PlaceModel.StreetAddress">
-            </fieldset>
+          <div class="col-lg-6">
+              
+                <fieldset class="form-group">
+                    <h4>Address Info</h4>
+                </fieldset>
 
-            <fieldset class="form-group">
-                <label>City</label>
-                <input class="form-control"  placeholder="City" [(ngModel)]="PlaceModel.City">
-            </fieldset>
-
-            <fieldset class="form-group">
-                <label>State</label>
-                <input class="form-control"  placeholder="State" [(ngModel)]="PlaceModel.State">
-            </fieldset>
-
-            <fieldset class="form-group">
-                <label>Zip</label>
-                <input class="form-control"  placeholder="Zip" [(ngModel)]="PlaceModel.Zip">
-            </fieldset>
-
-            <fieldset class="form-group">
-                <label>Country</label>
-                <input class="form-control"  placeholder="Country" [(ngModel)]="PlaceModel.Country">
-            </fieldset>
-
-            <fieldset class="form-group">
-                <label>Country Code</label>
-                <input class="form-control"  placeholder="Country Code" [(ngModel)]="PlaceModel.CountryCode">
-            </fieldset>
+                <div class="container">
+                        <div class="form-group">
+                        <input placeholder="search address" autocorrect="off" autocapitalize="off" spellcheck="off" type="text" [(ngModel)]="PlaceModel.StreetAddress" class="form-control" #search [formControl]="searchControl">
+                        </div>
+                        <sebm-google-map [latitude]="latitude" [longitude]="longitude" [scrollwheel]="false" [zoom]="zoom">
+                        <sebm-google-map-marker [latitude]="latitude" [longitude]="longitude"></sebm-google-map-marker>
+                        </sebm-google-map>
+                </div>
+                
         </div>
 
         <div class="col-lg-6">
-            <fieldset class="form-group">
-                <h4>Contact Info</h4>
-             </fieldset>
-            <fieldset class="form-group">
-                <label>Contact Name</label>
-                <input class="form-control"  placeholder="Contact Name" [(ngModel)]="PlaceModel.ContactName">
-            </fieldset>
+                <fieldset class="form-group">
+                    <h4>Contact Info</h4>
+                </fieldset>
 
-            <fieldset class="form-group">
-                <label>Contact Title</label>
-                <input class="form-control"  placeholder="Contact Title" [(ngModel)]="PlaceModel.ContactTitle">
-            </fieldset>
+                <fieldset class="form-group">
+                    <label>Contact Name</label>
+                    <input class="form-control"  placeholder="Contact Name" [(ngModel)]="PlaceModel.ContactName">
+                </fieldset>
 
-            <fieldset class="form-group">
-                <label>Phone</label>
-                <input class="form-control"  placeholder="Phone" [(ngModel)]="PlaceModel.Phone">
-            </fieldset>
+                <fieldset class="form-group">
+                    <label>Contact Title</label>
+                    <input class="form-control"  placeholder="Contact Title" [(ngModel)]="PlaceModel.ContactTitle">
+                </fieldset>
 
-            <fieldset class="form-group">
-                <label>Cell Phone</label>
-                <input class="form-control"  placeholder="Cell Phone" [(ngModel)]="PlaceModel.CellPhone">
-            </fieldset>
+                <fieldset class="form-group">
+                    <label>Phone</label>
+                    <input class="form-control"  placeholder="Phone" [(ngModel)]="PlaceModel.Phone">
+                </fieldset>
 
-            <fieldset class="form-group">
-                <label>Email</label>
-                <input class="form-control"  placeholder="Email" [(ngModel)]="PlaceModel.Email">
-            </fieldset>
+                <fieldset class="form-group">
+                    <label>Cell Phone</label>
+                    <input class="form-control"  placeholder="Cell Phone" [(ngModel)]="PlaceModel.CellPhone">
+                </fieldset>
 
-            <fieldset class="form-group">
-                <label>Website</label>
-                <input class="form-control"  placeholder="Website" [(ngModel)]="PlaceModel.Website">
-            </fieldset>
+                <fieldset class="form-group">
+                    <label>Email</label>
+                    <input class="form-control"  placeholder="Email" [(ngModel)]="PlaceModel.Email">
+                </fieldset>
+
+                <fieldset class="form-group">
+                    <label>Website</label>
+                    <input class="form-control"  placeholder="Website" [(ngModel)]="PlaceModel.Website">
+                </fieldset>
         </div>
 
     </div>

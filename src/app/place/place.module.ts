@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule,FormControl } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { PlaceRoutingModule } from './place-routing.module';
 import { PlaceComponent } from './place.component';
@@ -9,11 +9,16 @@ import {PlaceServiceApi,StatusServiceApi,RepPlaceServiceApi,UserServiceApi} from
 import {GlobalApi} from '../shared/global-functions';
 import {GooglePlaceModule} from 'ng2-google-place-autocomplete';
 import { MultiselectDropdownModule } from 'angular-2-dropdown-multiselect';
+import { AgmCoreModule } from "angular2-google-maps/core";
 
 
 @NgModule({
     imports: [
-        ReactiveFormsModule,
+        AgmCoreModule.forRoot({
+            apiKey: "AIzaSyC6UFj0VOyEzkqseKrklaDH8XOTJh_q6wk",
+            libraries: ["places"]
+        }),
+        ReactiveFormsModule,        
         FormsModule,
         CommonModule,
         PlaceRoutingModule,

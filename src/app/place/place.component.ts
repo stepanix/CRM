@@ -1,8 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,ViewChild, ElementRef,NgZone } from '@angular/core';
+import { FormsModule, ReactiveFormsModule,FormControl } from '@angular/forms';
 import {ActivatedRoute,Router} from '@angular/router';
 import { routerTransition } from '../router.animations';
 import {DialogModule,SharedModule,DataTableModule,ListboxModule} from 'primeng/primeng';
 import {PlaceServiceApi,StatusServiceApi,RepPlaceServiceApi,UserServiceApi} from '../shared/shared';
+import { AgmCoreModule, MapsAPILoader } from 'angular2-google-maps/core';
+import {} from '@types/googlemaps';
 
 import {SelectItem} from 'primeng/primeng';
 
@@ -25,41 +28,97 @@ export class PlaceComponent implements OnInit {
     SelectedUsers : any[] = [];
 
     displayReplist : boolean = false;
+    displayAddress : boolean = false;
 
-  constructor(private router: Router,
+    public latitude: number;
+    public longitude: number;
+    public searchControl: FormControl;
+    public zoom: number;
+    PlaceDtoIn: any;
+    
+    
+    @ViewChild("search")
+    public searchElementRef: ElementRef;
+
+  constructor(
+    private mapsAPILoader: MapsAPILoader,
+    private ngZone: NgZone,
+    private router: Router,
     private route:ActivatedRoute,
     private userServiceApi : UserServiceApi,
     private repPlaceServiceApi : RepPlaceServiceApi,
     private placeServiceApi : PlaceServiceApi,
     private statusServiceApi:StatusServiceApi) {
 
-      this.placeId = this.route.snapshot.params['placeid'];
-      
-      this.PlaceModel.Name = "";
-      this.PlaceModel.SelectedStatus = -1;
-      this.PlaceModel.City = "";
-      this.PlaceModel.State = "";
-      this.PlaceModel.Zip = "";
-      this.PlaceModel.Country = "";
-      this.PlaceModel.CountryCode = "";
-      this.PlaceModel.StreetAddress ="";
-      
-      this.PlaceModel.ContactName = "";
-      this.PlaceModel.ContactTitle = "";
-      this.PlaceModel.Phone = "";
-      this.PlaceModel.CellPhone = "";
-      this.PlaceModel.Email = "";
-      this.PlaceModel.Website = "";
-
-      if (this.placeId !== Number("0")) {
-          this.getPlaceApi();
-      }
-
     }
 
-  ngOnInit() {
-    this.loadStatusApi();
+   ngOnInit() {
+        this.loadStatusApi();
+        this.placeId = this.route.snapshot.params['placeid'];
+      
+        this.PlaceModel.Name = "";
+        this.PlaceModel.SelectedStatus = -1;
+        this.PlaceModel.StreetAddress ="";
+      
+        this.PlaceModel.ContactName = "";
+        this.PlaceModel.ContactTitle = "";
+        this.PlaceModel.Phone = "";
+        this.PlaceModel.CellPhone = "";
+        this.PlaceModel.Email = "";
+        this.PlaceModel.Website = "";
+
+        if (this.placeId !== Number("0")) {
+            this.getPlaceApi();
+        }
+
+      //set google maps defaults
+       this.zoom = 4;
+       this.latitude = -26.0323027;
+       this.longitude = 28.0363948;
+
+      //create search FormControl
+      this.searchControl = new FormControl();
+
+      //set current position
+     this.setCurrentPosition();
+     
+         //load Places Autocomplete
+         this.mapsAPILoader.load().then(() => {
+           let autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {
+             types: ["address"]
+           });
+           autocomplete.addListener("place_changed", () => {
+             this.ngZone.run(() => {
+               //get the place result
+               let place: google.maps.places.PlaceResult = autocomplete.getPlace();
+       
+               //verify result
+               if (place.geometry === undefined || place.geometry === null) {
+                 return;
+               }
+               
+               this.PlaceModel.StreetAddress = place.formatted_address;
+               //set latitude, longitude and zoom
+               this.latitude = place.geometry.location.lat();
+               this.longitude = place.geometry.location.lng();
+               
+               this.zoom = 12;
+             });
+           });
+         });
+   }
+
+   private setCurrentPosition() {
+    if ("geolocation" in navigator) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        this.latitude = position.coords.latitude;
+        this.longitude = position.coords.longitude;
+        this.zoom = 12;
+      });
+    }
   }
+
+   
 
    showRepList(){
      this.listUnAssignedRepPlacesApi();
@@ -99,10 +158,6 @@ export class PlaceComponent implements OnInit {
             this.PlaceModel.Name = res.name;
             this.PlaceModel.SelectedStatus = res.statusId;
             this.PlaceModel.StreetAddress = res.StreetAddress;
-            this.PlaceModel.City = res.city;
-            this.PlaceModel.State = res.state;
-            this.PlaceModel.Zip = res.zip;
-            this.PlaceModel.Country = res.country;
             this.PlaceModel.ContactName = res.contactName;
             this.PlaceModel.ContactTitle = res.contactTitle;
             this.PlaceModel.Phone = res.phone;
@@ -124,27 +179,28 @@ export class PlaceComponent implements OnInit {
       }
   }
 
+  setDtoInputModel(idvar:number){
+      this.PlaceDtoIn = {
+        id: idvar,
+        name: this.PlaceModel.Name,
+        streetAddress: this.PlaceModel.StreetAddress,
+        statusId: this.PlaceModel.SelectedStatus,
+        email: this.PlaceModel.Email,
+        webSite: this.PlaceModel.Website,
+        contactName: this.PlaceModel.ContactName,
+        contactTitle: this.PlaceModel.ContactTitle,
+        phone: this.PlaceModel.Phone,
+        cellPhone: this.PlaceModel.CellPhone,
+        comment: "",
+        latitude: this.latitude,
+        longitude : this.longitude
+    };
+  }
+
   //Add new place to Remote database
   addNewPlaceApi(){
-        let PlaceDtoIn = {
-          id: 0,
-          name: this.PlaceModel.Name,
-          streetAddress: this.PlaceModel.StreetAddress,
-          city: this.PlaceModel.City,
-          state: this.PlaceModel.State,
-          zip: this.PlaceModel.Zip,
-          zipExtension: "",
-          country: this.PlaceModel.Country,
-          statusId: this.PlaceModel.SelectedStatus,
-          email: this.PlaceModel.Email,
-          webSite: this.PlaceModel.Website,
-          contactName: this.PlaceModel.ContactName,
-          contactTitle: this.PlaceModel.ContactTitle,
-          phone: this.PlaceModel.Phone,
-          cellPhone: this.PlaceModel.CellPhone,
-          comment: ""
-      };
-      this.placeServiceApi.addPlace(PlaceDtoIn)
+      this.setDtoInputModel(0);
+      this.placeServiceApi.addPlace(this.PlaceDtoIn)
       .subscribe(
           res => {
               this.placeId = res.id;
@@ -158,25 +214,8 @@ export class PlaceComponent implements OnInit {
   }
 
   updatePlaceApi(){
-    let PlaceDtoIn = {
-      id: this.placeId,
-      name: this.PlaceModel.Name,
-      streetAddress: this.PlaceModel.StreetAddress,
-      city: this.PlaceModel.City,
-      state: this.PlaceModel.State,
-      zip: this.PlaceModel.Zip,
-      zipExtension: "",
-      country: this.PlaceModel.Country,
-      statusId: this.PlaceModel.SelectedStatus,
-      email: this.PlaceModel.Email,
-      webSite: this.PlaceModel.Website,
-      contactName: this.PlaceModel.ContactName,
-      contactTitle: this.PlaceModel.ContactTitle,
-      phone: this.PlaceModel.Phone,
-      cellPhone: this.PlaceModel.CellPhone,
-      comment: ""
-  };
-  this.placeServiceApi.updatePlace(PlaceDtoIn)
+   this.setDtoInputModel(this.placeId);
+   this.placeServiceApi.updatePlace(this.PlaceDtoIn)
   .subscribe(
       res => {
         alert("Place Updated Successfully");
