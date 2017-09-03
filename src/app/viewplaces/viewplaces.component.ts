@@ -38,4 +38,19 @@ export class ViewPlacesComponent implements OnInit {
        });
   }
 
+  deletePlaceApi(placevar) {
+    if (window.confirm('Are you sure you want to delete?')) {
+        this.placeServiceAPi.deletePlace(placevar.id)
+        .subscribe(
+            res => {
+              this.loadPlacesApi();
+            },err => {
+              console.log(err.message);
+              return;
+          });
+    }else{
+       return;
+    }
+}
+
 }

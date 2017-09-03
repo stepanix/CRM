@@ -33,4 +33,19 @@ export class ViewFormsComponent implements OnInit {
        });
   }
 
+  deleteFormApi(formvar){
+        if (window.confirm('Are you sure you want to delete?')) {
+          this.formServiceApi.deleteForm(formvar.id)
+          .subscribe(
+              res => {
+                this.listFormsApi();
+              },err => {
+                console.log(err.message);
+                return;
+            });
+      }else{
+        return;
+      }
+  }
+
 }

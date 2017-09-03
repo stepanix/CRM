@@ -38,6 +38,12 @@ export class ProductServiceApi {
                          .map((res:Response) => res.json()) // ...and calling .json() on the response to return data
                          .catch((error:any) => Observable.throw(error.json() || 'Server error')); //...errors if any
      }
+
+     deleteProduct (id: any): Observable<any> {
+        return this.http.delete(crmBaseUrl + "Product/" + id) // ...using post request
+                         .map((res:Response) => res.json()) // ...and calling .json() on the response to return data
+                         .catch((error:any) => Observable.throw(error.json() || 'Server error')); //...errors if any
+     }
     
      
 

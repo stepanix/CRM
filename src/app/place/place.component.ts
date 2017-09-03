@@ -231,11 +231,13 @@ export class PlaceComponent implements OnInit {
 
   //List Assigned Reps from Remote Database
   listRepPlacesApi(){
+    this.reps = [];
     this.repPlaceServiceApi.getRepByPlaceId(this.placeId)
     .subscribe(
         res => {
           for(var i=0; i<res.length; i++) {
             this.reps.push({
+              id: res[i].id,
               userId : res[i].userId,
               fullName : res[i].user.firstName + " " + res[i].user.surname
             })
@@ -287,8 +289,21 @@ export class PlaceComponent implements OnInit {
           return;
       });
   }
-
   
+  deleteRepApi(repvar) {
+     if (window.confirm('Are you sure you want to delete?')) {
+          this.repPlaceServiceApi.deleteRepPlace(repvar.id)
+          .subscribe(
+              res => {
+                this.listRepPlacesApi();
+              },err => {
+                console.log(err.message);
+                return;
+            });
+      }else{
+        return;
+      }
+  }
   
 
 }

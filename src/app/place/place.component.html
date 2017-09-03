@@ -43,7 +43,7 @@
                         
                           <ng-template let-rep="rowData" pTemplate="body">
                           <div align="center">
-                              <button type="button" class="btn btn-sm btn-danger" (click)="deleteRep(product)">
+                              <button type="button" class="btn btn-sm btn-danger" (click)="deleteRepApi(rep)">
                                 <i class="fa fa-trash" aria-hidden="true"></i>
                             </button>
                           </div>
@@ -75,27 +75,6 @@
 
      <p></p>
      <p></p>
-
-
-      <!-- Google Maps  Dialog -->
-      <!-- <p-dialog header="Search Address" [(visible)]="displayAddress" modal="modal" width="600"   positionTop="80"  [responsive]="true">
-            
-            <div class="container">
-                <div class="form-group">
-                <input placeholder="search for location" autocorrect="off" autocapitalize="off" spellcheck="off" type="text" class="form-control" #search [formControl]="searchControl">
-                </div>
-                <sebm-google-map [latitude]="latitude" [longitude]="longitude" [scrollwheel]="false" [zoom]="zoom">
-                <sebm-google-map-marker [latitude]="latitude" [longitude]="longitude"></sebm-google-map-marker>
-                </sebm-google-map>
-            </div>
-
-            <p-footer>
-                <button type="button" class="btn btn-sm btn-danger">Continue</button>
-                <button type="button" (click)="hideRepList()" class="btn btn-sm btn-danger">Cancel</button>
-            </p-footer>
-            
-       </p-dialog> -->
-       <!-- End Google Maps Dialog -->
 
       <div class="row">
         

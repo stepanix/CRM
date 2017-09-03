@@ -99,4 +99,19 @@ export class ViewProductsComponent implements OnInit {
           });
     }
 
+    deleteProductApi(productvar) {
+        if (window.confirm('Are you sure you want to delete?')) {
+            this.productServiceApi.deleteProduct(productvar.id)
+            .subscribe(
+                res => {
+                  this.listProductsApi();
+                },err => {
+                  console.log(err.message);
+                  return;
+              });
+        }else{
+           return;
+        }
+    }
+
 }

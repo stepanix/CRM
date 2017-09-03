@@ -51,6 +51,12 @@ export class RepPlaceServiceApi {
                          .map((res:Response) => res.json()) // ...and calling .json() on the response to return data
                          .catch((error:any) => Observable.throw(error.json() || 'Server error')); //...errors if any
      }
+
+     deleteRepPlace (id: any): Observable<any> {
+        return this.http.delete(crmBaseUrl + "RepresentativePlace/" + id) // ...using post request
+                         .map((res:Response) => res.json()) // ...and calling .json() on the response to return data
+                         .catch((error:any) => Observable.throw(error.json() || 'Server error')); //...errors if any
+     }
     
      
 
