@@ -5,7 +5,8 @@ import { ViewUsersRoutingModule } from './viewusers-routing.module';
 import { ViewUsersComponent } from './viewusers.component';
 import { PageHeaderModule } from './../shared';
 import {DataTableModule,SharedModule,DialogModule} from 'primeng/primeng';
-import {UserServiceApi} from '../shared/shared';
+import {UserServiceApi,TenantServiceApi} from '../shared/shared';
+import {GlobalApi} from '../shared/global-functions';
 
 
 @NgModule({
@@ -20,7 +21,7 @@ import {UserServiceApi} from '../shared/shared';
         SharedModule
     ],
     declarations: [ViewUsersComponent],
-    providers: [UserServiceApi]
+    providers: [UserServiceApi,TenantServiceApi,GlobalApi]
 })
 
 export class ViewUsersModule { }
