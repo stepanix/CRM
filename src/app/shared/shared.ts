@@ -7,3 +7,4 @@ export * from './services/status-service-api';
 export * from './services/repplace-service-api';
 export * from './services/user-service-api';
 export * from './services/tenant-service-api';
+export * from './services/login-service-api';
