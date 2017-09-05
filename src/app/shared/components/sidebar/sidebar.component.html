@@ -30,6 +30,10 @@
         <a [routerLink]="['/viewforms']" [routerLinkActive]="['router-link-active']" class="list-group-item">
           <i class="fa fa-fw fa-edit"></i>&nbsp;{{ 'Manage Forms' | translate }}
         </a>
+
+        <a [routerLink]="['/schedule']" [routerLinkActive]="['router-link-active']" class="list-group-item">
+            <i class="fa fa-fw fa-calendar-check-o"></i>&nbsp;{{ 'Schedule' | translate }}
+        </a>
         
         <!-- <a [routerLink]="['/bs-element']" [routerLinkActive]="['router-link-active']" class="list-group-item">
             <i class="fa fa-fw fa-desktop"></i>&nbsp;{{ 'boostrapElement' | translate }}

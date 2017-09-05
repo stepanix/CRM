@@ -1,0 +1,19 @@
+<div [@routerTransition]>
+  
+      <app-page-header [heading]="'Schedule'" [icon]="'fa-edit'"></app-page-header>
+
+        <div align="right"><button type="button"  class="btn btn-sm btn-danger">Add New Visit</button></div>
+      
+      <p></p>
+
+      <!-- Schedule List -->
+
+      <p-schedule [events]="events" [header]="header" defaultDate="2017-02-01" [eventLimit]="4" [editable]="true"
+      (onDayClick)="handleDayClick($event)" (onEventClick)="handleEventClick($event)"></p-schedule>
+
+
+      
+       <!-- End Schedule  -->
+  
+  
+  </div>
