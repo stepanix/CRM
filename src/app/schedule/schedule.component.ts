@@ -60,4 +60,20 @@ export class ScheduleComponent implements OnInit {
   ];
   }
 
+    listEventsApi(){
+      this.events = [];
+      this.scheduleServiceApi.getSchedules()
+      .subscribe(
+           res => {
+            //  for(var i=0; i< res.length; i++){
+            //    this.events.push({
+            //      title: res[i].
+            //    });
+             
+           },err => {
+             console.log(err.message);
+             return;
+         });
+    }
+
 }

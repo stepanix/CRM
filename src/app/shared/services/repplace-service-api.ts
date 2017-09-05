@@ -37,7 +37,7 @@ export class RepPlaceServiceApi {
         .catch((error:any) => Observable.throw(error.json() || 'Server error'));
      }
 
-     getRepByPlaceId(id:number) : Observable<any[]> {         
+     getRepByPlaceId(id:number) : Observable<any[]> {
         return  this.http.get(crmBaseUrl + "RepresentativePlace/ByPlaceId?id=" + id ,{headers: this.getHeader()})
         .map((response: Response) => response.json())
         .catch((error:any) => Observable.throw(error.json() || 'Server error'));

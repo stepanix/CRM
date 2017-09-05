@@ -22,7 +22,7 @@ export class UserServiceApi {
         this.token = 'bearer ' + localStorage.getItem('token');
         this.header.append('Authorization', this.token);
         this.header.append('Content-Type', 'application/json');   
-        return this.header; 
+        return this.header;
      }
 
      getUsers() : Observable<any[]> {
@@ -38,8 +38,8 @@ export class UserServiceApi {
      }
 
      getUnAssignedReps(placeid:number) : Observable<any[]> {
-         console.log(crmBaseUrl + "User/UnAssignedReps?placeId=" + placeid ,{headers: this.getHeader()});
-        return  this.http.get(crmBaseUrl + "User/UnAssignedReps?placeId=" + placeid)
+         //console.log(crmBaseUrl + "User/UnAssignedReps?placeId=" + placeid);
+        return  this.http.get(crmBaseUrl + "User/UnAssignedReps?placeId=" + placeid ,{headers: this.getHeader()})
         .map((response: Response) => response.json())
         .catch((error:any) => Observable.throw(error.json() || 'Server error'));
      }
