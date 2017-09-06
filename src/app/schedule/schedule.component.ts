@@ -1,10 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { routerTransition } from '../router.animations';
 import { FormsModule, ReactiveFormsModule,FormControl } from '@angular/forms';
-import {DialogModule,DropdownModule,DataTableModule,SharedModule,ListboxModule,ScheduleModule} from 'primeng/primeng';
+import {DialogModule,DropdownModule,DataTableModule,SharedModule,ListboxModule,ScheduleModule,AutoCompleteModule,CalendarModule} from 'primeng/primeng';
 import {PlaceServiceApi,ScheduleServiceApi,UserServiceApi} from '../shared/shared';
+import { DatepickerModule } from 'angular2-material-datepicker'
+
 import 'fullcalendar';
 import * as moment from 'moment';
+
 
 
 
@@ -18,54 +21,127 @@ import * as moment from 'moment';
 export class ScheduleComponent implements OnInit {
 
   events : any[] =[];
+  users : any[] = [];
+  places : any[] = [];
+  filteredCachedUsers : any[] = [];
+  filteredCachedPlaces : any[] =[];
+
+  selectedUser: any;
+  selectedPlace : any;
+  selectedDate : any;
 
   header: any;
 
-  defaultDate:string = moment().format('YYYY-MM-DD').toString();
+  ScheduleModel : any = {};
+  displayDialog : boolean = false;
 
   
+  startTime : any;
   
+  
+
+  defaultDate:string = moment().format('YYYY-MM-DD').toString();
 
   constructor(private placeServiceApi:PlaceServiceApi ,
               private scheduleServiceApi:ScheduleServiceApi,
               private userServiceApi : UserServiceApi) {
+          
+          
+  }
 
-                console.log(this.defaultDate);
+  showScheduleDialog() {
+    this.refreshvariables();
+    this.displayDialog = true;
+  }
 
+  refreshvariables(){
+    this.ScheduleModel.visitDate = this.defaultDate;
   }
 
   ngOnInit() {
-    this.header = {
-			left: 'prev,next today',
-			center: 'title',
-			right: 'month,agendaWeek,agendaDay'
-    };
-    this.listEventsApi();
-  //   this.events = [
-  //     {
-  //         "title": "All Day Event",
-  //         "start": "2016-12-12"
-  //     },
-  //     {
-  //         "title": "Long Event",
-  //         "start": "2016-01-07",
-  //         "end": "2016-01-10"
-  //     },
-  //     {
-  //         "title": "Repeating Event",
-  //         "start": "2016-01-09T16:00:00"
-  //     },
-  //     {
-  //         "title": "Repeating Event",
-  //         "start": "2016-01-16T16:00:00"
-  //     },
-  //     {
-  //         "title": "Conference",
-  //         "start": "2016-01-11",
-  //         "end": "2016-01-13"
-  //     }
-  // ];
+      this.header = {
+        left: 'prev,next today',
+        center: 'title',
+        right: 'month,agendaWeek,agendaDay'
+      };
+      this.listEventsApi();
+      this.listUsersApi();
+      this.listPlacesApi();
+   }
+
+   saveSchedule(){
+     alert(this.selectedUser.id);
+     alert(this.selectedPlace.id);
+   }
+
+   searchUser(event) {
+     let query = event.query;
+     this.filteredCachedUsers = this.filterUsers(query, this.users);
+   }
+
+   filterUsers(query, allusers: any[]):any[] {
+    let filtered : any[] = [];
+    for(let i = 0; i < this.users.length; i++) {
+        let user = allusers[i];
+        if(user.fullName.toLowerCase().indexOf(query.toLowerCase()) == 0
+          || user.firstName.toLowerCase().indexOf(query.toLowerCase()) == 0
+          || user.surname.toLowerCase().indexOf(query.toLowerCase()) == 0
+        ) {
+            filtered.push(user);
+        }
+    }
+    return filtered;
   }
+
+  searchPlace(event) {
+    let query = event.query;
+    this.filteredCachedPlaces = this.filterPlaces(query, this.places);
+  }
+
+  filterPlaces(query, allplaces: any[]):any[] {
+   let filtered : any[] = [];
+   for(let i = 0; i < this.places.length; i++) {
+       let place = allplaces[i];
+       if(place.name.toLowerCase().indexOf(query.toLowerCase()) == 0
+         || place.streetAddress.toLowerCase().indexOf(query.toLowerCase()) == 0) {
+           filtered.push(place);
+       }
+   }
+   return filtered;
+ }
+
+   listUsersApi(){
+    this.users = [];
+    this.userServiceApi.getUsers()
+    .subscribe(
+        res => {
+          for(var i=0; i<res.length;i++){
+              this.users.push({
+                id : res[i].id,
+                fullName : res[i].firstName + " " + res[i].surname,
+                firstName : res[i].firstName,
+                surname : res[i].surname 
+              });
+          }
+        },err => {
+          console.log(err.message);
+          return;
+      });
+   }
+
+   listPlacesApi(){
+    this.places = [];
+    this.placeServiceApi.getPlaces()
+    .subscribe(
+        res => {
+            this.places = res;
+          //console.log(JSON.stringify(this.users));
+        },err => {
+          console.log(err.message);
+          return;
+      });
+   }
+
 
     listEventsApi(){
       this.events = [];
@@ -78,7 +154,6 @@ export class ScheduleComponent implements OnInit {
                     start: this.parseVisitDate(res[i].visitDate,res[i].visitTime)
                  });
               }
-             console.log(JSON.stringify(this.events));
            },err => {
              console.log(err.message);
              return;
@@ -92,5 +167,7 @@ export class ScheduleComponent implements OnInit {
          return visitTimeVar;
        }
     }
+
+
 
 }

@@ -2,18 +2,72 @@
   
       <app-page-header [heading]="'Schedule'" [icon]="'fa-edit'"></app-page-header>
 
-        <div align="right"><button type="button"  class="btn btn-sm btn-danger">Add New Visit</button></div>
+        <div align="right"><button type="button" (click) = "showScheduleDialog()" class="btn btn-sm btn-danger">Add New Visit</button></div>
       
       <p></p>
 
       <!-- Schedule List -->
 
-      <p-schedule [events]="events" [header]="header" [defaultDate]="defaultDate" [eventLimit]="4" [editable]="true"
-      (onDayClick)="handleDayClick($event)" (onEventClick)="handleEventClick($event)"></p-schedule>
-
-
+        <p-schedule [events]="events" [header]="header" [defaultDate]="defaultDate" [eventLimit]="20" [editable]="true"
+        (onDayClick)="handleDayClick($event)" (onEventClick)="handleEventClick($event)"></p-schedule>
       
        <!-- End Schedule  -->
+
+       <!-- Add New Visit Dialog -->
+
+       <p-dialog header="Add New Scheduled Visit" [(visible)]="displayDialog" modal="modal" width="500" height="auto" responsive="true" positionTop="80">
+        
+         
+        <label>Date</label>
+        <fieldset class="form-group">
+                <material-datepicker [(date)]="selectedDate"></material-datepicker>
+            <!-- <p-calendar [(ngModel)]="value" styleClass="ui-inputtext" readonlyInput="readonlyInput" [showIcon]="true">
+
+                
+            </p-calendar> -->
+        </fieldset>
+
+        <fieldset class="form-group">
+              <label>Time (Optional)</label>
+              
+        </fieldset>
+
+        <label>Representative</label>
+        <fieldset class="form-group">
+            <p-autoComplete  [(ngModel)]="selectedUser" (completeMethod)="searchUser($event)" [suggestions]="filteredCachedUsers" field="fullName"  [size]="53"></p-autoComplete>
+        </fieldset>
+
+        <label>Place</label>
+        <fieldset class="form-group">
+            <p-autoComplete  [(ngModel)]="selectedPlace" (completeMethod)="searchPlace($event)" [suggestions]="filteredCachedPlaces" field="name" [size]="53"></p-autoComplete>
+        </fieldset>
+
+        <fieldset class="form-group">
+            <label>Notes (Optional)</label>
+            <textarea class="form-control"></textarea>
+        </fieldset>
+
+        <fieldset class="form-group">
+             <label><input type="checkbox" value="" > Recurring</label> 
+            
+        </fieldset>
+
+        <fieldset> 
+            <label>Weeks</label>           
+            <input class="form-control">
+       </fieldset>
+
+       <p>
+       </p>
+
+         <p-footer>
+             <button type="button" class="btn btn-sm btn-danger" (click)="saveSchedule()">Save</button>
+             <button type="button" (click)="hideProductDialog()" class="btn btn-sm btn-danger">Cancel</button>
+         </p-footer>
+ 
+       </p-dialog>
+ 
+   <!-- End Add New visit Dialog -->
   
   
   </div>

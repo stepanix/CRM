@@ -29,6 +29,7 @@
     "angular-2-data-table": "^0.1.2",
     "angular-2-dropdown-multiselect": "^1.5.4",
     "angular2-google-maps": "^0.17.0",
+    "angular2-material-datepicker": "^0.5.0",
     "core-js": "^2.4.1",
     "font-awesome": "^4.7.0",
     "fullcalendar": "^3.5.0",
