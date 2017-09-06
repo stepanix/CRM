@@ -7,6 +7,7 @@ import { PageHeaderModule } from './../shared';
 import {DialogModule,DropdownModule,DataTableModule,SharedModule,ListboxModule,ScheduleModule,AutoCompleteModule,CalendarModule} from 'primeng/primeng';
 import {PlaceServiceApi,ScheduleServiceApi,UserServiceApi} from '../shared/shared';
 import { DatepickerModule } from 'angular2-material-datepicker'
+import { NguiDatetimePickerModule } from '@ngui/datetime-picker';
 
 import {GlobalApi} from '../shared/global-functions';
 import * as jQuery from 'jquery';
@@ -27,7 +28,8 @@ import * as jQuery from 'jquery';
         ListboxModule,
         CalendarModule,
         AutoCompleteModule,
-        DatepickerModule
+        DatepickerModule,
+        NguiDatetimePickerModule
     ],
     declarations: [ScheduleComponent],
     providers: [PlaceServiceApi,ScheduleServiceApi,GlobalApi,UserServiceApi]

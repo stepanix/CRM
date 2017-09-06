@@ -5,11 +5,9 @@ import {DialogModule,DropdownModule,DataTableModule,SharedModule,ListboxModule,S
 import {PlaceServiceApi,ScheduleServiceApi,UserServiceApi} from '../shared/shared';
 import { DatepickerModule } from 'angular2-material-datepicker'
 
+
 import 'fullcalendar';
 import * as moment from 'moment';
-
-
-
 
 @Component({
    selector: 'app-schedule',
@@ -26,26 +24,32 @@ export class ScheduleComponent implements OnInit {
   filteredCachedUsers : any[] = [];
   filteredCachedPlaces : any[] =[];
 
-  selectedUser: any;
-  selectedPlace : any;
-  selectedDate : any;
+  selectedUser: any = {};
+  selectedPlace : any = {};
+  selectedDate : any = "";
+  selectedTime : any = null;
+  Recurring : boolean = false;
+  Weeks : any = 0;
+  Note : any ="";
+
+  dtoUserId = "";
+  dtoPlaceId = "";
 
   header: any;
 
   ScheduleModel : any = {};
   displayDialog : boolean = false;
-
   
   startTime : any;
-  
-  
 
   defaultDate:string = moment().format('YYYY-MM-DD').toString();
 
   constructor(private placeServiceApi:PlaceServiceApi ,
               private scheduleServiceApi:ScheduleServiceApi,
               private userServiceApi : UserServiceApi) {
-          
+
+                this.selectedUser.id="";
+                this.selectedPlace.id="";
           
   }
 
@@ -54,8 +58,16 @@ export class ScheduleComponent implements OnInit {
     this.displayDialog = true;
   }
 
+  // formatSelectedTime(){
+  //   this.selectedTime = moment(this.selectedTime).format('LT');
+  // }
+
   refreshvariables(){
     this.ScheduleModel.visitDate = this.defaultDate;
+    this.selectedUser.id="";
+    this.selectedPlace.id="";
+    this.dtoUserId = "";
+    this.dtoPlaceId = "";
   }
 
   ngOnInit() {
@@ -69,10 +81,13 @@ export class ScheduleComponent implements OnInit {
       this.listPlacesApi();
    }
 
-   saveSchedule(){
-     alert(this.selectedUser.id);
-     alert(this.selectedPlace.id);
+   setSelectedUser(value){
+     this.dtoUserId=value.id;
    }
+
+   setSelectedPlace(value){
+    this.dtoPlaceId=value.id;
+  }
 
    searchUser(event) {
      let query = event.query;
@@ -142,7 +157,6 @@ export class ScheduleComponent implements OnInit {
       });
    }
 
-
     listEventsApi(){
       this.events = [];
       this.scheduleServiceApi.getSchedules()
@@ -164,8 +178,38 @@ export class ScheduleComponent implements OnInit {
        if(visitTimeVar===null){
           return visitDateVar;
        }else{
-         return visitTimeVar;
+         var tempdate:string = visitDateVar;
+         console.log(tempdate.replace("00:00:00",moment(visitTimeVar).format('HH:mm')));
+         return tempdate.replace("00:00:00",moment(visitTimeVar).format('HH:mm'));
        }
+    }
+
+    hideDialog(){
+      this.displayDialog = false;
+    }
+
+    saveScheduleApi() {
+      let ScheduleDto = {
+            placeId: this.dtoPlaceId,
+            userId: this.dtoUserId,
+            visitDate: this.selectedDate,
+            visitTime: this.selectedTime,
+            visitNote: this.Note,
+            isRecurring: this.Recurring,
+            repeatCycle: this.Weeks,
+            isVisited: false,
+            isScheduled: true
+        };
+        console.log(JSON.stringify(ScheduleDto));
+        this.scheduleServiceApi.addSchedule(ScheduleDto)
+        .subscribe(
+            res => {
+              this.listEventsApi();
+              this.displayDialog = false;
+            },err => {
+              console.log(err.message);
+              return;
+          });
     }
 
 

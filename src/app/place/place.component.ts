@@ -277,7 +277,7 @@ export class PlaceComponent implements OnInit {
          placeId: this.placeId
       });
     }
-    console.log(JSON.stringify(this.RepPlaceDtoIn));
+    //console.log(JSON.stringify(this.RepPlaceDtoIn));
     this.repPlaceServiceApi.addRepPlaceList(this.RepPlaceDtoIn)
     .subscribe(
         res => {

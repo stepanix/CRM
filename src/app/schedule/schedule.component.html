@@ -21,48 +21,44 @@
         <label>Date</label>
         <fieldset class="form-group">
                 <material-datepicker [(date)]="selectedDate"></material-datepicker>
-            <!-- <p-calendar [(ngModel)]="value" styleClass="ui-inputtext" readonlyInput="readonlyInput" [showIcon]="true">
-
-                
-            </p-calendar> -->
         </fieldset>
 
         <fieldset class="form-group">
               <label>Time (Optional)</label>
-              
+              <input [(ngModel)]="selectedTime" date-format="HH:mm" parse-format="HH:mm" ngui-datetime-picker time-only="true" [readonly]="true" />
         </fieldset>
 
         <label>Representative</label>
         <fieldset class="form-group">
-            <p-autoComplete  [(ngModel)]="selectedUser" (completeMethod)="searchUser($event)" [suggestions]="filteredCachedUsers" field="fullName"  [size]="53"></p-autoComplete>
+            <p-autoComplete  [(ngModel)]="selectedUser" (onSelect)="setSelectedUser(selectedUser)" (completeMethod)="searchUser($event)" [suggestions]="filteredCachedUsers" field="fullName"  [size]="53"></p-autoComplete>
         </fieldset>
 
         <label>Place</label>
         <fieldset class="form-group">
-            <p-autoComplete  [(ngModel)]="selectedPlace" (completeMethod)="searchPlace($event)" [suggestions]="filteredCachedPlaces" field="name" [size]="53"></p-autoComplete>
+            <p-autoComplete  [(ngModel)]="selectedPlace" (onSelect)="setSelectedPlace(selectedPlace)" (completeMethod)="searchPlace($event)" [suggestions]="filteredCachedPlaces" field="name" [size]="53"></p-autoComplete>
         </fieldset>
 
         <fieldset class="form-group">
             <label>Notes (Optional)</label>
-            <textarea class="form-control"></textarea>
+            <textarea class="form-control" [(ngModel)]="Note"></textarea>
         </fieldset>
 
         <fieldset class="form-group">
-             <label><input type="checkbox" value="" > Recurring</label> 
+             <label><input type="checkbox" value="" [(ngModel)]="Recurring" > Recurring</label>
             
         </fieldset>
 
         <fieldset> 
             <label>Weeks</label>           
-            <input class="form-control">
+            <input class="form-control" [(ngModel)]="Weeks" [disabled]="!Recurring">
        </fieldset>
 
        <p>
        </p>
 
          <p-footer>
-             <button type="button" class="btn btn-sm btn-danger" (click)="saveSchedule()">Save</button>
-             <button type="button" (click)="hideProductDialog()" class="btn btn-sm btn-danger">Cancel</button>
+             <button type="button" class="btn btn-sm btn-danger" (click)="saveScheduleApi()" [disabled]="selectedDate==='' || dtoUserId ==='' ||dtoPlaceId===''" >Save</button>
+             <button type="button" (click)="hideDialog()" class="btn btn-sm btn-danger">Cancel</button>
          </p-footer>
  
        </p-dialog>
