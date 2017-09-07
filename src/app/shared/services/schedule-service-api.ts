@@ -26,14 +26,14 @@ export class ScheduleServiceApi {
         return this.header;
      }
 
-     getSchedulesByStatus(isVisited:boolean,isScheduled:boolean,date:any) : Observable<any[]> {
-        return  this.http.get(crmBaseUrl + "Schedule/ByStatus?isVisited=" + isVisited + "&isScheduled=" + isScheduled + "&date=" + date ,{headers: this.getHeader()})
+     getSchedulesByStatus(isVisited:boolean,isScheduled:boolean) : Observable<any[]> {
+        return  this.http.get(crmBaseUrl + "Schedule/ByStatus?isVisited=" + isVisited + "&isScheduled=" + isScheduled ,{headers: this.getHeader()})
         .map((response: Response) => response.json())
         .catch((error:any) => Observable.throw(error.json() || 'Server error'));
     }
 
-     getSchedules(date:any) : Observable<any[]> {
-          return  this.http.get(crmBaseUrl + "Schedule?date=" + date ,{headers: this.getHeader()})
+     getSchedules() : Observable<any[]> {
+          return  this.http.get(crmBaseUrl + "Schedule" ,{headers: this.getHeader()})
           .map((response: Response) => response.json())
           .catch((error:any) => Observable.throw(error.json() || 'Server error'));
      }

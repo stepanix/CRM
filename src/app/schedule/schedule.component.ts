@@ -28,10 +28,10 @@ export class ScheduleComponent implements OnInit {
   selectedPlace : any = {};
   selectedDate : any = "";
   selectedTime : any = null;
-  eventDate : any="";
+  
   Recurring : boolean = false;
   Weeks : any = 0;
-  Note : any ="";
+  Note : any = "";
 
   dtoUserId = "";
   dtoPlaceId = "";
@@ -51,7 +51,6 @@ export class ScheduleComponent implements OnInit {
               private userServiceApi : UserServiceApi) {
           this.selectedUser.id = "";
           this.selectedPlace.id = "";
-          this.eventDate = this.defaultDate;
   }
 
   showScheduleDialog() {
@@ -161,7 +160,7 @@ export class ScheduleComponent implements OnInit {
 
     listEventsApi(){
       this.events = [];
-      this.scheduleServiceApi.getSchedules(this.eventDate)
+      this.scheduleServiceApi.getSchedules()
       .subscribe(
            res => {
              for(var i=0; i< res.length; i++){
