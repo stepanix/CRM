@@ -104,7 +104,7 @@ export class FormComponent implements OnInit {
             res => {
               this.questionTypes = res;
             },err => {
-              console.log(err.message);
+              console.log(err);
               return;
           });
     }
@@ -283,7 +283,7 @@ export class FormComponent implements OnInit {
                 this.router.navigate(['/viewforms']);
                 console.log(JSON.stringify(res));
             },err => {
-              console.log(err.message);
+              console.log(err);
               return;
           });
     }
@@ -303,7 +303,7 @@ export class FormComponent implements OnInit {
                 this.router.navigate(['/viewforms']);
                 console.log(JSON.stringify(res));
             },err => {
-                console.log(err.message);
+                console.log(err);
                 return;
             });
     }

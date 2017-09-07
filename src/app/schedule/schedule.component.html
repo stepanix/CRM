@@ -2,16 +2,16 @@
   
       <app-page-header [heading]="'Schedule'" [icon]="'fa-edit'"></app-page-header>
 
-      <p-checkbox name="groupname" label="Scheduled"></p-checkbox>
+      <label><input type="checkbox" value="" [(ngModel)]="isScheduled" (ngModelChange)="listEventsByStatusApi()"> Scheduled</label>      
         &nbsp;
         &nbsp;
-      <p-checkbox name="groupname" label="Visited as scheduled"></p-checkbox>
+      <label><input type="checkbox" value="" [(ngModel)]="isVisited" (ngModelChange)="listEventsByStatusApi()"> Visited as scheduled</label>
         &nbsp;
         &nbsp;
-      <p-checkbox name="groupname" label="Unscheduled visits"></p-checkbox>
+      <label><input type="checkbox" value="" [(ngModel)]="isUnScheduled" (ngModelChange)="listEventsByStatusApi()"> Unscheduled visits</label>
         &nbsp;
         &nbsp;
-      <p-checkbox name="groupname" label="Missed schedule"></p-checkbox>
+      <label><input type="checkbox" value="" [(ngModel)]="isMissed" (ngModelChange)="listEventsByStatusApi()"> Missed schedule</label>
 
       <p></p>
 

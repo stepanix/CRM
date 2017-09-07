@@ -42,6 +42,11 @@ export class ScheduleComponent implements OnInit {
   displayDialog : boolean = false;
   
   startTime : any;
+
+  isScheduled : boolean = false;
+  isVisited : boolean = false;
+  isUnScheduled: boolean = false;
+  isMissed : boolean = false;
   
 
   defaultDate:string = moment().format('YYYY-MM-DD').toString();
@@ -140,7 +145,7 @@ export class ScheduleComponent implements OnInit {
               });
           }
         },err => {
-          console.log(err.message);
+          console.log(err);
           return;
       });
    }
@@ -153,7 +158,7 @@ export class ScheduleComponent implements OnInit {
             this.places = res;
           //console.log(JSON.stringify(this.users));
         },err => {
-          console.log(err.message);
+          console.log(err);
           return;
       });
    }
@@ -171,7 +176,33 @@ export class ScheduleComponent implements OnInit {
                  });
               }
            },err => {
-             console.log(err.message);
+             console.log(err);
+             return;
+         });
+    }
+
+    // selectListedEvents(){
+    //    if(this.isVisited===true && this.isScheduled ===true && this.isUnScheduled===true && this.isMissed===true){
+
+    //    }else{
+    //      this.listEventsByStatusApi();
+    //    }
+    // }
+
+    listEventsByStatusApi(){
+      this.events = [];
+      this.scheduleServiceApi.getSchedulesByStatus(this.isVisited,this.isScheduled,this.isUnScheduled,this.isMissed)
+      .subscribe(
+           res => {
+             for(var i=0; i< res.length; i++){
+                this.events.push({
+                    id:res[i].id,
+                    title: res[i].place.name,
+                    start: this.parseVisitDate(res[i].visitDate,res[i].visitTime)
+                 });
+              }
+           },err => {
+             console.log(err);
              return;
          });
     }
@@ -210,7 +241,7 @@ export class ScheduleComponent implements OnInit {
               this.listEventsApi();
               this.displayDialog = false;
             },err => {
-              console.log(err.message);
+              console.log(err);
               return;
           });
     }

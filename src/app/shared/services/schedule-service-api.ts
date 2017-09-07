@@ -5,6 +5,7 @@ import {Observable} from 'rxjs/Observable';
 import {crmBaseUrl} from '../../shared/global-vars';
 
 import 'rxjs/add/operator/catch';
+import 'rxjs/add/observable/throw';
 
 
 
@@ -26,8 +27,9 @@ export class ScheduleServiceApi {
         return this.header;
      }
 
-     getSchedulesByStatus(isVisited:boolean,isScheduled:boolean) : Observable<any[]> {
-        return  this.http.get(crmBaseUrl + "Schedule/ByStatus?isVisited=" + isVisited + "&isScheduled=" + isScheduled ,{headers: this.getHeader()})
+     getSchedulesByStatus(isVisited:boolean,isScheduled:boolean,isUnScheduled:boolean ,isMissed:boolean) : Observable<any[]> {
+         console.log(crmBaseUrl + "Schedule/ByStatus?isVisited=" + isVisited + "&isScheduled=" + isScheduled +"&isUnScheduled=" + isUnScheduled +"&isMissed=" + isMissed);
+        return  this.http.get(crmBaseUrl + "Schedule/ByStatus?isVisited=" + isVisited + "&isScheduled=" + isScheduled +"&isUnScheduled=" + isUnScheduled +"&isMissed=" + isMissed ,{headers: this.getHeader()})
         .map((response: Response) => response.json())
         .catch((error:any) => Observable.throw(error.json() || 'Server error'));
     }
