@@ -21,8 +21,8 @@
 
       <!-- Schedule List -->
 
-        <p-schedule [events]="events" [header]="header" [defaultDate]="defaultDate" [eventLimit]="20" [editable]="true"
-        (onDayClick)="handleDayClick($event)" (onEventClick)="handleEventClick($event)"></p-schedule>
+        <p-schedule [events]="events" [header]="header" [defaultDate]="defaultDate" [eventLimit]="20" [editable]="true" (onEventClick)="editEvent($event)"></p-schedule>
+        
       
        <!-- End Schedule  -->
 
@@ -33,7 +33,7 @@
          
         <label>Date</label>
         <fieldset class="form-group">
-                <material-datepicker [(date)]="selectedDate"></material-datepicker>
+              <material-datepicker [(date)]="selectedDate"></material-datepicker>
         </fieldset>
 
         <fieldset class="form-group">
@@ -70,7 +70,8 @@
        </p>
 
          <p-footer>
-             <button type="button" class="btn btn-sm btn-danger" (click)="saveScheduleApi()" [disabled]="selectedDate==='' || dtoUserId ==='' ||dtoPlaceId===''" >Save</button>
+             <button type="button" class="btn btn-sm btn-danger" (click)="saveSchedule()" [disabled]="selectedDate==='' || dtoUserId ==='' || dtoPlaceId==='' || visited===true" >Save</button>
+             <button type="button" class="btn btn-sm btn-danger" (click)="removeScheduleApi()" [disabled]="scheduleId==='' || visited===true" >Remove Schedule</button>
              <button type="button" (click)="hideDialog()" class="btn btn-sm btn-danger">Cancel</button>
          </p-footer>
  

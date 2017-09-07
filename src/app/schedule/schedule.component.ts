@@ -47,6 +47,12 @@ export class ScheduleComponent implements OnInit {
   isVisited : boolean = false;
   isUnScheduled: boolean = false;
   isMissed : boolean = false;
+  scheduleId : any ="";
+
+  visited:boolean = false;
+  scheduled:boolean = false;
+  missed:boolean = false;
+  unscheduled : boolean = false;
   
 
   defaultDate:string = moment().format('YYYY-MM-DD').toString();
@@ -65,10 +71,17 @@ export class ScheduleComponent implements OnInit {
 
   refreshvariables() {
       this.ScheduleModel.visitDate = this.defaultDate;
-      this.selectedUser.id="";
-      this.selectedPlace.id="";
+      this.selectedTime = "";
+      this.selectedUser.id = "";
+      this.selectedPlace.id = "";
       this.dtoUserId = "";
       this.dtoPlaceId = "";
+      this.scheduleId = "";
+      this.visited = false;
+      this.scheduled = false;
+      this.missed = false;
+      this.unscheduled = false;
+
   }
 
 
@@ -83,8 +96,41 @@ export class ScheduleComponent implements OnInit {
       this.listPlacesApi();
    }
 
-   handleEventClick(e){
-     //alert(e.calEvent.id);
+   editEvent(e) {
+    this.showScheduleDialog();
+    this.scheduleId = e.calEvent.id;
+    this.scheduleServiceApi.getSchedule(this.scheduleId)
+    .subscribe(
+         res => {
+           console.log(moment(res.visitDate).format("YYYY/MM/DD"));
+           let tempDate = moment(res.visitDate).format().toString();
+           this.selectedDate = new Date(tempDate);
+           this.selectedTime = res.visitTime;
+           this.Note = res.visitNote;
+           this.selectedUser = {
+              id : res.user.id,
+              fullName : res.user.firstName + " " + res.user.surname,
+              firstName : res.user.firstName,
+              surname : res.user.surname 
+           }
+           this.selectedPlace = {
+              id: res.place.id,
+              name: res.place.name,
+              streetAddress: res.place.streetAddress
+           }
+
+         this.visited = res.isVisited;
+         this.scheduled = res.isScheduled;
+         this.missed = res.isMissed;
+         this.unscheduled = res.isUnScheduled;
+
+         this.setSelectedUser(this.selectedUser);
+         this.setSelectedPlace(this.selectedPlace);
+         },err => {
+           console.log(err);
+           return;
+       });
+    //alert(e.calEvent.id);
    }
 
    setSelectedUser(value){
@@ -156,7 +202,6 @@ export class ScheduleComponent implements OnInit {
     .subscribe(
         res => {
             this.places = res;
-          //console.log(JSON.stringify(this.users));
         },err => {
           console.log(err);
           return;
@@ -180,14 +225,6 @@ export class ScheduleComponent implements OnInit {
              return;
          });
     }
-
-    // selectListedEvents(){
-    //    if(this.isVisited===true && this.isScheduled ===true && this.isUnScheduled===true && this.isMissed===true){
-
-    //    }else{
-    //      this.listEventsByStatusApi();
-    //    }
-    // }
 
     listEventsByStatusApi(){
       this.events = [];
@@ -218,11 +255,13 @@ export class ScheduleComponent implements OnInit {
     }
 
     hideDialog(){
+      this.refreshvariables();
       this.displayDialog = false;
     }
 
     saveScheduleApi() {
       let ScheduleDto = {
+            id: 1,
             placeId: this.dtoPlaceId,
             userId: this.dtoUserId,
             visitDate: this.selectedDate,
@@ -231,19 +270,73 @@ export class ScheduleComponent implements OnInit {
             isRecurring: this.Recurring,
             repeatCycle: this.Weeks,
             isVisited: false,
-            isScheduled: true
+            isScheduled: true,
+            isMissed : false,
+            isUnScheduled: false
         };
-        console.log(JSON.stringify(ScheduleDto));
+        
         this.scheduleServiceApi.addSchedule(ScheduleDto)
         .subscribe(
             res => {
-              this.refreshvariables();
+              this.hideDialog();
               this.listEventsApi();
               this.displayDialog = false;
             },err => {
               console.log(err);
               return;
           });
+    }
+
+    updatecheduleApi() {
+       let ScheduleDto = {
+            id: this.scheduleId,
+            placeId: this.dtoPlaceId,
+            userId: this.dtoUserId,
+            visitDate: this.selectedDate,
+            visitTime: this.selectedTime,
+            visitNote: this.Note,
+            isRecurring: this.Recurring,
+            repeatCycle: this.Weeks,
+            isVisited: this.visited,
+            isScheduled: this.scheduled,
+            isMissed : this.missed,
+            isUnScheduled: this.unscheduled
+        };
+        
+        this.scheduleServiceApi.updateSchedule(ScheduleDto)
+        .subscribe(
+            res => {
+              this.hideDialog();
+              this.listEventsApi();
+              this.displayDialog = false;
+            },err => {
+              console.log(err);
+              return;
+          });
+    }
+
+    saveSchedule() {
+        if(this.scheduleId===""){         
+          this.saveScheduleApi();
+        }else{
+          this.updatecheduleApi();
+        }
+    }
+
+    removeScheduleApi(){
+         if (window.confirm('Are you sure you want to delete?')) {
+            this.scheduleServiceApi.deleteSchedule(this.scheduleId)
+            .subscribe(
+                res => {
+                  this.hideDialog();
+                  this.listEventsApi();
+                },err => {
+                  console.log(err.message);
+                  return;
+              });
+        }else{
+          return;
+        }
     }
 
 
