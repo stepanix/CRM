@@ -9,3 +9,4 @@ export * from './services/user-service-api';
 export * from './services/tenant-service-api';
 export * from './services/login-service-api';
 export * from './services/schedule-service-api';
+export * from './services/retailauditforms-service-api';

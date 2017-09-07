@@ -28,7 +28,7 @@ export class ViewFormsComponent implements OnInit {
          res => {
            this.forms = res;
          },err => {
-           console.log(err.message);
+           console.log(err);
            return;
        });
   }
@@ -40,7 +40,7 @@ export class ViewFormsComponent implements OnInit {
               res => {
                 this.listFormsApi();
               },err => {
-                console.log(err.message);
+                console.log(err);
                 return;
             });
       }else{

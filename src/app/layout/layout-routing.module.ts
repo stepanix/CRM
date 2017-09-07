@@ -17,6 +17,7 @@ const routes: Routes = [
                 { path: 'viewplaces', loadChildren: '../viewplaces/viewplaces.module#ViewPlacesModule' },
                 { path: 'place/:placeid', loadChildren: '../place/place.module#PlaceModule' },
                 { path: 'schedule', loadChildren: '../schedule/schedule.module#ScheduleViewModule' },
+                { path: 'viewretailauditforms', loadChildren: '../viewretailauditforms/viewretailauditforms.module#ViewRetailAuditFormsModule' },
 
                 { path: 'forms', loadChildren: './form/form.module#FormModule' },
                 // { path: 'bs-element', loadChildren: './bs-element/bs-element.module#BsElementModule' },
