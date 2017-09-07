@@ -28,6 +28,7 @@ export class ScheduleComponent implements OnInit {
   selectedPlace : any = {};
   selectedDate : any = "";
   selectedTime : any = null;
+  eventDate : any="";
   Recurring : boolean = false;
   Weeks : any = 0;
   Note : any ="";
@@ -41,44 +42,45 @@ export class ScheduleComponent implements OnInit {
   displayDialog : boolean = false;
   
   startTime : any;
+  
 
   defaultDate:string = moment().format('YYYY-MM-DD').toString();
 
-  constructor(private placeServiceApi:PlaceServiceApi ,
+  constructor(private placeServiceApi:PlaceServiceApi,
               private scheduleServiceApi:ScheduleServiceApi,
               private userServiceApi : UserServiceApi) {
-
-                this.selectedUser.id="";
-                this.selectedPlace.id="";
-          
+          this.selectedUser.id = "";
+          this.selectedPlace.id = "";
+          this.eventDate = this.defaultDate;
   }
 
   showScheduleDialog() {
-    this.refreshvariables();
-    this.displayDialog = true;
+     this.refreshvariables();
+     this.displayDialog = true;
   }
 
-  // formatSelectedTime(){
-  //   this.selectedTime = moment(this.selectedTime).format('LT');
-  // }
-
-  refreshvariables(){
-    this.ScheduleModel.visitDate = this.defaultDate;
-    this.selectedUser.id="";
-    this.selectedPlace.id="";
-    this.dtoUserId = "";
-    this.dtoPlaceId = "";
+  refreshvariables() {
+      this.ScheduleModel.visitDate = this.defaultDate;
+      this.selectedUser.id="";
+      this.selectedPlace.id="";
+      this.dtoUserId = "";
+      this.dtoPlaceId = "";
   }
+
 
   ngOnInit() {
       this.header = {
-        left: 'prev,next today',
-        center: 'title',
-        right: 'month,agendaWeek,agendaDay'
+         left: 'prev,next today',
+         center: 'title',
+         right: 'month,agendaWeek,agendaDay'
       };
       this.listEventsApi();
       this.listUsersApi();
       this.listPlacesApi();
+   }
+
+   handleEventClick(e){
+     //alert(e.calEvent.id);
    }
 
    setSelectedUser(value){
@@ -159,11 +161,12 @@ export class ScheduleComponent implements OnInit {
 
     listEventsApi(){
       this.events = [];
-      this.scheduleServiceApi.getSchedules()
+      this.scheduleServiceApi.getSchedules(this.eventDate)
       .subscribe(
            res => {
              for(var i=0; i< res.length; i++){
                 this.events.push({
+                    id:res[i].id,
                     title: res[i].place.name,
                     start: this.parseVisitDate(res[i].visitDate,res[i].visitTime)
                  });
@@ -204,6 +207,7 @@ export class ScheduleComponent implements OnInit {
         this.scheduleServiceApi.addSchedule(ScheduleDto)
         .subscribe(
             res => {
+              this.refreshvariables();
               this.listEventsApi();
               this.displayDialog = false;
             },err => {

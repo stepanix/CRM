@@ -2,6 +2,19 @@
   
       <app-page-header [heading]="'Schedule'" [icon]="'fa-edit'"></app-page-header>
 
+      <p-checkbox name="groupname" label="Scheduled"></p-checkbox>
+        &nbsp;
+        &nbsp;
+      <p-checkbox name="groupname" label="Visited as scheduled"></p-checkbox>
+        &nbsp;
+        &nbsp;
+      <p-checkbox name="groupname" label="Unscheduled visits"></p-checkbox>
+        &nbsp;
+        &nbsp;
+      <p-checkbox name="groupname" label="Missed schedule"></p-checkbox>
+
+      <p></p>
+
         <div align="right"><button type="button" (click) = "showScheduleDialog()" class="btn btn-sm btn-danger">Add New Visit</button></div>
       
       <p></p>
@@ -13,7 +26,7 @@
       
        <!-- End Schedule  -->
 
-       <!-- Add New Visit Dialog -->
+       <!-- Add New Visit Dialog -->       
 
        <p-dialog header="Add New Scheduled Visit" [(visible)]="displayDialog" modal="modal" width="500" height="auto" responsive="true" positionTop="80">
         

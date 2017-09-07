@@ -23,11 +23,17 @@ export class ScheduleServiceApi {
         this.token = 'bearer ' + localStorage.getItem('token');
         this.header.append('Authorization', this.token);
         this.header.append('Content-Type', 'application/json');   
-        return this.header; 
+        return this.header;
      }
 
-     getSchedules() : Observable<any[]> {
-          return  this.http.get(crmBaseUrl + "Schedule" ,{headers: this.getHeader()})
+     getSchedulesByStatus(isVisited:boolean,isScheduled:boolean,date:any) : Observable<any[]> {
+        return  this.http.get(crmBaseUrl + "Schedule/ByStatus?isVisited=" + isVisited + "&isScheduled=" + isScheduled + "&date=" + date ,{headers: this.getHeader()})
+        .map((response: Response) => response.json())
+        .catch((error:any) => Observable.throw(error.json() || 'Server error'));
+    }
+
+     getSchedules(date:any) : Observable<any[]> {
+          return  this.http.get(crmBaseUrl + "Schedule?date=" + date ,{headers: this.getHeader()})
           .map((response: Response) => response.json())
           .catch((error:any) => Observable.throw(error.json() || 'Server error'));
      }

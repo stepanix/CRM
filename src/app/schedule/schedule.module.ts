@@ -4,7 +4,8 @@ import { CommonModule } from '@angular/common';
 import { ScheduleRoutingModule } from './schedule-routing.module';
 import { ScheduleComponent } from './schedule.component';
 import { PageHeaderModule } from './../shared';
-import {DialogModule,DropdownModule,DataTableModule,SharedModule,ListboxModule,ScheduleModule,AutoCompleteModule,CalendarModule} from 'primeng/primeng';
+import {CheckboxModule,DialogModule,DropdownModule,DataTableModule,SharedModule,
+    ListboxModule,ScheduleModule,AutoCompleteModule,CalendarModule} from 'primeng/primeng';
 import {PlaceServiceApi,ScheduleServiceApi,UserServiceApi} from '../shared/shared';
 import { DatepickerModule } from 'angular2-material-datepicker'
 import { NguiDatetimePickerModule } from '@ngui/datetime-picker';
@@ -26,6 +27,7 @@ import * as jQuery from 'jquery';
         SharedModule,
         ScheduleModule,
         ListboxModule,
+        CheckboxModule,
         CalendarModule,
         AutoCompleteModule,
         DatepickerModule,
