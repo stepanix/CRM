@@ -67,6 +67,8 @@ export class ScheduleComponent implements OnInit {
   showScheduleDialog() {
      this.refreshvariables();
      this.displayDialog = true;
+     this.listUsersApi();
+     this.listPlacesApi();
   }
 
   refreshvariables() {
