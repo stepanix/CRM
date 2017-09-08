@@ -66,7 +66,7 @@ export class ViewStatusComponent implements OnInit {
           this.hideDialog();
           this.listStatusApi();
         },err => {
-          console.log(err.message);
+          console.log(err);
           return;
       });
   }
@@ -82,7 +82,7 @@ export class ViewStatusComponent implements OnInit {
          this.hideDialog();
          this.listStatusApi();
        },err => {
-         console.log(err.message);
+         console.log(err);
          return;
      });
   }
@@ -94,7 +94,7 @@ export class ViewStatusComponent implements OnInit {
         res => {
           this.statuses = res;
         },err => {
-          console.log(err.message);
+          console.log(err);
           return;
       });
   }
@@ -106,7 +106,7 @@ export class ViewStatusComponent implements OnInit {
             res => {
               this.listStatusApi();
             },err => {
-              console.log(err.message);
+              console.log(err);
               return;
           });
     }else{

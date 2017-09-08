@@ -11,9 +11,13 @@
           <i class="fa fa-fw fa-dashboard"></i>&nbsp;{{ 'dashboard' | translate }}
         </a>
 
+        <a [routerLink]="['/viewtenants']" [routerLinkActive]="['router-link-active']" class="list-group-item">
+            <i class="fa fa-fw fa-building"></i>&nbsp;{{ 'Manage Tenants' | translate }}
+        </a>
+
         <a [routerLink]="['/viewusers']" [routerLinkActive]="['router-link-active']" class="list-group-item">
             <i class="fa fa-fw fa-users"></i>&nbsp;{{ 'Manage Users' | translate }}
-          </a>
+        </a>
 
         <a [routerLink]="['/viewproducts']" [routerLinkActive]="['router-link-active']" class="list-group-item">
           <i class="fa fa-fw fa-cube"></i>&nbsp;{{ 'Manage Products' | translate }}
@@ -24,7 +28,7 @@
           </a>
 
         <a [routerLink]="['/viewplaces']" [routerLinkActive]="['router-link-active']" class="list-group-item">
-            <i class="fa fa-fw fa-building"></i>&nbsp;{{ 'Manage Places' | translate }}
+            <i class="fa fa-fw fa-map-marker"></i>&nbsp;{{ 'Manage Places' | translate }}
         </a>
         
         <a [routerLink]="['/viewforms']" [routerLinkActive]="['router-link-active']" class="list-group-item">

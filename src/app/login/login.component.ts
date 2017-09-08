@@ -25,6 +25,7 @@ export class LoginComponent implements OnInit {
         let loginData = 'username=' + this.username + '&password=' + this.password + '&grant_type=password';
         this.loginServiceApi.postLogin(loginData).subscribe(res => {
             localStorage.setItem('token', res.access_token);
+            localStorage.setItem('fullname',res.fullname);
             this.router.navigate(['/dashboard']);
          }, err => {
              alert("Sorry ! the username or password you entered is incorrect");           
