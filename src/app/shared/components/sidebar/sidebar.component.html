@@ -11,6 +11,10 @@
           <i class="fa fa-fw fa-dashboard"></i>&nbsp;{{ 'dashboard' | translate }}
         </a>
 
+        <a routerLink="/activities" [routerLinkActive]="['router-link-active']" class="list-group-item">
+            <i class="fa fa-fw fa-file-text"></i>&nbsp;{{ 'activities' | translate }}
+          </a>
+
         <a [routerLink]="['/viewtenants']" [routerLinkActive]="['router-link-active']" class="list-group-item">
             <i class="fa fa-fw fa-building"></i>&nbsp;{{ 'Manage Tenants' | translate }}
         </a>
@@ -39,8 +43,8 @@
            <i class="fa fa-fw fa-book"></i>&nbsp;{{ 'Retail Audit' | translate }}
         </a>
 
-        <a [routerLink]="['/schedule']" [routerLinkActive]="['router-link-active']" class="list-group-item">
-            <i class="fa fa-fw fa-calendar-check-o"></i>&nbsp;{{ 'Schedule' | translate }}
+        <a [routerLink]="['/reports']" [routerLinkActive]="['router-link-active']" class="list-group-item">
+            <i class="fa fa-fw fa-area-chart"></i>&nbsp;{{ 'Reports' | translate }}
         </a>
         
         <!-- <a [routerLink]="['/bs-element']" [routerLinkActive]="['router-link-active']" class="list-group-item">
