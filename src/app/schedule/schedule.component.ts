@@ -83,9 +83,7 @@ export class ScheduleComponent implements OnInit {
       this.scheduled = false;
       this.missed = false;
       this.unscheduled = false;
-
   }
-
 
   ngOnInit() {
       this.header = {

@@ -10,3 +10,8 @@ export * from './services/tenant-service-api';
 export * from './services/login-service-api';
 export * from './services/schedule-service-api';
 export * from './services/retailauditforms-service-api';
+export * from './services/formvalue-service-api';
+export * from './services/photo-service-api';
+export * from './services/timemileage-service-api';
+export * from './services/note-service-api';
+export * from './services/productauditretail-service-api';
