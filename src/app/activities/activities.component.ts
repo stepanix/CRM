@@ -7,6 +7,8 @@ import {PlaceServiceApi,UserServiceApi,TimeMileageServiceApi} from '../shared/sh
 import {FormValueServiceApi,PhotoServiceApi,ScheduleServiceApi} from '../shared/shared';
 import {NoteServiceApi,ProductAuditRetailServiceApi} from '../shared/shared';
 
+import * as moment from 'moment';
+
 @Component({
   selector: 'app-activities',
   templateUrl: './activities.component.html',
@@ -39,7 +41,15 @@ export class ActivitiesComponent implements OnInit {
   UserSelectedModel : boolean = false;
   PlaceSelectedModel : boolean = false;
 
-  activities : any[] = [];
+  allActivities : any[] = [];
+  formActivities : any[] = [];
+  photoActivities : any[] = [];
+  visitActivities : any[] = [];
+  noteActivities : any[] = [];
+  newPlaceActivities : any[] = [];
+  auditActivities : any[] = [];
+
+  selectedModule : string = "";
   
   constructor(
     private productAuditRetailServiceApi: ProductAuditRetailServiceApi,
@@ -52,8 +62,82 @@ export class ActivitiesComponent implements OnInit {
     private userServiceApi : UserServiceApi) {
     }
 
+    applyFiltersApi() {
+       if(this.selectedModule==="audits"){
+          this.listAuditRetailActivitiesApi();
+       }
+    }
+
+    listAllActivitiesApi(){
+       
+    }
+
+    listAuditRetailActivitiesApi(){
+      this.checkSetEmptyDateRange();
+      this.auditActivities = [];
+      if(this.dtoUserId ==="" && this.dtoPlaceId ==="") {
+          this.productAuditRetailServiceApi.getProductAuditRetailsDateRange(this.selectedDateFrom,this.selectedDateTo)
+          .subscribe(
+              res => {           
+                this.auditActivities = res;
+                console.log(JSON.stringify(this.auditActivities));
+              },err => {
+                console.log(err);
+                return;
+            });
+            
+      }
+
+      if(this.dtoUserId !=="" && this.dtoPlaceId ==="") {        
+        this.productAuditRetailServiceApi.getProductAuditRetailsRep(this.selectedDateFrom,this.selectedDateTo,this.dtoUserId)
+        .subscribe(
+            res => {           
+              
+            },err => {
+              console.log(err);
+              return;
+          });
+       }
+
+       if(this.dtoUserId ==="" && this.dtoPlaceId !=="") {
+        this.productAuditRetailServiceApi.getProductAuditRetailsPlace(this.selectedDateFrom,this.selectedDateTo,this.dtoPlaceId)
+        .subscribe(
+            res => {           
+              
+            },err => {
+              console.log(err);
+              return;
+          });
+       }
+
+       if(this.dtoUserId !=="" && this.dtoPlaceId !=="") {
+          this.productAuditRetailServiceApi.getProductAuditRetailsRepAndPlace(this.selectedDateFrom,this.selectedDateTo,this.dtoUserId,this.dtoPlaceId)
+          .subscribe(
+              res => {
+              },err => {
+                console.log(err);
+                return;
+            });
+       }
+      
+    }
+
+    checkSetEmptyDateRange() {
+         if(Date.parse(this.selectedDateFrom) > Date.parse(this.selectedDateTo)) {
+             this.dateTo = this.selectedDateFrom;
+             this.selectedDateTo = this.selectedDateFrom;
+        }
+        if(Date.parse(this.selectedDateFrom).toString()==="NaN" 
+          || Date.parse(this.selectedDateTo).toString()==="NaN") {
+            this.selectedDateFrom = moment().format("YYYY-MM-DD");
+            this.selectedDateTo = moment().format("YYYY-MM-DD");
+        }
+    }
+
     isAppyButtonDisabled():boolean{
-        if((Date.parse(this.selectedDateFrom).toString()==="NaN"  || Date.parse(this.selectedDateTo).toString()==="NaN") &&  (this.dtoPlaceId==="" && this.dtoUserId==="")){          
+        if(this.selectedModule==="" ||
+          (Date.parse(this.selectedDateFrom).toString()==="NaN"  || Date.parse(this.selectedDateTo).toString()==="NaN") 
+          &&  (this.dtoPlaceId==="" && this.dtoUserId==="")){          
           return true;
         }else{
           return false;
@@ -61,11 +145,11 @@ export class ActivitiesComponent implements OnInit {
     }
 
     dateFromSelected(){
-      this.selectedDateFrom = this.dateFrom;
+      this.selectedDateFrom = moment(this.dateFrom).format("YYYY-MM-DD") ;
     }
 
     dateToSelected(){
-      this.selectedDateTo = this.dateTo;
+      this.selectedDateTo = moment(this.dateTo).format("YYYY-MM-DD");
     }
 
   ngOnInit() {
@@ -178,12 +262,7 @@ filterPlaces(query, allplaces: any[]):any[] {
     return filtered;
 }
 
-applyFiltersApi() {
-  if(Date.parse(this.selectedDateFrom) > Date.parse(this.selectedDateTo)){
-     this.dateTo = this.selectedDateFrom;
-     this.selectedDateTo = this.selectedDateFrom;
-  }
-}
+
 
 
 
