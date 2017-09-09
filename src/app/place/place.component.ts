@@ -34,8 +34,7 @@ export class PlaceComponent implements OnInit {
     public longitude: number;
     public searchControl: FormControl;
     public zoom: number;
-    PlaceDtoIn: any;
-    
+    PlaceDtoIn: any;    
     
     @ViewChild("search")
     public searchElementRef: ElementRef;
@@ -145,7 +144,7 @@ export class PlaceComponent implements OnInit {
          res => {
            this.status = res;
          },err => {
-           console.log(err.message);
+           console.log(err);
            return;
        });
   }
@@ -166,7 +165,7 @@ export class PlaceComponent implements OnInit {
             this.PlaceModel.Website = res.webSite;
             this.listRepPlacesApi();
          },err => {
-           console.log(err.message);
+           console.log(err);
            return;
        });
   }
@@ -208,7 +207,7 @@ export class PlaceComponent implements OnInit {
               alert("Place Saved Successfully");
               //console.log(JSON.stringify(res));
           },err => {
-            console.log(err.message);
+            console.log(err);
             return;
         });
   }
@@ -220,7 +219,7 @@ export class PlaceComponent implements OnInit {
       res => {
         alert("Place Updated Successfully");
       },err => {
-        console.log(err.message);
+        console.log(err);
         return;
     });
   }
@@ -243,7 +242,7 @@ export class PlaceComponent implements OnInit {
             })
           }
         },err => {          
-          console.log(err.message);
+          console.log(err);
           return;
       });
   }
@@ -263,7 +262,7 @@ export class PlaceComponent implements OnInit {
           
           console.log(JSON.stringify(this.users));
         },err => {
-          console.log(err.message);
+          console.log(err);
           return;
       });
   }
@@ -285,7 +284,7 @@ export class PlaceComponent implements OnInit {
           this.listRepPlacesApi();
             //console.log(JSON.stringify(res));
         },err => {
-          console.log(err.message);
+          console.log(err);
           return;
       });
   }
@@ -297,7 +296,7 @@ export class PlaceComponent implements OnInit {
               res => {
                 this.listRepPlacesApi();
               },err => {
-                console.log(err.message);
+                console.log(err);
                 return;
             });
       }else{
