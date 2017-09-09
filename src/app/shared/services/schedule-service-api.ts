@@ -27,6 +27,31 @@ export class ScheduleServiceApi {
         return this.header;
      }
 
+     getSchedulesDateRange(dateFrom,dateTo) : Observable<any[]> {
+         console.log(crmBaseUrl + "Schedule/DateRange?dateFrom=" + dateFrom + "&dateTo=" + dateTo);
+        return  this.http.get(crmBaseUrl + "Schedule/DateRange?dateFrom=" + dateFrom + "&dateTo=" + dateTo  ,{headers: this.getHeader()})
+        .map((response: Response) => response.json())
+        .catch((error:any) => Observable.throw(error.json() || 'Server error'));
+     }
+  
+     getSchedulesRep(dateFrom,dateTo,rep) : Observable<any[]> {
+        return  this.http.get(crmBaseUrl + "Schedule/Rep?dateFrom=" + dateFrom + "&dateTo=" + dateTo + "&rep=" + rep ,{headers: this.getHeader()})
+        .map((response: Response) => response.json())
+        .catch((error:any) => Observable.throw(error.json() || 'Server error'));
+     }
+  
+     getSchedulesPlace(dateFrom,dateTo,place) : Observable<any[]> {
+        return  this.http.get(crmBaseUrl + "Schedule/Place?dateFrom=" + dateFrom + "&dateTo=" + dateTo + "&place=" + place ,{headers: this.getHeader()})
+        .map((response: Response) => response.json())
+        .catch((error:any) => Observable.throw(error.json() || 'Server error'));
+     }
+  
+     getSchedulesRepAndPlace(dateFrom,dateTo,rep,place) : Observable<any[]> {
+        return  this.http.get(crmBaseUrl + "Schedule/RepAndPlace?dateFrom=" + dateFrom + "&dateTo=" + dateTo + "&rep=" + rep + "&place=" + place ,{headers: this.getHeader()})
+        .map((response: Response) => response.json())
+        .catch((error:any) => Observable.throw(error.json() || 'Server error'));
+     }
+
      getSchedulesByStatus(isVisited:boolean,isScheduled:boolean,isUnScheduled:boolean ,isMissed:boolean) : Observable<any[]> {
          console.log(crmBaseUrl + "Schedule/ByStatus?isVisited=" + isVisited + "&isScheduled=" + isScheduled +"&isUnScheduled=" + isUnScheduled +"&isMissed=" + isMissed);
         return  this.http.get(crmBaseUrl + "Schedule/ByStatus?isVisited=" + isVisited + "&isScheduled=" + isScheduled +"&isUnScheduled=" + isUnScheduled +"&isMissed=" + isMissed ,{headers: this.getHeader()})

@@ -63,13 +63,244 @@ export class ActivitiesComponent implements OnInit {
     }
 
     applyFiltersApi() {
-       if(this.selectedModule==="audits"){
+       if(this.selectedModule==="audits") {
           this.listAuditRetailActivitiesApi();
+       }else if(this.selectedModule==="visits") {
+          this.listVisitsApi();
+       }else if(this.selectedModule==="forms"){
+          this.listFormValuesApi();
+       }else if(this.selectedModule==="photos"){
+          this.listPhotosApi();
+       }else if(this.selectedModule==="notes"){
+        this.listNotesApi();
+       }else if(this.selectedModule==="newplaces"){
+        this.listNewPlacesApi();
+       }else if(this.selectedModule==="all"){
+          this.listAllActivitiesApi();
        }
     }
 
     listAllActivitiesApi(){
-       
+      this.listAuditRetailActivitiesApi();
+      this.listVisitsApi();
+      this.listFormValuesApi();
+      this.listPhotosApi();
+      this.listNotesApi();
+      this.listNewPlacesApi();
+    }
+
+    listFormValuesApi(){
+      this.checkSetEmptyDateRange();
+      this.formActivities = [];
+      if(this.dtoUserId ==="" && this.dtoPlaceId ==="") {
+          this.formValueServiceApi.getFormValuesDateRange(this.selectedDateFrom,this.selectedDateTo)
+          .subscribe(
+              res => {
+                 this.formActivities = res;
+                 console.log(JSON.stringify(this.formActivities));
+              },err => {
+                 console.log(err);
+                 return;
+            });
+      }
+
+      if(this.dtoUserId !=="" && this.dtoPlaceId ==="") {
+        this.formValueServiceApi.getFormValuesRep(this.selectedDateFrom,this.selectedDateTo,this.dtoUserId)
+        .subscribe(
+            res => {           
+              this.formActivities = res;
+              console.log(JSON.stringify(this.formActivities));
+            },err => {
+              console.log(err);
+              return;
+          });
+       }
+
+       if(this.dtoUserId ==="" && this.dtoPlaceId !=="") {
+        this.formValueServiceApi.getFormValuesPlace(this.selectedDateFrom,this.selectedDateTo,this.dtoPlaceId)
+        .subscribe(
+            res => {           
+              this.formActivities = res;
+              console.log(JSON.stringify(this.formActivities));
+            },err => {
+              console.log(err);
+              return;
+          });
+       }
+
+       if(this.dtoUserId !=="" && this.dtoPlaceId !=="") {
+          this.formValueServiceApi.getFormValuesRepAndPlace(this.selectedDateFrom,this.selectedDateTo,this.dtoUserId,this.dtoPlaceId)
+          .subscribe(
+              res => {
+                this.formActivities = res;
+                console.log(JSON.stringify(this.formActivities));
+              },err => {
+                console.log(err);
+                return;
+            });
+       }
+      
+    }
+
+    listPhotosApi(){
+      this.checkSetEmptyDateRange();
+      this.photoActivities = [];
+      if(this.dtoUserId ==="" && this.dtoPlaceId ==="") {
+          this.photoServiceApi.getPhotosDateRange(this.selectedDateFrom,this.selectedDateTo)
+          .subscribe(
+              res => {
+                 this.photoActivities = res;
+                 console.log(JSON.stringify(this.photoActivities));
+              },err => {
+                 console.log(err);
+                 return;
+            });
+      }
+
+      if(this.dtoUserId !=="" && this.dtoPlaceId ==="") {
+        this.photoServiceApi.getPhotosRep(this.selectedDateFrom,this.selectedDateTo,this.dtoUserId)
+        .subscribe(
+            res => {           
+              this.photoActivities = res;
+              console.log(JSON.stringify(this.photoActivities));
+            },err => {
+              console.log(err);
+              return;
+          });
+       }
+
+       if(this.dtoUserId ==="" && this.dtoPlaceId !=="") {
+        this.photoServiceApi.getPhotosPlace(this.selectedDateFrom,this.selectedDateTo,this.dtoPlaceId)
+        .subscribe(
+            res => {           
+              this.photoActivities = res;
+              console.log(JSON.stringify(this.photoActivities));
+            },err => {
+              console.log(err);
+              return;
+          });
+       }
+
+       if(this.dtoUserId !=="" && this.dtoPlaceId !=="") {
+          this.photoServiceApi.getPhotosRepAndPlace(this.selectedDateFrom,this.selectedDateTo,this.dtoUserId,this.dtoPlaceId)
+          .subscribe(
+              res => {
+                this.photoActivities = res;
+                console.log(JSON.stringify(this.photoActivities));
+              },err => {
+                console.log(err);
+                return;
+            });
+       }
+      
+    }
+
+    
+
+    listNotesApi(){
+      this.checkSetEmptyDateRange();
+      this.noteActivities = [];
+      if(this.dtoUserId ==="" && this.dtoPlaceId ==="") {
+          this.noteServiceApi.getNotesDateRange(this.selectedDateFrom,this.selectedDateTo)
+          .subscribe(
+              res => {
+                 this.noteActivities = res;
+                 console.log(JSON.stringify(this.noteActivities));
+              },err => {
+                 console.log(err);
+                 return;
+            });
+      }
+
+      if(this.dtoUserId !=="" && this.dtoPlaceId ==="") {
+        this.noteServiceApi.getNotesRep(this.selectedDateFrom,this.selectedDateTo,this.dtoUserId)
+        .subscribe(
+            res => {           
+              this.noteActivities = res;
+              console.log(JSON.stringify(this.noteActivities));
+            },err => {
+              console.log(err);
+              return;
+          });
+       }
+
+       if(this.dtoUserId ==="" && this.dtoPlaceId !=="") {
+        this.noteServiceApi.getNotesPlace(this.selectedDateFrom,this.selectedDateTo,this.dtoPlaceId)
+        .subscribe(
+            res => {           
+              this.noteActivities = res;
+              console.log(JSON.stringify(this.noteActivities));
+            },err => {
+              console.log(err);
+              return;
+          });
+       }
+
+       if(this.dtoUserId !=="" && this.dtoPlaceId !=="") {
+          this.noteServiceApi.getNotesRepAndPlace(this.selectedDateFrom,this.selectedDateTo,this.dtoUserId,this.dtoPlaceId)
+          .subscribe(
+              res => {
+                this.noteActivities = res;
+                console.log(JSON.stringify(this.noteActivities));
+              },err => {
+                console.log(err);
+                return;
+            });
+       }
+      
+    }
+
+    listVisitsApi(){
+      this.checkSetEmptyDateRange();
+      this.visitActivities = [];
+      if(this.dtoUserId ==="" && this.dtoPlaceId ==="") {
+          this.scheduleServiceApi.getSchedulesDateRange(this.selectedDateFrom,this.selectedDateTo)
+          .subscribe(
+              res => {
+                 this.visitActivities = res;
+                 console.log(JSON.stringify(this.visitActivities));
+              },err => {
+                 console.log(err);
+                 return;
+            });
+      }
+
+      if(this.dtoUserId !=="" && this.dtoPlaceId ==="") {
+        this.scheduleServiceApi.getSchedulesRep(this.selectedDateFrom,this.selectedDateTo,this.dtoUserId)
+        .subscribe(
+            res => {           
+              this.visitActivities = res;
+              console.log(JSON.stringify(this.visitActivities));
+            },err => {
+              console.log(err);
+              return;
+          });
+       }
+
+       if(this.dtoUserId ==="" && this.dtoPlaceId !=="") {
+        this.scheduleServiceApi.getSchedulesPlace(this.selectedDateFrom,this.selectedDateTo,this.dtoPlaceId)
+        .subscribe(
+            res => {           
+              this.visitActivities = res;
+              console.log(JSON.stringify(this.visitActivities));
+            },err => {
+              console.log(err);
+              return;
+          });
+       }
+
+       if(this.dtoUserId !=="" && this.dtoPlaceId !=="") {
+          this.scheduleServiceApi.getSchedulesRepAndPlace(this.selectedDateFrom,this.selectedDateTo,this.dtoUserId,this.dtoPlaceId)
+          .subscribe(
+              res => {
+                this.visitActivities = res;
+                console.log(JSON.stringify(this.visitActivities));
+              },err => {
+                console.log(err);
+                return;
+            });
+       }
+      
     }
 
     listAuditRetailActivitiesApi(){
@@ -78,21 +309,20 @@ export class ActivitiesComponent implements OnInit {
       if(this.dtoUserId ==="" && this.dtoPlaceId ==="") {
           this.productAuditRetailServiceApi.getProductAuditRetailsDateRange(this.selectedDateFrom,this.selectedDateTo)
           .subscribe(
-              res => {           
-                this.auditActivities = res;
-                console.log(JSON.stringify(this.auditActivities));
+              res => {
+                 this.auditActivities = res;
+                 console.log(JSON.stringify(this.auditActivities));
               },err => {
-                console.log(err);
-                return;
+                 console.log(err);
+                 return;
             });
-            
       }
 
       if(this.dtoUserId !=="" && this.dtoPlaceId ==="") {        
         this.productAuditRetailServiceApi.getProductAuditRetailsRep(this.selectedDateFrom,this.selectedDateTo,this.dtoUserId)
         .subscribe(
             res => {           
-              
+              this.auditActivities = res;
             },err => {
               console.log(err);
               return;
@@ -103,7 +333,7 @@ export class ActivitiesComponent implements OnInit {
         this.productAuditRetailServiceApi.getProductAuditRetailsPlace(this.selectedDateFrom,this.selectedDateTo,this.dtoPlaceId)
         .subscribe(
             res => {           
-              
+              this.auditActivities = res;
             },err => {
               console.log(err);
               return;
@@ -114,12 +344,40 @@ export class ActivitiesComponent implements OnInit {
           this.productAuditRetailServiceApi.getProductAuditRetailsRepAndPlace(this.selectedDateFrom,this.selectedDateTo,this.dtoUserId,this.dtoPlaceId)
           .subscribe(
               res => {
+                this.auditActivities = res;
               },err => {
                 console.log(err);
                 return;
             });
        }
       
+    }
+
+    listNewPlacesApi(){
+        this.checkSetEmptyDateRange();
+        this.newPlaceActivities = [];
+        if(this.dtoUserId ==="" && this.dtoPlaceId ==="") {
+            this.placeServiceApi.getPlacesDateRange(this.selectedDateFrom,this.selectedDateTo)
+            .subscribe(
+                res => {
+                  this.newPlaceActivities = res;
+                  console.log(JSON.stringify(this.newPlaceActivities));
+                },err => {
+                  console.log(err);
+                  return;
+              });
+        }
+
+        if(this.dtoUserId !=="" && this.dtoPlaceId ==="") {        
+          this.placeServiceApi.getPlacesRep(this.selectedDateFrom,this.selectedDateTo,this.dtoUserId)
+          .subscribe(
+              res => {
+                this.newPlaceActivities = res;
+              },err => {
+                console.log(err);
+                return;
+            });
+        }
     }
 
     checkSetEmptyDateRange() {

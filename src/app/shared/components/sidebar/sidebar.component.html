@@ -11,16 +11,12 @@
           <i class="fa fa-fw fa-dashboard"></i>&nbsp;{{ 'dashboard' | translate }}
         </a>
 
-        <a routerLink="/activities" [routerLinkActive]="['router-link-active']" class="list-group-item">
-            <i class="fa fa-fw fa-file-text"></i>&nbsp;{{ 'activities' | translate }}
-          </a>
+        <a [routerLink]="['/viewusers']" [routerLinkActive]="['router-link-active']" class="list-group-item">
+            <i class="fa fa-fw fa-users"></i>&nbsp;{{ 'Manage Users' | translate }}
+        </a>
 
         <a [routerLink]="['/viewtenants']" [routerLinkActive]="['router-link-active']" class="list-group-item">
             <i class="fa fa-fw fa-building"></i>&nbsp;{{ 'Manage Tenants' | translate }}
-        </a>
-
-        <a [routerLink]="['/viewusers']" [routerLinkActive]="['router-link-active']" class="list-group-item">
-            <i class="fa fa-fw fa-users"></i>&nbsp;{{ 'Manage Users' | translate }}
         </a>
 
         <a [routerLink]="['/viewproducts']" [routerLinkActive]="['router-link-active']" class="list-group-item">
@@ -45,6 +41,10 @@
 
         <a [routerLink]="['/schedule']" [routerLinkActive]="['router-link-active']" class="list-group-item">
             <i class="fa fa-fw fa-calendar"></i>&nbsp;{{ 'Schedule' | translate }}
+        </a>
+
+        <a routerLink="/activities" [routerLinkActive]="['router-link-active']" class="list-group-item">
+            <i class="fa fa-fw fa-file-text"></i>&nbsp;{{ 'activities' | translate }}
         </a>
 
         <a [routerLink]="['/reports']" [routerLinkActive]="['router-link-active']" class="list-group-item">
