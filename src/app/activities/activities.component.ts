@@ -72,11 +72,66 @@ export class ActivitiesComponent implements OnInit {
        }else if(this.selectedModule==="photos"){
           this.listPhotosApi();
        }else if(this.selectedModule==="notes"){
-        this.listNotesApi();
+          this.listNotesApi();
        }else if(this.selectedModule==="newplaces"){
-        this.listNewPlacesApi();
+          this.listNewPlacesApi();
        }else if(this.selectedModule==="all"){
           this.listAllActivitiesApi();
+       }
+       for(var i=0;i<this.auditActivities.length;i++){
+        this.allActivities.push({
+            rep: this.auditActivities[i].user.firstName + " " + this.auditActivities[i].user.surname,
+            place: this.auditActivities[i].place.name,
+            description : this.auditActivities[i].form.name,
+            picture : '',
+            date: this.auditActivities[i].addedDate
+         });
+       }
+       for(var i=0;i<this.visitActivities.length;i++){
+        this.allActivities.push({
+            rep: this.visitActivities[i].user.firstName + " " + this.visitActivities[i].user.surname,
+            place: this.visitActivities[i].place.name,
+            description : '',
+            picture : '',
+            date: this.visitActivities[i].addedDate
+         });
+       }
+       for(var i=0;i<this.formActivities.length;i++){
+          this.allActivities.push({
+              rep: this.formActivities[i].user.firstName + " " + this.formActivities[i].user.surname,
+              place: this.formActivities[i].place.name,
+              description : this.formActivities[i].form.title,
+              picture : '',
+              date: this.formActivities[i].addedDate
+          });
+       }
+       for(var i=0;i<this.photoActivities.length;i++){
+          this.allActivities.push({
+              rep: this.photoActivities[i].user.firstName + " " + this.photoActivities[i].user.surname,
+              place: this.photoActivities[i].place.name,
+              description : this.photoActivities[i].note,
+              picture : this.photoActivities[i].pictureUrl,
+              date: this.photoActivities[i].addedDate
+          });
+      }
+      for(var i=0;i<this.noteActivities.length;i++){
+          this.allActivities.push({
+              rep: this.noteActivities[i].user.firstName + " " + this.noteActivities[i].user.surname,
+              place: this.noteActivities[i].place.name,
+              description : this.noteActivities[i].description,
+              picture : '',
+              date: this.noteActivities[i].addedDate
+          });
+       }
+
+       for(var i=0;i<this.newPlaceActivities.length;i++){
+          this.allActivities.push({
+              rep: this.newPlaceActivities[i].user.firstName + " " + this.newPlaceActivities[i].user.surname,
+              place: this.newPlaceActivities[i].place.name,
+              description : 'No Activities',
+              picture : '',
+              date: this.newPlaceActivities[i].addedDate
+          });
        }
     }
 
