@@ -6,6 +6,8 @@ import { ViewPlacesComponent } from './viewplaces.component';
 import { PageHeaderModule } from './../shared';
 import {DataTableModule,SharedModule,DialogModule} from 'primeng/primeng';
 import {PlaceServiceApi,StatusServiceApi} from '../shared/shared';
+import {BusyModule} from 'angular2-busy';
+
 
 
 @NgModule({
@@ -17,7 +19,8 @@ import {PlaceServiceApi,StatusServiceApi} from '../shared/shared';
         ViewPlacesRoutingModule,
         PageHeaderModule,
         DataTableModule,
-        SharedModule
+        SharedModule,
+        BusyModule
     ],
     declarations: [ViewPlacesComponent],
     providers: [PlaceServiceApi,StatusServiceApi]

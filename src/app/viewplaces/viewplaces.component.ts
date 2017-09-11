@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { routerTransition } from '../router.animations';
 import {PlaceServiceApi,StatusServiceApi} from '../shared/shared';
 import {DataTableModule,SharedModule} from 'primeng/primeng';
+import {Subscription} from 'rxjs';
+
 
 @Component({
    selector: 'app-viewplaces',
@@ -14,7 +16,7 @@ export class ViewPlacesComponent implements OnInit {
 
   
   places : any[] = [];
-  
+  busy: Subscription;
   
 
   constructor(private placeServiceAPi:PlaceServiceApi) {
@@ -28,7 +30,8 @@ export class ViewPlacesComponent implements OnInit {
   //Load Status From Remote Database
   loadPlacesApi() {
     this.places = [];
-    this.placeServiceAPi.getPlaces()
+    
+    this.busy = this.placeServiceAPi.getPlaces()
     .subscribe(
          res => {
            this.places = res;
