@@ -6,6 +6,7 @@ import { ViewProductsComponent } from './viewproducts.component';
 import { PageHeaderModule } from './../shared';
 import {DataTableModule,SharedModule,DialogModule} from 'primeng/primeng';
 import {ProductServiceApi} from '../shared/shared';
+import {BusyModule} from 'angular2-busy';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import {ProductServiceApi} from '../shared/shared';
         ViewProductsRoutingModule,
         PageHeaderModule,
         DataTableModule,
-        SharedModule
+        SharedModule,
+        BusyModule
     ],
     declarations: [ViewProductsComponent],
     providers: [ProductServiceApi]

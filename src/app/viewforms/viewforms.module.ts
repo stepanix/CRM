@@ -6,7 +6,7 @@ import { ViewFormsComponent } from './viewforms.component';
 import { PageHeaderModule } from './../shared';
 import {DataTableModule,SharedModule} from 'primeng/primeng';
 import {FormServiceApi} from '../shared/shared';
-
+import {BusyModule} from 'angular2-busy';
 
 @NgModule({
     imports: [
@@ -16,7 +16,8 @@ import {FormServiceApi} from '../shared/shared';
         ViewFormsRoutingModule,
         PageHeaderModule,
         DataTableModule,
-        SharedModule
+        SharedModule,
+        BusyModule
     ],
     declarations: [ViewFormsComponent],
     providers: [FormServiceApi]

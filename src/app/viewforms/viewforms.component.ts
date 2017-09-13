@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { routerTransition } from '../router.animations';
 import {FormServiceApi} from '../shared/shared';
 import {DataTableModule,SharedModule} from 'primeng/primeng';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-viewforms',
@@ -12,6 +13,7 @@ import {DataTableModule,SharedModule} from 'primeng/primeng';
 export class ViewFormsComponent implements OnInit {
 
   forms : any[] = [];
+  busy: Subscription;
 
   constructor(private formServiceApi:FormServiceApi) { 
 
@@ -23,7 +25,7 @@ export class ViewFormsComponent implements OnInit {
 
   listFormsApi(){
     this.forms = [];
-    this.formServiceApi.getForms()
+    this.busy = this.formServiceApi.getForms()
     .subscribe(
          res => {
            this.forms = res;

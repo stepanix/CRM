@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { routerTransition } from '../router.animations';
 import {ProductServiceApi} from '../shared/shared';
 import {DataTableModule,SharedModule,DialogModule} from 'primeng/primeng';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-viewproducts',
@@ -15,6 +16,7 @@ export class ViewProductsComponent implements OnInit {
     displayProductDialog : boolean = false;
     ProductModel : any = {};
     productId : any = "0";
+    busy: Subscription;
     
 
     constructor(private productServiceApi:ProductServiceApi) {
@@ -60,7 +62,7 @@ export class ViewProductsComponent implements OnInit {
          id: 1,
          name: this.ProductModel.Name
       };
-      this.productServiceApi.addProduct(ProductDtoIn)
+      this.busy = this.productServiceApi.addProduct(ProductDtoIn)
       .subscribe(
           res => {
              this.hideProductDialog();
@@ -76,20 +78,20 @@ export class ViewProductsComponent implements OnInit {
         id: this.productId,
         name: this.ProductModel.Name
      };
-     this.productServiceApi.updateProduct(ProductDtoIn)
+     this.busy = this.productServiceApi.updateProduct(ProductDtoIn)
      .subscribe(
          res => {
-           this.hideProductDialog();
-           this.listProductsApi();
+            this.hideProductDialog();
+            this.listProductsApi();
          },err => {
-           console.log(err.message);
-           return;
-       });
+            console.log(err.message);
+            return;
+        });
     }
 
     listProductsApi() {
         this.products = [];
-        this.productServiceApi.getProducts()
+        this.busy = this.productServiceApi.getProducts()
         .subscribe(
             res => {
               this.products = res;
@@ -101,7 +103,7 @@ export class ViewProductsComponent implements OnInit {
 
     deleteProductApi(productvar) {
         if (window.confirm('Are you sure you want to delete?')) {
-            this.productServiceApi.deleteProduct(productvar.id)
+          this.busy = this.productServiceApi.deleteProduct(productvar.id)
             .subscribe(
                 res => {
                   this.listProductsApi();
