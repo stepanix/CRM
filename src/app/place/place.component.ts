@@ -8,6 +8,7 @@ import { AgmCoreModule, MapsAPILoader } from 'angular2-google-maps/core';
 import {} from '@types/googlemaps';
 
 import {SelectItem} from 'primeng/primeng';
+import {Subscription} from 'rxjs';
 
 @Component({
     selector: 'app-place',
@@ -18,6 +19,7 @@ import {SelectItem} from 'primeng/primeng';
 
 export class PlaceComponent implements OnInit {
 
+    busy: Subscription;
     PlaceModel : any = {};
     placeId : any = "0";
     status : any[] = [];
@@ -139,7 +141,7 @@ export class PlaceComponent implements OnInit {
   //Load Status From Remote Database
   loadStatusApi() {
     this.status = [];
-    this.statusServiceApi.getStatuses()
+    this.busy=this.statusServiceApi.getStatuses()
     .subscribe(
          res => {
            this.status = res;
@@ -151,7 +153,7 @@ export class PlaceComponent implements OnInit {
 
   //get place details from remote database
   getPlaceApi() {
-    this.placeServiceApi.getPlace(this.placeId)
+    this.busy=this.placeServiceApi.getPlace(this.placeId)
     .subscribe(
          res => {
             this.PlaceModel.Name = res.name;
@@ -199,7 +201,7 @@ export class PlaceComponent implements OnInit {
   //Add new place to Remote database
   addNewPlaceApi(){
       this.setDtoInputModel(0);
-      this.placeServiceApi.addPlace(this.PlaceDtoIn)
+      this.busy=this.placeServiceApi.addPlace(this.PlaceDtoIn)
       .subscribe(
           res => {
               this.placeId = res.id;
@@ -214,7 +216,7 @@ export class PlaceComponent implements OnInit {
 
   updatePlaceApi(){
    this.setDtoInputModel(this.placeId);
-   this.placeServiceApi.updatePlace(this.PlaceDtoIn)
+   this.busy=this.placeServiceApi.updatePlace(this.PlaceDtoIn)
   .subscribe(
       res => {
         alert("Place Updated Successfully");
@@ -231,7 +233,7 @@ export class PlaceComponent implements OnInit {
   //List Assigned Reps from Remote Database
   listRepPlacesApi(){
     this.reps = [];
-    this.repPlaceServiceApi.getRepByPlaceId(this.placeId)
+    this.busy=this.repPlaceServiceApi.getRepByPlaceId(this.placeId)
     .subscribe(
         res => {
           for(var i=0; i<res.length; i++) {
@@ -250,7 +252,7 @@ export class PlaceComponent implements OnInit {
   //List UnAssigned Reps from Remote Database
   listUnAssignedRepPlacesApi(){
     this.users = [];
-    this.userServiceApi.getUnAssignedReps(this.placeId)
+    this.busy=this.userServiceApi.getUnAssignedReps(this.placeId)
     .subscribe(
         res => {
           for(var i=0;i<res.length;i++){
@@ -277,7 +279,7 @@ export class PlaceComponent implements OnInit {
       });
     }
     //console.log(JSON.stringify(this.RepPlaceDtoIn));
-    this.repPlaceServiceApi.addRepPlaceList(this.RepPlaceDtoIn)
+    this.busy=this.repPlaceServiceApi.addRepPlaceList(this.RepPlaceDtoIn)
     .subscribe(
         res => {
           this.hideRepList();
@@ -291,7 +293,7 @@ export class PlaceComponent implements OnInit {
   
   deleteRepApi(repvar) {
      if (window.confirm('Are you sure you want to delete?')) {
-          this.repPlaceServiceApi.deleteRepPlace(repvar.id)
+      this.busy=this.repPlaceServiceApi.deleteRepPlace(repvar.id)
           .subscribe(
               res => {
                 this.listRepPlacesApi();

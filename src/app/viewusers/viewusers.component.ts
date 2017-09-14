@@ -3,6 +3,7 @@ import { routerTransition } from '../router.animations';
 import {DataTableModule,SharedModule,DialogModule} from 'primeng/primeng';
 import {UserServiceApi,TenantServiceApi} from '../shared/shared';
 import {GlobalApi} from '../shared/global-functions';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-viewusers',
@@ -19,6 +20,7 @@ export class ViewUsersComponent implements OnInit {
   UserModel : any = {};
   userId : any = "";
   UserDtoIn : any = {};
+  busy: Subscription;
 
    constructor(private globalApi : GlobalApi,
     private userServiceApi:UserServiceApi,
@@ -100,7 +102,7 @@ export class ViewUsersComponent implements OnInit {
 
   getUserApi(uservar){
     this.userId = uservar.id;
-    this.userServiceApi.getUser(this.userId)
+    this.busy=this.userServiceApi.getUser(this.userId)
     .subscribe(
         res => {
             this.userId =  res.id;
@@ -118,7 +120,7 @@ export class ViewUsersComponent implements OnInit {
 
   saveUserApi() {
     this.setUserDtoInput();
-    this.userServiceApi.addUser(this.UserDtoIn)
+    this.busy=this.userServiceApi.addUser(this.UserDtoIn)
     .subscribe(
         res => {
           this.hideDialog();
@@ -131,7 +133,7 @@ export class ViewUsersComponent implements OnInit {
 
   updateUserApi() {
       this.setUserDtoInput();
-      this.userServiceApi.updateUser(this.UserDtoIn)
+      this.busy=this.userServiceApi.updateUser(this.UserDtoIn)
       .subscribe(
           res => {
             this.hideDialog();
@@ -144,7 +146,7 @@ export class ViewUsersComponent implements OnInit {
 
    listUsersApi() {
       this.users = [];
-      this.userServiceApi.getUsers()
+      this.busy=this.userServiceApi.getUsers()
       .subscribe(
           res => {
           for(var i=0; i<res.length;i++){
@@ -164,7 +166,7 @@ export class ViewUsersComponent implements OnInit {
 
   listTenantsApi() {
       this.tenants = [];
-      this.tenantServiceApi.getTenants()
+      this.busy=this.tenantServiceApi.getTenants()
       .subscribe(
           res => {
             this.tenants = res;

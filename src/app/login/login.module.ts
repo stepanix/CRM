@@ -4,12 +4,14 @@ import { FormsModule } from '@angular/forms';
 import { LoginRoutingModule } from './login-routing.module';
 import { LoginComponent } from './login.component';
 import {LoginServiceApi} from '../shared/shared';
+import {BusyModule} from 'angular2-busy';
 
 @NgModule({
     imports: [
         CommonModule,
         LoginRoutingModule,
-        FormsModule
+        FormsModule,
+        BusyModule
     ],
     declarations: [LoginComponent],
     providers: [LoginServiceApi]

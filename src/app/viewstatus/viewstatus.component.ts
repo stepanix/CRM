@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {StatusServiceApi} from '../shared/shared';
 import { routerTransition } from '../router.animations';
 import {DataTableModule,SharedModule,DialogModule} from 'primeng/primeng';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-viewstatus',
@@ -16,6 +17,7 @@ export class ViewStatusComponent implements OnInit {
   displayDialog : boolean = false;
   StatusModel : any = {};
   statusId : any = "0";
+  busy: Subscription;
 
   constructor(private statusServiceApi:StatusServiceApi) { 
     this.StatusModel.Name = "";
@@ -60,7 +62,7 @@ export class ViewStatusComponent implements OnInit {
       id: 1,
       name: this.StatusModel.Name
     };
-    this.statusServiceApi.addStatus(StatusDtoIn)
+    this.busy=this.statusServiceApi.addStatus(StatusDtoIn)
     .subscribe(
         res => {
           this.hideDialog();
@@ -76,7 +78,7 @@ export class ViewStatusComponent implements OnInit {
       id: this.statusId,
       name: this.StatusModel.Name
    };
-   this.statusServiceApi.updateStatus(StatusDtoIn)
+   this.busy=this.statusServiceApi.updateStatus(StatusDtoIn)
    .subscribe(
        res => {
          this.hideDialog();
@@ -89,7 +91,7 @@ export class ViewStatusComponent implements OnInit {
 
   listStatusApi() {
     this.statuses = [];
-    this.statusServiceApi.getStatuses()
+    this.busy=this.statusServiceApi.getStatuses()
     .subscribe(
         res => {
           this.statuses = res;

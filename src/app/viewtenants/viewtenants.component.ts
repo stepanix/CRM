@@ -3,6 +3,7 @@ import {TenantServiceApi} from '../shared/shared';
 import { routerTransition } from '../router.animations';
 import {DataTableModule,SharedModule,DialogModule} from 'primeng/primeng';
 import {GlobalApi} from '../shared/global-functions';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-viewtenants',
@@ -16,6 +17,7 @@ export class ViewTenantsComponent implements OnInit {
   displayDialog : boolean = false;
   TenantModel : any = {};
   tenantId : any = "0";
+  busy: Subscription;
 
   constructor(private globalApi:GlobalApi,private tenantServiceApi:TenantServiceApi) {
       this.refreshVariables();
@@ -93,7 +95,7 @@ export class ViewTenantsComponent implements OnInit {
         contactPerson : this.TenantModel.ContactPerson,
         contactNumber : this.TenantModel.ContactNumber
       };
-      this.tenantServiceApi.addTenant(TenantDtoIn)
+      this.busy=this.tenantServiceApi.addTenant(TenantDtoIn)
       .subscribe(
           res => {
             this.hideDialog();
@@ -115,7 +117,7 @@ export class ViewTenantsComponent implements OnInit {
         contactPerson : this.TenantModel.ContactPerson,
         contactNumber : this.TenantModel.ContactNumber
       };
-      this.tenantServiceApi.updateTenant(TenantDtoIn)
+      this.busy=this.tenantServiceApi.updateTenant(TenantDtoIn)
       .subscribe(
           res => {
             this.hideDialog();
@@ -128,7 +130,7 @@ export class ViewTenantsComponent implements OnInit {
 
     listTenantApi() {
       this.tenants = [];
-      this.tenantServiceApi.getTenants()
+      this.busy=this.tenantServiceApi.getTenants()
       .subscribe(
           res => {
             this.tenants = res;
@@ -140,7 +142,7 @@ export class ViewTenantsComponent implements OnInit {
 
     deleteTenantApi(tenantvar) {
       if (window.confirm('Are you sure you want to delete?')) {
-          this.tenantServiceApi.deleteTenant(tenantvar.id)
+        this.busy=this.tenantServiceApi.deleteTenant(tenantvar.id)
           .subscribe(
               res => {
                 this.listTenantApi();

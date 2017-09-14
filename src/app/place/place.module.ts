@@ -10,6 +10,7 @@ import {GlobalApi} from '../shared/global-functions';
 import {GooglePlaceModule} from 'ng2-google-place-autocomplete';
 import { MultiselectDropdownModule } from 'angular-2-dropdown-multiselect';
 import { AgmCoreModule } from "angular2-google-maps/core";
+import {BusyModule} from 'angular2-busy';
 
 
 @NgModule({
@@ -29,7 +30,8 @@ import { AgmCoreModule } from "angular2-google-maps/core";
         SharedModule,
         MultiselectDropdownModule,
         ListboxModule,
-        GooglePlaceModule        
+        GooglePlaceModule,
+        BusyModule
     ],
     declarations: [PlaceComponent],
     providers: [PlaceServiceApi,StatusServiceApi,GlobalApi,RepPlaceServiceApi,UserServiceApi]

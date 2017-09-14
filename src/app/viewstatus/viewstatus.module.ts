@@ -6,6 +6,7 @@ import { ViewStatusComponent } from './viewstatus.component';
 import { PageHeaderModule } from './../shared';
 import {DataTableModule,SharedModule,DialogModule} from 'primeng/primeng';
 import {StatusServiceApi} from '../shared/shared';
+import {BusyModule} from 'angular2-busy';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import {StatusServiceApi} from '../shared/shared';
         ViewStatusRoutingModule,
         PageHeaderModule,
         DataTableModule,
-        SharedModule
+        SharedModule,
+        BusyModule
     ],
     declarations: [ViewStatusComponent],
     providers: [StatusServiceApi]

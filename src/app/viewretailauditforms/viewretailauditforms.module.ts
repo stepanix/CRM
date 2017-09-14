@@ -6,6 +6,7 @@ import { ViewRetailAuditFormsComponent } from './viewretailauditforms.component'
 import { PageHeaderModule } from './../shared';
 import {DataTableModule,SharedModule} from 'primeng/primeng';
 import {RetailAuditFormServiceApi} from '../shared/shared';
+import {BusyModule} from 'angular2-busy';
 
 
 @NgModule({
@@ -16,7 +17,8 @@ import {RetailAuditFormServiceApi} from '../shared/shared';
         ViewRetailAuditFormsRoutingModule,
         PageHeaderModule,
         DataTableModule,
-        SharedModule
+        SharedModule,
+        BusyModule
     ],
     declarations: [ViewRetailAuditFormsComponent],
     providers: [RetailAuditFormServiceApi]

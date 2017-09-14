@@ -4,6 +4,7 @@ import { routerTransition } from '../router.animations';
 import {DialogModule,SharedModule,DataTableModule} from 'primeng/primeng';
 import {FormServiceApi,QuestionTypeApi} from '../shared/shared';
 import {GlobalApi} from '../shared/global-functions';
+import {Subscription} from 'rxjs';
 
 @Component({
     selector: 'app-form',
@@ -14,6 +15,7 @@ import {GlobalApi} from '../shared/global-functions';
 
 export class FormComponent implements OnInit {
 
+    busy: Subscription;
     displayQuestion: boolean = false;
     displaySelectionList: boolean = false;
 
@@ -206,8 +208,8 @@ export class FormComponent implements OnInit {
     }
 
     //select answer from aray to edit
-    editAnswer(selectionAnswer) {     
-         this.showSelectionListDialog();   
+    editAnswer(selectionAnswer) {
+         this.showSelectionListDialog();
          this.TempAnswerModel =  this.FieldAnswers.find(answer => answer.id === selectionAnswer.id);
          this.AnswerModel.id =  selectionAnswer.id;
          this.AnswerModel.Answer =  this.TempAnswerModel.answer;
@@ -248,7 +250,7 @@ export class FormComponent implements OnInit {
     //Get Form data from web service
     getFormApi() {
       this.questions = []
-      this.formServiceApi.getForm(this.FormId)
+      this.busy=this.formServiceApi.getForm(this.FormId)
       .subscribe(
           res => {
               //console.log(JSON.stringify(res));
@@ -277,7 +279,7 @@ export class FormComponent implements OnInit {
             description: this.FormModel.Description,
             fields: JSON.stringify(this.FormQuestions)
         };
-        this.formServiceApi.addForm(FormDtoIn)
+        this.busy=this.formServiceApi.addForm(FormDtoIn)
         .subscribe(
             res => {
                 this.router.navigate(['/viewforms']);
@@ -297,7 +299,7 @@ export class FormComponent implements OnInit {
              fields: JSON.stringify(this.FormQuestions)
         };
         console.log(FormDtoIn.fields);
-        this.formServiceApi.updateForm(FormDtoIn)
+        this.busy = this.formServiceApi.updateForm(FormDtoIn)
         .subscribe(
             res => {
                 this.router.navigate(['/viewforms']);

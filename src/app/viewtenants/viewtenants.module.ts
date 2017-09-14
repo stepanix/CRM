@@ -7,6 +7,7 @@ import { PageHeaderModule } from './../shared';
 import {DataTableModule,SharedModule,DialogModule} from 'primeng/primeng';
 import {TenantServiceApi} from '../shared/shared';
 import {GlobalApi} from '../shared/global-functions';
+import {BusyModule} from 'angular2-busy';
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import {GlobalApi} from '../shared/global-functions';
         ViewTenantsRoutingModule,
         PageHeaderModule,
         DataTableModule,
-        SharedModule
+        SharedModule,
+        BusyModule
     ],
     declarations: [ViewTenantsComponent],
     providers: [TenantServiceApi,GlobalApi]

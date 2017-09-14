@@ -7,7 +7,7 @@ import { PageHeaderModule } from './../shared';
 import {DialogModule,DropdownModule,DataTableModule,SharedModule} from 'primeng/primeng';
 import {FormServiceApi,QuestionTypeApi} from '../shared/shared';
 import {GlobalApi} from '../shared/global-functions';
-
+import {BusyModule} from 'angular2-busy';
 
 
 @NgModule({
@@ -20,7 +20,8 @@ import {GlobalApi} from '../shared/global-functions';
         DialogModule,
         DropdownModule,
         DataTableModule,
-        SharedModule
+        SharedModule,
+        BusyModule
     ],
     declarations: [FormComponent],
     providers: [FormServiceApi,QuestionTypeApi,GlobalApi]
