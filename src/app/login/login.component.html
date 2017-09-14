@@ -2,21 +2,18 @@
    <div [ngBusy]="busy"></div>
     <div class="row">
         <div class="col-md-4 push-md-4">
-            <img src="assets/images/logo.png" width="150px" class="user-avatar" />
-            <h1>Technocrat CRM Login</h1>
-            
+             <img src="assets/images/logo.png" width="150px" class="user-avatar" />
+             <h1>Technocrat CRM Login</h1>
                 <div class="form-content">
                     <div class="form-group">
                         <input type="text" [(ngModel)]="username" class="form-control input-underline input-lg" id="" placeholder="Email">
                     </div>
 
                     <div class="form-group">
-                        <input type="password" [(ngModel)]="password" class="form-control input-underline input-lg" id="" placeholder="Password">
+                        <input type="password" [(ngModel)]="password" (keyup.enter)="onLoggedin()" class="form-control input-underline input-lg" id="" placeholder="Password">
                     </div>
                 </div>
-                <a class="btn rounded-btn" (click)="onLoggedin()"> Log in </a>
-                
-           
+                <button class="btn rounded-btn" [disabled]="username==='' || password===''" (click)="onLoggedin()"> Log in </button>
         </div>
     </div>
 </div>

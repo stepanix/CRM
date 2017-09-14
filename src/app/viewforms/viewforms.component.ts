@@ -23,7 +23,7 @@ export class ViewFormsComponent implements OnInit {
     this.listFormsApi();
   }
 
-  listFormsApi(){
+  listFormsApi() {
     this.forms = [];
     this.busy = this.formServiceApi.getForms()
     .subscribe(
