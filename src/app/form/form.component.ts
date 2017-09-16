@@ -137,6 +137,7 @@ export class FormComponent implements OnInit {
        this.questions = this.FormQuestions;
        console.log(JSON.stringify(this.FormQuestions));
        this.refreshQuestionVariables();
+       this.refreshAnswerVariables();
     }
 
     //Update question data
@@ -191,6 +192,7 @@ export class FormComponent implements OnInit {
        this.FieldAnswers = [];
        this.QuestionModel.Mandatory = false;
        this.QuestionModel.SelectionList = [];
+       this.selectionAnswers = [];
     }
 
     refreshAnswerVariables() {
