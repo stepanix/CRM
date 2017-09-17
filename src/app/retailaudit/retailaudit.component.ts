@@ -191,6 +191,7 @@ export class RetailAuditComponent implements OnInit {
     this.FieldAnswers = [];
     this.QuestionModel.Mandatory = false;
     this.QuestionModel.SelectionList = [];
+    this.selectionAnswers = [];
  }
 
  refreshAnswerVariables() {
