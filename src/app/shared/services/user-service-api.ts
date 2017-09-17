@@ -19,7 +19,7 @@ export class UserServiceApi {
      }
 
      getHeader() {
-        this.header = new Headers();        
+        this.header = new Headers();
         this.token = 'bearer ' + localStorage.getItem('token');
         this.header.append('Authorization', this.token);
         this.header.append('Content-Type', 'application/json');   

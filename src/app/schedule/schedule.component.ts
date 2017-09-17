@@ -273,7 +273,8 @@ export class ScheduleComponent implements OnInit {
             isVisited: false,
             isScheduled: true,
             isMissed : false,
-            isUnScheduled: false
+            isUnScheduled: false,
+            visitStatus : "New visit"
         };
         
         this.scheduleServiceApi.addSchedule(ScheduleDto)
@@ -301,7 +302,8 @@ export class ScheduleComponent implements OnInit {
             isVisited: this.visited,
             isScheduled: this.scheduled,
             isMissed : this.missed,
-            isUnScheduled: this.unscheduled
+            isUnScheduled: this.unscheduled,
+            visitStatus : "New visit"
         };
         
         this.scheduleServiceApi.updateSchedule(ScheduleDto)
