@@ -141,12 +141,16 @@ export class FormComponent implements OnInit {
     }
 
     //Update question data
-    updateQuestionData(){
-       this.deleteQuestion(this.TempQuestionModel);
-       this.addNewQuestionData();
-       this.TempQuestionModel = {};
-       this.QuestionModel.id = null;
-       this.hideQuestionDialog();
+    updateQuestionData() {
+      let index: number = this.FormQuestions.indexOf(this.TempQuestionModel);
+      if (index !== -1) {
+          this.FormQuestions[index].question = this.QuestionModel.question;
+          this.FormQuestions[index].SelectedQuestionTypeModel =  this.QuestionModel.SelectedQuestionTypeModel;
+      }
+      console.log(this.QuestionModel.question);      
+      this.TempQuestionModel = {};
+      this.QuestionModel.id = null;
+      this.hideQuestionDialog();
     }
     
     //Save Answer Data
