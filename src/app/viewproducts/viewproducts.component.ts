@@ -76,7 +76,9 @@ export class ViewProductsComponent implements OnInit {
     updateProductApi() {
       let ProductDtoIn = {
         id: this.productId,
-        name: this.ProductModel.Name
+        name: this.ProductModel.Name,
+        price: this.ProductModel.Price,
+        eanCode: this.ProductModel.BarCode
      };
      this.busy = this.productServiceApi.updateProduct(ProductDtoIn)
      .subscribe(

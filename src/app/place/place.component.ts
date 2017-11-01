@@ -17,6 +17,7 @@ import {Subscription} from 'rxjs';
     animations: [routerTransition()]
 })
 
+
 export class PlaceComponent implements OnInit {
 
     busy: Subscription;
