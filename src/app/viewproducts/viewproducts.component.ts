@@ -21,6 +21,8 @@ export class ViewProductsComponent implements OnInit {
 
     constructor(private productServiceApi:ProductServiceApi) {
         this.ProductModel.Name = "";
+        this.ProductModel.Price = "0";
+        this.ProductModel.BarCode = "";
         this.listProductsApi();
      }
 
@@ -31,6 +33,8 @@ export class ViewProductsComponent implements OnInit {
     refreshVariables(){
       this.productId = "0";
       this.ProductModel.Name = "";
+      this.ProductModel.Price = "0";
+      this.ProductModel.BarCode = "";
     }
 
     showProductDialog() {
@@ -55,12 +59,16 @@ export class ViewProductsComponent implements OnInit {
        this.showProductDialog();
        this.productId = product.id;
        this.ProductModel.Name = product.name;
+       this.ProductModel.Price = product.price;
+       this.ProductModel.BarCode = product.eanCode;
     }
 
     saveProductApi(){
       let ProductDtoIn = {
          id: 1,
-         name: this.ProductModel.Name
+         name: this.ProductModel.Name,
+         price: this.ProductModel.Price,
+         eanCode: this.ProductModel.BarCode
       };
       this.busy = this.productServiceApi.addProduct(ProductDtoIn)
       .subscribe(

@@ -66,7 +66,7 @@
         </fieldset>
 
         <p-footer>
-            <button type="button" class="btn btn-sm btn-danger" (click)="saveProduct()" [disabled]="ProductModel.Name==='' || ProductModel.Price==='0' || ProductModel.Price==='' || ProductModel.BarCode===''">Save</button>
+            <button type="button" class="btn btn-sm btn-danger" (click)="saveProduct()" [disabled]="ProductModel.Name==='' || ProductModel.Price==='0' || ProductModel.Price==='' || ProductModel.BarCode==='' || ProductModel.BarCode===null">Save</button>
             <button type="button" (click)="hideProductDialog()" class="btn btn-sm btn-danger">Cancel</button>
         </p-footer>
 
