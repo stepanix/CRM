@@ -23,15 +23,14 @@
           <div class="col-lg-3">
               <fieldset class="form-group">
                   <label>From</label>
-                  <input [(ngModel)]="dateFrom" type="date" class="form-control" (popupClosed)="dateFromSelected()" ngui-datetime-picker date-only="true" />
+                  <input [(ngModel)]="dateFrom" type="date" class="form-control" (popupClosed)="dateFromSelected()" date-only="true" />
               </fieldset>
-              
           </div>
 
           <div class="col-lg-3">
               <fieldset class="form-group">
                   <label>To</label>
-                  <input [(ngModel)]="dateTo" type="date" class="form-control" (popupClosed)="dateToSelected()" ngui-datetime-picker date-only="true" />
+                  <input [(ngModel)]="dateTo" type="date" class="form-control" (popupClosed)="dateToSelected()" date-only="true" />
               </fieldset>
           </div>
 

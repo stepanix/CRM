@@ -33,6 +33,7 @@ export class ActivityServiceApi {
      }
 
      getActivitiesSummary(userid:any,dateFrom:any,dateTo:any,placeId:any) : Observable<any[]> {
+        console.log(crmBaseUrl + "Activity/Summary?userid=" + userid + "&dateFrom=" + dateFrom + "&dateTo=" + dateTo + "&placeId=" + placeId);
         return  this.http.get(crmBaseUrl + "Activity/Summary?userid=" + userid + "&dateFrom=" + dateFrom + "&dateTo=" + dateTo + "&placeId=" + placeId  ,{headers: this.getHeader()})
         .map((response: Response) => response.json())
         .catch((error:any) => Observable.throw(error.json() || 'Server error'));
