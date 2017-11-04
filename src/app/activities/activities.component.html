@@ -2,7 +2,7 @@
   
       <app-page-header [heading]="'Activities'" [icon]="'fa-edit'"></app-page-header>
       
-      <div class="row">
+      <div class="row" style="width:70%!important;margin: 0px auto;">
 
           <div class="col-lg-3">
       
@@ -37,9 +37,7 @@
           </div>
 
           <div class="col-lg-3">
-             
           </div>
-
           
           <fieldset class="form-group">
               <button type="button" (click)="showDialog()" class="btn btn-sm btn-danger">Add Filter</button>
@@ -60,18 +58,45 @@
           &nbsp;
           <fieldset class="form-group">
               <label><input type="checkbox" [hidden]="PlaceSelectedModel===false" [(ngModel)]="PlaceSelectedModel" (change)="handlePlaceChange($event)"> {{dtoPlaceName}}</label>
-          </fieldset>
-
-          <div class="form-group">
-              <p>&nbsp;</p>
-              <p>&nbsp;</p>
-              <p>&nbsp;</p>
-              <p>&nbsp;</p>
-              <p>&nbsp;</p>
-              <p>&nbsp;</p>
-          </div>
+          </fieldset>         
          
       </div>
+
+      <div *ngFor="let item of activities" style="width:70%!important;margin: 0px auto;" class="mui-row">
+            <div class="card">
+              <div class="card-body">
+                <div>
+                    <strong><span style="float:left!important;padding-left:30px;">{{item.salesRep}}</span></strong>
+
+                    <span style="float:right!important;padding-right:30px">{{item.date}}</span>
+                    <br>
+                    <span style="float:left!important;padding-left:30px;padding-bottom:30px">{{item.place}}</span>
+                    
+                    <span style="float:right!important;padding-right:30px;padding-bottom:30px">{{item.time}}</span>
+                    
+                </div>
+                <br>
+              </div>
+            </div>
+      </div>
+      
+        <!-- <p-dataList [value]="activities" [rows]="5">
+            <ng-template let-activity pTemplate="item">
+                <div class="ui-g">
+                    <div class="ui-g-10 ui-sm-10">
+                        <strong><span style="float:left!important">{{activity.salesRep}}</span></strong>
+                        <br>
+                        <span style="float:left!important">{{activity.place}}</span>
+                    </div>
+                    <div>
+                     <span style="float:right!important">{{activity.date}}</span><br>
+                     <span style="float:right!important">{{activity.time}}</span></div>
+                    <div></div>
+                    <br>
+                </div>
+            </ng-template>
+        </p-dataList> -->
+      
 
       <p-dialog header="Select Filter(s) Here" [(visible)]="displayDialog" modal="modal" width="500" height="auto" responsive="true" positionTop="80">
           

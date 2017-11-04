@@ -28,6 +28,7 @@ export class LoginComponent implements OnInit {
         this.busy=this.loginServiceApi.postLogin(loginData).subscribe(res => {
             localStorage.setItem('token', res.access_token);
             localStorage.setItem('fullname',res.fullname);
+            localStorage.setItem('userid',res.userid);
             this.router.navigate(['/dashboard']);
          }, err => {
              alert("Sorry ! the username or password you entered is incorrect");           

@@ -15,3 +15,4 @@ export * from './services/photo-service-api';
 export * from './services/timemileage-service-api';
 export * from './services/note-service-api';
 export * from './services/productauditretail-service-api';
+export * from './services/activity-service-api';
