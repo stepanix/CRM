@@ -40,6 +40,7 @@ export class ActivitiesComponent implements OnInit {
   PlaceSelectedModel : boolean = false;
 
   activities : any[] = [];
+  activitiesTemp : any[] = [];
   
 
   selectedModule : string = "";
@@ -48,7 +49,7 @@ export class ActivitiesComponent implements OnInit {
     private placeServiceApi:PlaceServiceApi,
     private userServiceApi : UserServiceApi) {
        this.dtoUserId = localStorage.getItem('userid');
-       this.dateFrom =  moment().format("YYYY-MM-DD");
+       this.dateFrom =  moment("2016-12-12").format("YYYY-MM-DD");
        this.dateTo =  moment().format("YYYY-MM-DD");
        this.dtoPlaceId = 0;
        this.getActivityLog();
@@ -57,6 +58,27 @@ export class ActivitiesComponent implements OnInit {
     applyFiltersApi() {
       this.getActivityLog();
     }
+
+    appyModuleFilter(){
+      this.activities = [];
+      if(this.selectedModule==="all"){
+        this.activities = this.activitiesTemp;
+      }
+      this.activitiesTemp.forEach(entry => {       
+        if (entry.activity === this.selectedModule 
+          &&  (moment(entry.date).format("YYYY-MM-DD") >= moment(this.dateFrom).format("YYYY-MM-DD") 
+          && moment(entry.date).format("YYYY-MM-DD") <= moment(this.dateTo).format("YYYY-MM-DD"))) {
+          this.activities.push({
+              salesRep : entry.salesRep,
+              activity : entry.activity,
+              place : entry.place,
+              address : entry.address,
+              date :   entry.date,
+              time : entry.time
+            });
+        }
+     });
+    }
         
     getActivityLog() {
        this.activities = [];
@@ -64,7 +86,7 @@ export class ActivitiesComponent implements OnInit {
        .subscribe(
            res => {
              for(var i=0; i<res.length;i++){
-                 this.activities.push({
+                 this.activitiesTemp.push({
                    salesRep : res[i].user.firstName + " " + res[i].user.surname,
                    activity : res[i].activityLog,
                    place : res[i].place.name + "                 -   activity : " + res[i].activityLog,
@@ -73,6 +95,7 @@ export class ActivitiesComponent implements OnInit {
                    time : moment(res[i].dateCreated).format("LT")
                  });
              }
+             this.activities = this.activitiesTemp;
            },err => {
              console.log(err);
              return;
@@ -103,10 +126,12 @@ export class ActivitiesComponent implements OnInit {
 
     dateFromSelected(){
       this.selectedDateFrom = moment(this.dateFrom).format("YYYY-MM-DD") ;
+      this.appyModuleFilter();
     }
 
     dateToSelected(){
       this.selectedDateTo = moment(this.dateTo).format("YYYY-MM-DD");
+      this.appyModuleFilter();
     }
 
   ngOnInit() {
