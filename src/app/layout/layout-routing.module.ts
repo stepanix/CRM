@@ -11,7 +11,7 @@ const routes: Routes = [
                 { path: 'dashboard', loadChildren: './dashboard/dashboard.module#DashboardModule' },
                 { path: 'activities', loadChildren: '../activities/activities.module#ActivitiesModule' },
                 { path: 'reports', loadChildren: '../reports/reports.module#ReportsModule' },
-                { path: 'reportdetail/:id', loadChildren: '../reportdetail/reportdetail.module#ReportDetailModule' },
+                { path: 'reportdetail/:type/:id', loadChildren: '../reportdetail/reportdetail.module#ReportDetailModule' },
                 { path: 'viewtenants', loadChildren: '../viewtenants/viewtenants.module#ViewTenantsModule' },
                 { path: 'viewusers', loadChildren: '../viewusers/viewusers.module#ViewUsersModule' },
                 { path: 'viewproducts', loadChildren: '../viewproducts/viewproducts.module#ViewProductsModule' },

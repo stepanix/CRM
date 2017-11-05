@@ -14,9 +14,9 @@
                     <p-panel [header]="form.title" [style]="{'text-align':'center'}">                        
                         <div class="car-detail">{{form.description}}</div>
                         <hr class="ui-widget-content" style="border-top:0">
-                        <a [routerLink] ="['/reportdetail',form.id]">
+                        <a [routerLink] ="['/reportdetail','form',form.id]">
                           <button type="button"  class="btn btn-sm btn-danger">
-                              <i class="fa fa-bar-chart" (click)="viewReport(form)" style="cursor:pointer"> View Report</i>
+                              <i class="fa fa-bar-chart" style="cursor:pointer"> View Report</i>
                           </button>
                         </a>
                     </p-panel>
