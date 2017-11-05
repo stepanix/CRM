@@ -11,6 +11,7 @@ const routes: Routes = [
                 { path: 'dashboard', loadChildren: './dashboard/dashboard.module#DashboardModule' },
                 { path: 'activities', loadChildren: '../activities/activities.module#ActivitiesModule' },
                 { path: 'reports', loadChildren: '../reports/reports.module#ReportsModule' },
+                { path: 'reportdetail/:id', loadChildren: '../reportdetail/reportdetail.module#ReportDetailModule' },
                 { path: 'viewtenants', loadChildren: '../viewtenants/viewtenants.module#ViewTenantsModule' },
                 { path: 'viewusers', loadChildren: '../viewusers/viewusers.module#ViewUsersModule' },
                 { path: 'viewproducts', loadChildren: '../viewproducts/viewproducts.module#ViewProductsModule' },
@@ -21,7 +22,7 @@ const routes: Routes = [
                 { path: 'place/:placeid', loadChildren: '../place/place.module#PlaceModule' },
                 { path: 'schedule', loadChildren: '../schedule/schedule.module#ScheduleViewModule' },
                 { path: 'viewretailauditforms', loadChildren: '../viewretailauditforms/viewretailauditforms.module#ViewRetailAuditFormsModule' },
-                { path: 'retailauditform/:id', loadChildren: '../retailaudit/retailaudit.module#RetailAuditModule' },
+                { path: 'retailauditform/:id', loadChildren: '../retailaudit/retailaudit.module#RetailAuditModule' },               
 
                 { path: 'forms', loadChildren: './form/form.module#FormModule' },
                 // { path: 'bs-element', loadChildren: './bs-element/bs-element.module#BsElementModule' },
