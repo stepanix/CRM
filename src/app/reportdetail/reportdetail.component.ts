@@ -5,6 +5,7 @@ import { PlaceServiceApi, ScheduleServiceApi, UserServiceApi, FormValueServiceAp
 import { routerTransition } from '../router.animations';
 import { DataGridModule, PanelModule } from 'primeng/primeng';
 
+
 @Component({
   selector: 'app-reportdetail',
   templateUrl: './reportdetail.component.html',
@@ -26,8 +27,14 @@ export class ReportDetailComponent implements OnInit {
   max: number = 0;
   avg: number = 0;
   sum: number = 0;
+  otherValues : number[] = [];
   count: number = 0;
-  qnumberCount: number = 0;
+  
+  chartData : any[] = [];
+  chartDataSum : any[] = [];
+  chartDataAvg : any[] = [];
+  chartDataMin : any[] = [];
+  chartDataMax : any[] = [];
 
   constructor(private formValueServiceApi: FormValueServiceApi,
     private router: Router,
@@ -48,7 +55,7 @@ export class ReportDetailComponent implements OnInit {
 
   listFormValues() {
     this.barChartData = [
-      { data: [65, 59, 80, 81, 56, 55, 40], label: '' }
+      { data: [65, 59, 80, 81], label: '' }
     ];
     let tempReportData: any[] = [];
     let extractedTempData: any[] = [];
@@ -68,18 +75,27 @@ export class ReportDetailComponent implements OnInit {
             for (let j = 0; j < tempReportData[i].data.length; j++) {
               extractedTempData.push({
                 question: tempReportData[i].data[j].question,
+                questionType : tempReportData[i].data[j].questionType,
                 answer: tempReportData[i].data[j].answer,
                 count : 0
               });
             }
           }
            for (let x = 0; x < extractedTempData.length; x++) {
+            this.sum = 0;
+            this.otherValues = [];
             for (let y = 0; y < extractedTempData.length; y++) {
-              if (extractedTempData[x].question === extractedTempData[y].question) {
-                  
-                 //console.log("question", extractedTempData[y].question , "answer", extractedTempData[x].answer, "count", extractedTempData[x].count +=1);
+              if (extractedTempData[x].question === extractedTempData[y].question) {                  
+                  if(extractedTempData[x].questionType==="3"){
+                    this.sum += this.isFormFieldValueValid(extractedTempData[x].answer);
+                    this.otherValues.push(parseFloat(extractedTempData[x].answer));
+                  }else{
+                    this.sum += 1;
+                    this.otherValues.push(1);
+                  }
               }
             }
+            this.saveChartData(extractedTempData[x].question,this.sum,this.otherValues);
           }
         console.log("tempReportData", tempReportData);
         console.log("extractedTempData", extractedTempData);
@@ -89,22 +105,19 @@ export class ReportDetailComponent implements OnInit {
       });
   }
 
-  parseQuestionType(qtype) {
-    if (qtype === "3") {
-
-    }
-    return 0;
+  saveChartData(label,data,othervalues) {
+   //check if label exists. if true, then update else add
   }
 
-  isFormFieldValueValid(formFieldValue): boolean {
+  isFormFieldValueValid(formFieldValue): number {
     if (formFieldValue === undefined
       || formFieldValue === "undefined"
       || formFieldValue === "null"
       || formFieldValue === null
       || formFieldValue === "") {
-      return false;
+      return 0;
     }
-    return true;
+    return parseFloat(formFieldValue);
   }
 
 }

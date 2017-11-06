@@ -6,6 +6,7 @@
         "baseUrl": "",
         "types": []
     },
+    "angularCompilerOptions": { "alwaysCompileGeneratedCode": true },
     "exclude": [
         "test.ts",
         "**/*.spec.ts"
