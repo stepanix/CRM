@@ -13,7 +13,6 @@ import { NguiDatetimePickerModule } from '@ngui/datetime-picker';
 import { ChartsModule } from 'ng2-charts';
 import {BusyModule} from 'angular2-busy';
 
-
 import {GlobalApi} from '../shared/global-functions';
 import * as jQuery from 'jquery';
 (window as any).jQuery = (window as any).$ = jQuery;
