@@ -106,7 +106,6 @@ export class ReportDetailComponent implements OnInit {
           });
           barChartValues = [];
         }
-        
         this.barChartData = this.chartValues[2].metrics;
         console.log("metric data",this.chartValues[2].metrics);
         console.log("barChartData",this.barChartData);
@@ -116,7 +115,7 @@ export class ReportDetailComponent implements OnInit {
       });
   }
 
-  parseAllAnswers(question): any {
+  parseAllAnswers(question) : any {
     this.chartAnswers = [];
     let answerSum: number = 0;
     let answerSumArray: number[] = [];

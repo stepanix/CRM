@@ -1,9 +1,6 @@
 <div [@routerTransition]>
-    
     <div [ngBusy]="busy"></div>
-
     <app-page-header [heading]="'Reports'" [icon]="'fa-edit'"></app-page-header>
-
     <div class="row">
         <p-dataGrid [value]="forms" [rows]="20">
             <p-header>
@@ -11,18 +8,17 @@
             </p-header>
             <ng-template let-form pTemplate="item">
                 <div style="padding:3px" class="ui-g-12 ui-md-3">
-                    <p-panel [header]="form.title" [style]="{'text-align':'center'}">                        
+                    <p-panel [header]="form.title" [style]="{'text-align':'center'}">
                         <div class="car-detail">{{form.description}}</div>
                         <hr class="ui-widget-content" style="border-top:0">
-                        <a [routerLink] ="['/reportdetail','form',form.id]">
-                          <button type="button"  class="btn btn-sm btn-danger">
-                              <i class="fa fa-bar-chart" style="cursor:pointer"> View Report</i>
-                          </button>
+                        <a [routerLink]="['/reportdetail','form',form.id]">
+                            <button type="button" class="btn btn-sm btn-danger">
+                                <i class="fa fa-bar-chart" style="cursor:pointer"> View Report</i>
+                            </button>
                         </a>
                     </p-panel>
                 </div>
             </ng-template>
         </p-dataGrid>
     </div>
-
 </div>
