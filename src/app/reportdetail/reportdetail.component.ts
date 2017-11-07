@@ -20,6 +20,7 @@ export class ReportDetailComponent implements OnInit {
   busy: Subscription;
   reportHeader: any;
   barChartData: any[] = [];
+  formName : string = "";
 
 
   barChartType: string = 'bar';
@@ -69,6 +70,7 @@ export class ReportDetailComponent implements OnInit {
       res => {
         for (var i = 0; i < res.length; i++) {
           if (res[i].formId == this.id) {
+            this.formName = res[i].form.title;
             tempReportData.push(
               JSON.parse(res[i].formFieldValues)
             );
@@ -107,8 +109,8 @@ export class ReportDetailComponent implements OnInit {
           barChartValues = [];
         }
         this.barChartData = this.chartValues[2].metrics;
-        console.log("metric data",this.chartValues[2].metrics);
-        console.log("barChartData",this.barChartData);
+        // console.log("metric data",this.chartValues[2].metrics);
+        // console.log("barChartData",this.barChartData);
       }, err => {
         console.log(err);
         return;
@@ -116,6 +118,8 @@ export class ReportDetailComponent implements OnInit {
   }
 
   parseAllAnswers(question) : any {
+    let baseData : any = {};
+    let baseDataArray : number[] = [];
     this.chartAnswers = [];
     let answerSum: number = 0;
     let answerSumArray: number[] = [];
@@ -139,7 +143,7 @@ export class ReportDetailComponent implements OnInit {
     avgSumArray.push(avgSum);
     maxValueArray.push(maxValue);
     minValueArray.push(minValue);
-
+    baseDataArray.push(0);
     this.chartSum = {
       data : answerSumArray,
       label : 'Sum' 
@@ -156,11 +160,16 @@ export class ReportDetailComponent implements OnInit {
       data : minValueArray,
       label : 'Min'
     };
+    baseData = {
+      data : baseDataArray,
+      label : ''
+    };
     this.chartAnswers.push(
       this.chartSum,
       this.chartAvg,
       this.chartMax,
-      this.chartMin
+      this.chartMin,
+      baseData
     );
     return this.chartAnswers;
   }
