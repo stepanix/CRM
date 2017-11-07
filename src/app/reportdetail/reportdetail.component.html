@@ -25,15 +25,18 @@
         </p-dataGrid>
     </div> -->
 
-    <div>
+    <div class="col-md-6">
         <div style="display: block">
             <canvas baseChart
                     [datasets]="barChartData"
                     [labels]="barChartLabels"
+                    [legend]="barChartLegend"
                     [options]="barChartOptions"                    
                     [chartType]="barChartType"></canvas>
                     
           </div>
     </div>
+
+    <button (click)="showLog()">Click</button>
 
 </div>

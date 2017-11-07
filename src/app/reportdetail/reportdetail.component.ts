@@ -20,21 +20,19 @@ export class ReportDetailComponent implements OnInit {
   busy: Subscription;
   reportHeader: any;
   barChartData: any[] = [];
-  barChartLabels: string[] = ['min', 'max', 'avg', 'sum'];
+
+
   barChartType: string = 'bar';
-  tempData: any[] = [];
-  min: number = 0;
-  max: number = 0;
-  avg: number = 0;
-  sum: number = 0;
-  otherValues : number[] = [];
-  count: number = 0;
-  
-  chartData : any[] = [];
-  chartDataSum : any[] = [];
-  chartDataAvg : any[] = [];
-  chartDataMin : any[] = [];
-  chartDataMax : any[] = [];
+  public barChartLegend: boolean = true;
+
+  chartSum: any = {};
+  chartAvg: any= {};
+  chartMax: any= {};
+  chartMin: any= {};
+  chartData: any[]= [];
+  chartAnswers : any[] = [];
+
+  extractedTempData: any[] = [];
 
   constructor(private formValueServiceApi: FormValueServiceApi,
     private router: Router,
@@ -55,66 +53,137 @@ export class ReportDetailComponent implements OnInit {
 
   listFormValues() {
     this.barChartData = [
-      { data: [65, 59, 80, 81], label: '' }
+      { data: [71], label: 'Sum' },
+      { data: [70.5], label: 'Avg' },
+      { data: [72], label: 'max' },
+      { data: [75], label: 'Min' },
+      { data: [10], label: 'base' }
     ];
     let tempReportData: any[] = [];
-    let extractedTempData: any[] = [];
+    let formFieldsData: any[] = [];
+    let sum: number = 0;
+
     this.busy = this.formValueServiceApi.getFormValues()
       .subscribe(
       res => {
         for (var i = 0; i < res.length; i++) {
-          //get data with respect to form id selected
           if (res[i].formId == this.id) {
-            tempReportData.push({
-              data: JSON.parse(res[i].formFieldValues)
-            });
+            tempReportData.push(
+              JSON.parse(res[i].formFieldValues)
+            );
           }
         }
-         //merge data
-          for (let i = 0; i < tempReportData.length; i++) {
-            for (let j = 0; j < tempReportData[i].data.length; j++) {
-              extractedTempData.push({
-                question: tempReportData[i].data[j].question,
-                questionType : tempReportData[i].data[j].questionType,
-                answer: tempReportData[i].data[j].answer,
-                count : 0
-              });
-            }
+
+        for (let i = 0; i < tempReportData.length; i++) {
+          for (let j = 0; j < tempReportData[i].length; j++) {
+            this.extractedTempData.push({
+              question: tempReportData[i][j].question,
+              questionTypeId: tempReportData[i][j].questionTypeId,
+              answer: tempReportData[i][j].answer
+            });
+            sum = 0;
           }
-           for (let x = 0; x < extractedTempData.length; x++) {
-            this.sum = 0;
-            this.otherValues = [];
-            for (let y = 0; y < extractedTempData.length; y++) {
-              if (extractedTempData[x].question === extractedTempData[y].question) {                  
-                  if(extractedTempData[x].questionType==="3"){
-                    this.sum += this.isFormFieldValueValid(extractedTempData[x].answer);
-                    this.otherValues.push(parseFloat(extractedTempData[x].answer));
-                  }else{
-                    this.sum += 1;
-                    this.otherValues.push(1);
-                  }
-              }
-            }
-            this.saveChartData(extractedTempData[x].question,this.sum,this.otherValues);
+        }
+        
+        for (let i = 0; i < this.extractedTempData.length; i++) {
+          if (this.parseQuestionExists(this.extractedTempData[i].question.trim()) === false) {
+            this.saveChartData(this.extractedTempData[i].question.trim(), this.parseAllAnswers(this.extractedTempData[i].question.trim()));
           }
-        console.log("tempReportData", tempReportData);
-        console.log("extractedTempData", extractedTempData);
+        }
+
+        for(let i= 0; i<this.chartData.length; i++){
+          // this.barChartData.push({
+          //    data: this.chartData[i].metrics.sum,
+          //    label : "sum"                      
+          // });
+        }
+        // this.barChartData = [
+        //   { data: [71], label: 'Sum' },
+        //   { data: [70.5], label: 'Avg' },
+        //   { data: [72], label: 'max' },
+        //   { data: [75], label: 'Min' },
+        //   { data: [10], label: 'base' }
+        // ];
+        console.log("Chart Data",this.chartData);
       }, err => {
         console.log(err);
         return;
       });
   }
 
-  saveChartData(label,data,othervalues) {
-   //check if label exists. if true, then update else add
+  parseAllAnswers(question): string {
+    this.chartAnswers = [];
+    let answerSum: number = 0;
+    let avgSum: number = 0;
+    let maxValue: number = 0;
+    let minValue: number = 0;
+    let answerArray: number[] = [];
+    let itemAnswers = this.extractedTempData.filter(item => item.question === question);
+
+    for (let x = 0; x < itemAnswers.length; x++) {
+      answerSum += this.answerFieldValue(itemAnswers[x].answer, itemAnswers[x].questionTypeId)
+      answerArray.push(this.answerFieldValue(itemAnswers[x].answer, itemAnswers[x].questionTypeId));
+    }
+    avgSum = answerSum / itemAnswers.length;
+    maxValue = Math.max.apply(null, answerArray);
+    minValue = Math.min.apply(null, answerArray);
+    this.chartSum = {
+      data : answerSum,
+      label : 'Sum' 
+    };
+    this.chartAvg = {
+      data : avgSum,
+      label : 'Avg'       
+    };
+    this.chartMax = {
+      data : maxValue,       
+      label : 'Max'   
+    };
+    this.chartMin = {
+      data : minValue,
+      label : 'Min'
+    };
+    this.chartAnswers.push(
+      this.chartSum,
+      this.chartAvg,
+      this.chartMax,
+      this.chartMin
+    );
+    return JSON.stringify(this.chartAnswers);
   }
 
-  isFormFieldValueValid(formFieldValue): number {
+  parseQuestionExists(question): boolean {
+    let itemModel = this.chartData.find(item => item.question === question);
+    if (itemModel === undefined) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  saveChartData(question, itemData) {
+    //check if label exists. if true, then update else add
+    this.chartData.push({
+      question: question,
+      metrics: itemData
+    });
+    //console.log(JSON.stringify(this.barChartData));
+  }
+
+  showLog() {
+    console.log(JSON.stringify(this.chartData));
+  }
+
+  answerFieldValue(formFieldValue, questionTypeId): number {
+    if (questionTypeId !== "3") {
+      return 1;
+    }
     if (formFieldValue === undefined
       || formFieldValue === "undefined"
       || formFieldValue === "null"
       || formFieldValue === null
-      || formFieldValue === "") {
+      || formFieldValue === ""
+      || Number.isNaN(formFieldValue)) {
       return 0;
     }
     return parseFloat(formFieldValue);
