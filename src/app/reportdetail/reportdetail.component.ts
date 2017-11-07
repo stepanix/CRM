@@ -68,7 +68,7 @@ export class ReportDetailComponent implements OnInit {
     this.busy = this.formValueServiceApi.getFormValues()
       .subscribe(
       res => {
-        console.log("all reports",res);
+        //console.log("all reports",res);
         for (var i = 0; i < res.length; i++) {
           if (res[i].formId == this.id) {
             this.formName = res[i].form.title;

@@ -14,11 +14,13 @@ export class ReportsComponent implements OnInit {
 
   forms : any[] = [];
   busy: Subscription;
+  schedulesreports : any[]  = [];
 
   constructor(private formServiceApi:FormServiceApi) { }
 
   ngOnInit() {
     this.listFormsApi();
+    this.listSchedulesApi();
   }
 
   listFormsApi(){
@@ -31,6 +33,13 @@ export class ReportsComponent implements OnInit {
         console.log(err);
         return;
       });
+  }
+
+  listSchedulesApi(){
+     this.schedulesreports = [{title:"By Place"},
+     {title:"By Representative"}
+    ];
+    
   }
 
 }
