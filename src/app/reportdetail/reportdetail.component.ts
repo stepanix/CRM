@@ -105,18 +105,24 @@ export class ReportDetailComponent implements OnInit {
         //   { data: [10], label: 'base' }
         // ];
         console.log("Chart Data",this.chartData);
+        console.log(this.chartData[0].metrics[0].label);
+        console.log(this.chartData[0].metrics[0].data);
       }, err => {
         console.log(err);
         return;
       });
   }
 
-  parseAllAnswers(question): string {
+  parseAllAnswers(question): any {
     this.chartAnswers = [];
     let answerSum: number = 0;
+    let answerSumArray: number[] = [];
     let avgSum: number = 0;
+    let avgSumArray: number[] = [];
     let maxValue: number = 0;
+    let maxValueArray: number[] = [];
     let minValue: number = 0;
+    let minValueArray: number[] = [];
     let answerArray: number[] = [];
     let itemAnswers = this.extractedTempData.filter(item => item.question === question);
 
@@ -127,20 +133,25 @@ export class ReportDetailComponent implements OnInit {
     avgSum = answerSum / itemAnswers.length;
     maxValue = Math.max.apply(null, answerArray);
     minValue = Math.min.apply(null, answerArray);
+    answerSumArray.push(answerSum);
+    avgSumArray.push(avgSum);
+    maxValueArray.push(maxValue);
+    minValueArray.push(minValue);
+
     this.chartSum = {
-      data : answerSum,
+      data : answerSumArray,
       label : 'Sum' 
     };
     this.chartAvg = {
-      data : avgSum,
+      data : avgSumArray,
       label : 'Avg'       
     };
     this.chartMax = {
-      data : maxValue,       
+      data : maxValueArray,       
       label : 'Max'   
     };
     this.chartMin = {
-      data : minValue,
+      data : minValueArray,
       label : 'Min'
     };
     this.chartAnswers.push(
@@ -149,7 +160,8 @@ export class ReportDetailComponent implements OnInit {
       this.chartMax,
       this.chartMin
     );
-    return JSON.stringify(this.chartAnswers);
+    return this.chartAnswers;
+    //return JSON.stringify(this.chartAnswers);
   }
 
   parseQuestionExists(question): boolean {
