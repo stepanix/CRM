@@ -29,7 +29,7 @@ export class ReportDetailComponent implements OnInit {
   chartAvg: any= {};
   chartMax: any= {};
   chartMin: any= {};
-  chartData: any[]= [];
+  chartValues: any[]= [];
   chartAnswers : any[] = [];
 
   extractedTempData: any[] = [];
@@ -93,27 +93,22 @@ export class ReportDetailComponent implements OnInit {
         }
         let barChartValues = [];
         let barChartData2 = [];
-        for(let i= 0; i<this.chartData.length; i++) {
-          for(let j=0; j < this.chartData[i].metrics.length; j++){
+        for(let i= 0; i<this.chartValues.length; i++) {
+          for(let j=0; j < this.chartValues[i].metrics.length; j++){
             barChartValues.push({
-              data:  this.chartData[i].metrics[j].data,
-              label : this.chartData[i].metrics[j].label  
+              data:  this.chartValues[i].metrics[j].data,
+              label : this.chartValues[i].metrics[j].label  
             }); 
           }               
           barChartData2.push({
-             question : this.chartData[i].question,
+             question : this.chartValues[i].question,
              chartValues : barChartValues
           });
           barChartValues = [];
         }
-        // this.barChartData = [
-        //   { data: [40], label: 'Sum' },
-        //   { data: [70.5], label: 'Avg' },
-        //   { data: [72], label: 'max' },
-        //   { data: [75], label: 'Min' }
-        // ];
-        this.barChartData = this.chartData[2].metrics;
-        console.log("metric data",this.chartData[2].metrics);
+        
+        this.barChartData = this.chartValues[2].metrics;
+        console.log("metric data",this.chartValues[2].metrics);
         console.log("barChartData",this.barChartData);
       }, err => {
         console.log(err);
@@ -169,11 +164,10 @@ export class ReportDetailComponent implements OnInit {
       this.chartMin
     );
     return this.chartAnswers;
-    //return JSON.stringify(this.chartAnswers);
   }
 
   parseQuestionExists(question): boolean {
-    let itemModel = this.chartData.find(item => item.question === question);
+    let itemModel = this.chartValues.find(item => item.question === question);
     if (itemModel === undefined) {
       return false;
     } else {
@@ -183,18 +177,13 @@ export class ReportDetailComponent implements OnInit {
 
   saveChartData(question, itemData) {
     //check if label exists. if true, then update else add
-    this.chartData.push({
+    this.chartValues.push({
       question: question,
       metrics: itemData
     });
-    //console.log(JSON.stringify(this.barChartData));
   }
 
-  showLog() {
-    console.log(JSON.stringify(this.chartData));
-  }
-
-  answerFieldValue(formFieldValue, questionTypeId): number {
+ answerFieldValue(formFieldValue, questionTypeId): number {
     if (questionTypeId !== "3") {
       return 1;
     }
