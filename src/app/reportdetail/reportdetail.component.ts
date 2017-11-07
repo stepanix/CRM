@@ -36,7 +36,15 @@ export class ReportDetailComponent implements OnInit {
 
   constructor(private formValueServiceApi: FormValueServiceApi,
     private router: Router,
-    private route: ActivatedRoute) { }
+    private route: ActivatedRoute) { 
+
+      this.barChartData = [
+          { data: [0], label: 'Sum' },
+          { data: [0], label: 'Avg' },
+          { data: [0], label: 'max' },
+          { data: [0], label: 'Min' }
+        ];
+    }
 
   ngOnInit() {
     this.id = this.route.snapshot.params['id'];
@@ -51,14 +59,7 @@ export class ReportDetailComponent implements OnInit {
     responsive: true
   };
 
-  listFormValues() {
-    this.barChartData = [
-      { data: [71], label: 'Sum' },
-      { data: [70.5], label: 'Avg' },
-      { data: [72], label: 'max' },
-      { data: [75], label: 'Min' },
-      { data: [10], label: 'base' }
-    ];
+  listFormValues() {    
     let tempReportData: any[] = [];
     let formFieldsData: any[] = [];
     let sum: number = 0;
@@ -90,23 +91,30 @@ export class ReportDetailComponent implements OnInit {
             this.saveChartData(this.extractedTempData[i].question.trim(), this.parseAllAnswers(this.extractedTempData[i].question.trim()));
           }
         }
-
-        for(let i= 0; i<this.chartData.length; i++){
-          // this.barChartData.push({
-          //    data: this.chartData[i].metrics.sum,
-          //    label : "sum"                      
-          // });
+        let barChartValues = [];
+        let barChartData2 = [];
+        for(let i= 0; i<this.chartData.length; i++) {
+          for(let j=0; j < this.chartData[i].metrics.length; j++){
+            barChartValues.push({
+              data:  this.chartData[i].metrics[j].data,
+              label : this.chartData[i].metrics[j].label  
+            }); 
+          }               
+          barChartData2.push({
+             question : this.chartData[i].question,
+             chartValues : barChartValues
+          });
+          barChartValues = [];
         }
         // this.barChartData = [
-        //   { data: [71], label: 'Sum' },
+        //   { data: [40], label: 'Sum' },
         //   { data: [70.5], label: 'Avg' },
         //   { data: [72], label: 'max' },
-        //   { data: [75], label: 'Min' },
-        //   { data: [10], label: 'base' }
+        //   { data: [75], label: 'Min' }
         // ];
-        console.log("Chart Data",this.chartData);
-        console.log(this.chartData[0].metrics[0].label);
-        console.log(this.chartData[0].metrics[0].data);
+        this.barChartData = this.chartData[2].metrics;
+        console.log("metric data",this.chartData[2].metrics);
+        console.log("barChartData",this.barChartData);
       }, err => {
         console.log(err);
         return;
