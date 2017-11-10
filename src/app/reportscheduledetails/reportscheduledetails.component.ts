@@ -173,5 +173,12 @@ export class ReportScheduleDetailsComponent implements OnInit {
     return itemPlace.length;
   }
 
+  parseTotalVisitsByRep(repid) {
+    let itemReps = this.rawPlaceData.filter(item => item.userId === repid && item.isVisited===true);
+    return itemReps.length;
+  }
+
+  
+
 
 }
