@@ -84,6 +84,8 @@ export class ScheduleComponent implements OnInit {
       this.scheduled = false;
       this.missed = false;
       this.unscheduled = false;
+      this.selectedUser = {};
+      this.selectedPlace = {};
   }
 
   ngOnInit() {
@@ -255,7 +257,7 @@ export class ScheduleComponent implements OnInit {
        }
     }
 
-    hideDialog(){
+    hideDialog() {
       this.refreshvariables();
       this.displayDialog = false;
     }
@@ -265,7 +267,7 @@ export class ScheduleComponent implements OnInit {
             id: 1,
             placeId: this.dtoPlaceId,
             userId: this.dtoUserId,
-            visitDate: this.selectedDate,
+            visitDate: moment(this.selectedDate).add(1, 'days'),
             visitTime: this.selectedTime,
             visitNote: this.Note,
             isRecurring: this.Recurring,
@@ -274,7 +276,7 @@ export class ScheduleComponent implements OnInit {
             isScheduled: true,
             isMissed : false,
             isUnScheduled: false,
-            visitStatus : "New visit"
+            visitStatus : "Scheduled"
         };
         
         this.scheduleServiceApi.addSchedule(ScheduleDto)
@@ -303,7 +305,7 @@ export class ScheduleComponent implements OnInit {
             isScheduled: this.scheduled,
             isMissed : this.missed,
             isUnScheduled: this.unscheduled,
-            visitStatus : "New visit"
+            visitStatus : "Scheduled"
         };
         
         this.scheduleServiceApi.updateSchedule(ScheduleDto)
