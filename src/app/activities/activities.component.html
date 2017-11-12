@@ -81,7 +81,6 @@
     <p-dialog header="Select Filter(s) Here" [(visible)]="displayDialog" modal="modal" width="500" height="auto" responsive="true"
         positionTop="80">
 
-
         <label>Representative</label>
         <fieldset class="form-group">
             <p-autoComplete [(ngModel)]="selectedUser" (onSelect)="setSelectedUser(selectedUser)" (completeMethod)="searchUser($event)"
