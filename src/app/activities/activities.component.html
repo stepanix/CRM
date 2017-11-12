@@ -1,126 +1,106 @@
 <div [@routerTransition]>
-  
-      <app-page-header [heading]="'Activities'" [icon]="'fa-edit'"></app-page-header>
-      
-      <div class="row" style="width:70%!important;margin: 0px auto;">
 
-          <div class="col-lg-3">
-      
-              <fieldset class="form-group">    
-                  <label>Select module</label>              
-                  <select class="form-control" name="subsection" [(ngModel)]="selectedModule" (change)="appyModuleFilter()">
-                     <option  value="all">* All field activities</option>
-                     <option  value="Forms">All forms</option>
-                     <option  value="Photos">Photos</option>
-                     <option  value="Visits">Place visits</option>
-                     <option  value="Notes">Place notes</option>
-                     <option  value="Orders">Orders</option>
-                     <option  value="Product Retail Audit">Retail audits</option>
-                  </select>
-              </fieldset>
-          </div>       
-          
-          <div class="col-lg-3">
-              <fieldset class="form-group">
-                  <label>From</label>
-                  <input [(ngModel)]="dateFrom" type="date" class="form-control" (popupClosed)="dateFromSelected()" date-only="true" />
-              </fieldset>
-          </div>
+    <app-page-header [heading]="'Activities'" [icon]="'fa-edit'"></app-page-header>
 
-          <div class="col-lg-3">
-              <fieldset class="form-group">
-                  <label>To</label>
-                  <input [(ngModel)]="dateTo" type="date" class="form-control" (popupClosed)="dateToSelected()" date-only="true" />
-              </fieldset>
-          </div>
+    <div class="row" style="width:70%!important;margin: 0px auto;">
 
-          <div class="col-lg-3">
-               <!-- <div style="padding-top:45px;">
-                <fieldset class="form-group">
-                <button type="button" (click)="applyFiltersApi()" class="btn btn-sm btn-danger">Search</button>
-                </fieldset>
-                </div> -->
-          </div>
-          
-          <fieldset class="form-group">
-              <button type="button" (click)="showDialog()" class="btn btn-sm btn-danger">Add Filter</button>
-          </fieldset>
-          &nbsp;
-          &nbsp;
-          <fieldset class="form-group">
-              <button type="button" (click)="applyFiltersApi()" [disabled] = "isAppyButtonDisabled()" class="btn btn-sm btn-danger">Apply Filter</button>
-          </fieldset>
-          &nbsp;
-          &nbsp;
-          &nbsp;
-          <fieldset class="form-group">
-              <label><input type="checkbox" [hidden]="UserSelectedModel===false" [(ngModel)]="UserSelectedModel" (change)="handleUserChange($event)"> {{dtoUserName}}</label>
-          </fieldset>
-          &nbsp;
-          &nbsp;
-          &nbsp;
-          <fieldset class="form-group">
-              <label><input type="checkbox" [hidden]="PlaceSelectedModel===false" [(ngModel)]="PlaceSelectedModel" (change)="handlePlaceChange($event)"> {{dtoPlaceName}}</label>
-          </fieldset>         
-         
-      </div>
+        <div class="col-lg-3">
 
-      <div *ngFor="let item of activities" style="width:70%!important;margin: 0px auto;" class="mui-row">
-            <div class="card">
-              <div class="card-body">
+            <fieldset class="form-group">
+                <label>Select module</label>
+                <select class="form-control" name="subsection" [(ngModel)]="selectedModule" (change)="appyModuleFilter()">
+                    <option value="all">* All field activities</option>
+                    <option value="Forms">All forms</option>
+                    <option value="Photos">Photos</option>
+                    <option value="Visits">Place visits</option>
+                    <option value="Notes">Place notes</option>
+                    <option value="Orders">Orders</option>
+                    <option value="Product Retail Audit">Retail audits</option>
+                </select>
+            </fieldset>
+        </div>
+
+        <div class="col-lg-3">
+            <fieldset class="form-group">
+                <label>From</label>
+                <input [(ngModel)]="dateFrom" type="date" class="form-control" (popupClosed)="dateFromSelected()" date-only="true" />
+            </fieldset>
+        </div>
+
+        <div class="col-lg-3">
+            <fieldset class="form-group">
+                <label>To</label>
+                <input [(ngModel)]="dateTo" type="date" class="form-control" (popupClosed)="dateToSelected()" date-only="true" />
+            </fieldset>
+        </div>
+
+        <div class="col-lg-3">
+
+        </div>
+
+        <fieldset class="form-group">
+            <button type="button" (click)="showDialog()" class="btn btn-sm btn-danger">Add Filter</button>
+        </fieldset>
+        &nbsp; &nbsp;
+        <fieldset class="form-group">
+            <button type="button" (click)="applyFiltersApi()" [disabled]="isAppyButtonDisabled()" class="btn btn-sm btn-danger">Apply Filter</button>
+        </fieldset>
+        &nbsp; &nbsp; &nbsp;
+        <fieldset class="form-group">
+            <label>
+                <input type="checkbox" [hidden]="UserSelectedModel===false" [(ngModel)]="UserSelectedModel" (change)="handleUserChange($event)"> {{dtoUserName}}</label>
+        </fieldset>
+        &nbsp; &nbsp; &nbsp;
+        <fieldset class="form-group">
+            <label>
+                <input type="checkbox" [hidden]="PlaceSelectedModel===false" [(ngModel)]="PlaceSelectedModel" (change)="handlePlaceChange($event)"> {{dtoPlaceName}}</label>
+        </fieldset>
+
+    </div>
+
+    <div *ngFor="let item of activities" style="width:70%!important;margin: 0px auto;" class="mui-row">
+        <div class="card">
+            <div class="card-body">
                 <div>
-                    <strong><span style="float:left!important;padding-left:30px;">{{item.salesRep}}</span></strong>
+                    <strong>
+                        <span style="float:left!important;padding-left:30px;">{{item.salesRep}}</span>
+                    </strong>
 
                     <span style="float:right!important;padding-right:30px">{{item.date}}</span>
                     <br>
                     <span style="float:left!important;padding-left:30px;padding-bottom:30px">{{item.place}}</span>
-                    
+
                     <span style="float:right!important;padding-right:30px;padding-bottom:30px">{{item.time}}</span>
-                    
+
                 </div>
                 <br>
-              </div>
             </div>
-      </div>
-      
-        <!-- <p-dataList [value]="activities" [rows]="5">
-            <ng-template let-activity pTemplate="item">
-                <div class="ui-g">
-                    <div class="ui-g-10 ui-sm-10">
-                        <strong><span style="float:left!important">{{activity.salesRep}}</span></strong>
-                        <br>
-                        <span style="float:left!important">{{activity.place}}</span>
-                    </div>
-                    <div>
-                     <span style="float:right!important">{{activity.date}}</span><br>
-                     <span style="float:right!important">{{activity.time}}</span></div>
-                    <div></div>
-                    <br>
-                </div>
-            </ng-template>
-        </p-dataList> -->
-      
+        </div>
+    </div>
 
-      <p-dialog header="Select Filter(s) Here" [(visible)]="displayDialog" modal="modal" width="500" height="auto" responsive="true" positionTop="80">
-          
-                      
-          <label>Representative</label>
-          <fieldset class="form-group">
-              <p-autoComplete  [(ngModel)]="selectedUser" (onSelect)="setSelectedUser(selectedUser)" (completeMethod)="searchUser($event)" [suggestions]="filteredCachedUsers" field="fullName"  [size]="53"></p-autoComplete>
-          </fieldset>
-  
-          <label>Place</label>
-          <fieldset class="form-group">
-              <p-autoComplete  [(ngModel)]="selectedPlace" (onSelect)="setSelectedPlace(selectedPlace)" (completeMethod)="searchPlace($event)" [suggestions]="filteredCachedPlaces" field="name" [size]="53"></p-autoComplete>
-          </fieldset>
-        
-  
-           <p-footer>
-               <button type="button" class="btn btn-sm btn-danger" (click)="addFilter()" [disabled]="dtoUserId ==='' && dtoPlaceId===''" >Ok</button>
-               <button type="button" (click)="hideDialog()" class="btn btn-sm btn-danger">Cancel</button>
-           </p-footer>
-   
-         </p-dialog>
+    <p-dialog header="Select Filter(s) Here" [(visible)]="displayDialog" modal="modal" width="500" height="auto" responsive="true"
+        positionTop="80">
 
-    
-  </div>
+
+        <label>Representative</label>
+        <fieldset class="form-group">
+            <p-autoComplete [(ngModel)]="selectedUser" (onSelect)="setSelectedUser(selectedUser)" (completeMethod)="searchUser($event)"
+                [suggestions]="filteredCachedUsers" field="fullName" [size]="53"></p-autoComplete>
+        </fieldset>
+
+        <label>Place</label>
+        <fieldset class="form-group">
+            <p-autoComplete [(ngModel)]="selectedPlace" (onSelect)="setSelectedPlace(selectedPlace)" (completeMethod)="searchPlace($event)"
+                [suggestions]="filteredCachedPlaces" field="name" [size]="53"></p-autoComplete>
+        </fieldset>
+
+
+        <p-footer>
+            <button type="button" class="btn btn-sm btn-danger" (click)="addFilter()" [disabled]="dtoUserId ==='' && dtoPlaceId===''">Ok</button>
+            <button type="button" (click)="hideDialog()" class="btn btn-sm btn-danger">Cancel</button>
+        </p-footer>
+
+    </p-dialog>
+
+
+</div>
