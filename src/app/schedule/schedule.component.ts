@@ -276,7 +276,8 @@ export class ScheduleComponent implements OnInit {
             isScheduled: true,
             isMissed : false,
             isUnScheduled: false,
-            visitStatus : "Scheduled"
+            visitStatus : "Scheduled",
+            repoId : this.newGuid()
         };
         
         this.scheduleServiceApi.addSchedule(ScheduleDto)
@@ -289,6 +290,16 @@ export class ScheduleComponent implements OnInit {
               console.log(err);
               return;
           });
+    }
+
+    newGuid(): string {
+      function s4() {
+        return Math.floor((1 + Math.random()) * 0x10000)
+          .toString(16)
+          .substring(1);
+      }
+      return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
+        s4() + '-' + s4() + s4() + s4();
     }
 
     updatecheduleApi() {
