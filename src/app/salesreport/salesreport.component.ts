@@ -76,15 +76,15 @@ export class SalesReportComponent implements OnInit {
     let sum: number = 0;    
     let labelItem :string = "";
     let valueItem : number = 0;
+    this.barchartData = [];
+    this.barchartLabels = [];
 
     this.busy = this.orderServiceApi.getOrderItemsDateRange(this.dateFrom, this.dateTo)
       .subscribe(
       res => {
         if(res.length > 0) {
           for (var i = 0; i < res.length; i++) {
-
             labelItem = moment(res[i].addedDate).format("MMM Do");
-
             if(this.tempLabelData.find(item => item.label === labelItem)===undefined) {
                //add new item
                this.tempLabelData.push({
@@ -92,14 +92,31 @@ export class SalesReportComponent implements OnInit {
                   value : res[i].amount
                });
             }else{
-               //valueItem = this.getRollingValue(labelItem) + parseFloat(res[i].amount);
-               //console.log("valueitem",valueItem);
                //update existing item
                this.updateBarChartData(labelItem,parseFloat(res[i].amount));
             }
           }
         }
-        console.log("labels",this.tempLabelData);
+        
+        for(let x=0;x<this.tempLabelData.length;x++){
+          this.barchartLabels.push(this.tempLabelData[x].label);
+          this.barchartData.push(this.tempLabelData[x].value);
+        }
+        console.log("barchart labels",this.barchartLabels);
+        console.log("barchart data",this.barchartData);
+        this.data = {
+          labels: this.barchartLabels,
+          datasets: [
+            {
+              label: 'Sales Report',
+              backgroundColor: '#42A5F5',
+              borderColor: '#1E88E5',
+              data: this.barchartData
+            }
+          ]
+        }
+        //console.log("chart values",this.tempLabelData);
+        //console.log("labels",this.tempLabelData);
         //console.log("valueitem",valueItem);
         // this.barChartData.push({
         //   data : 
