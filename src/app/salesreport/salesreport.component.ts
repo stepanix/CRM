@@ -26,7 +26,7 @@ export class SalesReportComponent implements OnInit {
   data: any;
   barchartData: number[] = [];
   barchartLabels: any[] = [];
-  tempLabelData: any[] = [];
+  tempLabels: any[] = [];
 
   extractedTempData: any[] = [];
   salesByProducts: any[] = [];
@@ -58,7 +58,7 @@ export class SalesReportComponent implements OnInit {
   }
 
   updateBarChartData(label, newValue: number) {
-    let itemModel: any = this.tempLabelData.find(item => item.label === label)
+    let itemModel: any = this.tempLabels.find(item => item.label === label)
     itemModel.value = parseFloat(itemModel.value) + newValue;
   }
 
@@ -98,9 +98,9 @@ export class SalesReportComponent implements OnInit {
         if (res.length > 0) {
           for (var i = 0; i < res.length; i++) {
             labelItem = moment(res[i].addedDate).format("MMM Do");
-            if (this.tempLabelData.find(item => item.label === labelItem) === undefined) {
+            if (this.tempLabels.find(item => item.label === labelItem) === undefined) {
               //add new item
-              this.tempLabelData.push({
+              this.tempLabels.push({
                 label: labelItem,
                 value: res[i].amount
               });
@@ -134,10 +134,12 @@ export class SalesReportComponent implements OnInit {
           console.log("sales per date", this.totalSalesPerDate);
         }
 
-        for (let x = 0; x < this.tempLabelData.length; x++) {
-          this.barchartLabels.push(this.tempLabelData[x].label);
-          this.barchartData.push(this.tempLabelData[x].value);
+        for (let x = 0; x < this.tempLabels.length; x++) {
+          this.barchartLabels.push(this.tempLabels[x].label);
+          this.barchartData.push(this.tempLabels[x].value);
         }
+
+        console.log("columns", this.tempLabels);
 
         this.data = {
           labels: this.barchartLabels,

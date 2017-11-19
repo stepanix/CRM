@@ -3,13 +3,23 @@
   <app-page-header [heading]="'Sales Report'" [icon]="'fa-edit'"></app-page-header>
   <p-chart type="bar" [data]="data"></p-chart>
       
-  <!-- <p-dataTable [value]="salesByProducts" [rows]="15" [immutable]="false" [paginator]="true"> -->
+  <p-dataTable [value]="salesByProducts" [rows]="15" [immutable]="false" [paginator]="true">
 
-      <!-- <p-column field="product" header="Name" [sortable]="true">
+    <p-column field="name" header="Name" [sortable]="true">
           <ng-template let-col let-salesByProduct="rowData" pTemplate="body">
               <span [style.color]="salesByProduct[col.field]">{{salesByProduct[col.field]}}</span>
           </ng-template>
-      </p-column> -->
+      </p-column>
+
+      <p-column field="totalSold" header="Total" [sortable]="true">
+          <ng-template let-col let-salesByProduct="rowData" pTemplate="body">
+              <span [style.color]="salesByProduct[col.field]">{{salesByProduct[col.field]}}</span>
+          </ng-template>
+      </p-column>
+
+      <p-column *ngFor="let col of tempLabels" [field]="col.field" [header]="col.label"></p-column>
+
+      
 
       <!-- 
 
@@ -43,6 +53,6 @@
           </ng-template>
       </p-column> -->
 
-  <!-- </p-dataTable> -->
+  </p-dataTable>
 
 </div>
