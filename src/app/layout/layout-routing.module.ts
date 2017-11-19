@@ -12,6 +12,7 @@ const routes: Routes = [
                 { path: 'activities', loadChildren: '../activities/activities.module#ActivitiesModule' },
                 { path: 'reports', loadChildren: '../reports/reports.module#ReportsModule' },
                 { path: 'reportdetail/:type/:id', loadChildren: '../reportdetail/reportdetail.module#ReportDetailModule' },
+                { path: 'salesreport/:type', loadChildren: '../salesreport/salesreport.module#SalesReportModule' },
                 { path: 'reportscheduledetails', loadChildren: '../reportscheduledetails/reportscheduledetails.module#ReportScheduleDetailsModule' },
                 { path: 'viewtenants', loadChildren: '../viewtenants/viewtenants.module#ViewTenantsModule' },
                 { path: 'viewusers', loadChildren: '../viewusers/viewusers.module#ViewUsersModule' },

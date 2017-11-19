@@ -4,6 +4,8 @@
         "outDir": "../out-tsc/app",
         "module": "es2015",
         "baseUrl": "",
+        "experimentalDecorators": true,
+        "allowJs": true,
         "types": []
     },
     "angularCompilerOptions": { "alwaysCompileGeneratedCode": true },

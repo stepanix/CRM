@@ -23,23 +23,46 @@
     </div>
     <br>
     <div class="row">
-            <p-dataGrid [value]="schedulesreports" [rows]="20">
-                <p-header>
-                    Schedule Reports
-                </p-header>
-                <ng-template let-schedulesreport pTemplate="item">
-                    <div style="padding:15px">
-                        <p-panel [header]="schedulesreport.title" [style]="{'text-align':'center'}">
-                            <div class="car-detail">View {{schedulesreport.title}}</div>
-                            <hr class="ui-widget-content" style="border-top:0">
-                            <a [routerLink]="['/reportscheduledetails']">
-                                <button type="button" class="btn btn-sm btn-danger">
-                                    <i class="fa fa-bar-chart" style="cursor:pointer"> View Report</i>
-                                </button>
-                            </a>
-                        </p-panel>
-                    </div>
-                </ng-template>
-            </p-dataGrid>
-        </div>
+        <p-dataGrid [value]="schedulesreports" [rows]="20">
+            <p-header>
+                Schedule Reports
+            </p-header>
+            <ng-template let-schedulesreport pTemplate="item">
+                <div style="padding:15px">
+                    <p-panel [header]="schedulesreport.title" [style]="{'text-align':'center'}">
+                        <div class="car-detail">View {{schedulesreport.title}}</div>
+                        <hr class="ui-widget-content" style="border-top:0">
+                        <a [routerLink]="['/reportscheduledetails']">
+                            <button type="button" class="btn btn-sm btn-danger">
+                                <i class="fa fa-bar-chart" style="cursor:pointer"> View Report</i>
+                            </button>
+                        </a>
+                    </p-panel>
+                </div>
+            </ng-template>
+        </p-dataGrid>
+    </div>
+
+    <div class="row">
+        <p-dataGrid [value]="salesreports" [rows]="20">
+            <p-header>
+                Sales Reports
+            </p-header>
+            <ng-template let-salesreport pTemplate="item">
+                <div style="padding:15px">
+                    <p-panel [header]="salesreport.title" [style]="{'text-align':'center'}">
+                        <div class="car-detail">View {{salesreport.title}}</div>
+                        <hr class="ui-widget-content" style="border-top:0">
+                        <a [routerLink]="['/salesreport' , salesreport.type]">
+                            <button type="button" class="btn btn-sm btn-danger">
+                                <i class="fa fa-bar-chart" style="cursor:pointer"> View Report</i>
+                            </button>
+                        </a>
+                    </p-panel>
+                </div>
+            </ng-template>
+        </p-dataGrid>
+    </div>
+
+
 </div>
