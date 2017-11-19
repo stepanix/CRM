@@ -102,8 +102,7 @@ export class SalesReportComponent implements OnInit {
           this.barchartLabels.push(this.tempLabelData[x].label);
           this.barchartData.push(this.tempLabelData[x].value);
         }
-        console.log("barchart labels",this.barchartLabels);
-        console.log("barchart data",this.barchartData);
+                
         this.data = {
           labels: this.barchartLabels,
           datasets: [
