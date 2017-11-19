@@ -7,7 +7,7 @@ import { PageHeaderModule } from './../shared';
 import {CheckboxModule,DialogModule,DropdownModule,DataTableModule,SharedModule,
     ListboxModule,ScheduleModule,AutoCompleteModule,CalendarModule} from 'primeng/primeng';
 import {DataGridModule,PanelModule} from 'primeng/primeng';
-import {PlaceServiceApi,ScheduleServiceApi,UserServiceApi,FormServiceApi} from '../shared/shared';
+import {PlaceServiceApi,ScheduleServiceApi,UserServiceApi,FormServiceApi,OrderItemServiceApi} from '../shared/shared';
 import { DatepickerModule } from 'angular2-material-datepicker'
 import { NguiDatetimePickerModule } from '@ngui/datetime-picker';
 import { ChartsModule } from 'ng2-charts';
@@ -41,6 +41,6 @@ import * as jQuery from 'jquery';
         PanelModule
     ],
     declarations: [SalesReportComponent],
-    providers: [PlaceServiceApi,ScheduleServiceApi,GlobalApi,UserServiceApi,FormServiceApi]
+    providers: [PlaceServiceApi,ScheduleServiceApi,GlobalApi,UserServiceApi,FormServiceApi,OrderItemServiceApi]
 })
 export class SalesReportModule { }

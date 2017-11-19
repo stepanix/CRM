@@ -45,9 +45,9 @@ export class ReportsComponent implements OnInit {
 
   listSalesApi() {
     this.salesreports = [
-      { title: "By Product",type : "product" },
-      { title: "By Place", type : "place" },
-      { title: "By Representative" , type : "rep" }
+      { title: "By Product",type : "Product" },
+      { title: "By Place", type : "Place" },
+      { title: "By Representative" , type : "Representative" }
     ];
   }
 
