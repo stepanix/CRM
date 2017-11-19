@@ -1,29 +1,48 @@
 <div [@routerTransition]>
   <div [ngBusy]="busy"></div>
   <app-page-header [heading]="'Sales Report'" [icon]="'fa-edit'"></app-page-header>
-  <!-- <div class="row"> -->
-      <p-chart type="bar" [data]="data"></p-chart>
-      <!-- <div style="display: block">
-          <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [legend]="barChartLegend" [options]="barChartOptions"
-            [chartType]="barChartType">
-          </canvas>
-        </div> -->
-    <!-- <p-dataGrid [value]="chartValues" [rows]="20">
-      <p-header>
-        Sales by {{type}}
-      </p-header>
-      <ng-template let-chartValue pTemplate="item">
-        <div style="padding:3px" class="ui-g-12 ui-md-3">
-          <p-panel [header]="" [style]="{'text-align':'center'}">
-            <div style="display: block">
-              <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [legend]="barChartLegend" [options]="barChartOptions"
-                [chartType]="barChartType">
-              </canvas>
-            </div>
-          </p-panel>
-        </div>
-      </ng-template>
-    </p-dataGrid> -->
-  <!-- </div> -->
+  <p-chart type="bar" [data]="data"></p-chart>
+      
+  <!-- <p-dataTable [value]="salesByProducts" [rows]="15" [immutable]="false" [paginator]="true"> -->
+
+      <!-- <p-column field="product" header="Name" [sortable]="true">
+          <ng-template let-col let-salesByProduct="rowData" pTemplate="body">
+              <span [style.color]="salesByProduct[col.field]">{{salesByProduct[col.field]}}</span>
+          </ng-template>
+      </p-column> -->
+
+      <!-- 
+
+      <p-column field="visits" header="Total Visits" [sortable]="true">
+          <ng-template let-col let-place="rowData" pTemplate="body">
+              <span [style.color]="place[col.field]">{{place[col.field]}}</span>
+          </ng-template>
+      </p-column>
+
+      <p-column field="scheduled" header="Scheduled" [sortable]="true">
+          <ng-template let-col let-place="rowData" pTemplate="body">
+              <span [style.color]="place[col.field]">{{place[col.field]}}</span>
+          </ng-template>
+      </p-column>
+
+      <p-column field="unscheduled" header="Unscheduled" [sortable]="true">
+          <ng-template let-col let-place="rowData" pTemplate="body">
+              <span [style.color]="place[col.field]">{{place[col.field]}}</span>
+          </ng-template>
+      </p-column>
+
+      <p-column field="scheduledVisited" header="Scheduled Visited" [sortable]="true">
+          <ng-template let-col let-place="rowData" pTemplate="body">
+              <span [style.color]="place[col.field]">{{place[col.field]}}</span>
+          </ng-template>
+      </p-column>
+
+      <p-column field="missed" header="Missed" [sortable]="true">
+          <ng-template let-col let-place="rowData" pTemplate="body">
+              <span [style.color]="place[col.field]">{{place[col.field]}}</span>
+          </ng-template>
+      </p-column> -->
+
+  <!-- </p-dataTable> -->
 
 </div>
