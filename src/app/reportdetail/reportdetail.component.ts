@@ -32,6 +32,7 @@ export class ReportDetailComponent implements OnInit {
   chartMin: any= {};
   chartValues: any[]= [];
   chartAnswers : any[] = [];
+  
 
   extractedTempData: any[] = [];
 

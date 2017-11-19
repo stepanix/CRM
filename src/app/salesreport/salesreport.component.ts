@@ -19,41 +19,91 @@ export class SalesReportComponent implements OnInit {
   id: any;
   reportData: any;
   reportHeader: any;
-  barChartData: any[] = [];
+  
+  dateFrom: any = "";
+  dateTo: any = "";
 
-  barChartType: string = 'bar';
-  public barChartLegend: boolean = true;
-  dateFrom : any = "";
-  dateTo : any = "";
+  data: any;
+  barchartData : number[] = [];
+  barchartLabels : any[] = [];
+  tempLabelData : any[] = [];
 
-  constructor(private orderServiceApi:OrderItemServiceApi, 
+  extractedTempData: any[] = [];
+
+  constructor(private orderServiceApi: OrderItemServiceApi,
     private router: Router,
-    private route: ActivatedRoute) { 
-      this.dateFrom = moment("2016-12-12").format("YYYY-MM-DD");
-      this.dateTo = moment().format("YYYY-MM-DD");
-      this.barChartData = [
-        { data: [0], label: 'Jan' }
-      ];
+    private route: ActivatedRoute) {
+    this.dateFrom = moment("2016-12-12").format("YYYY-MM-DD");
+    this.dateTo = moment().format("YYYY-MM-DD");
+
+    this.barchartData = [65, 59, 80, 81, 56, 55, 40];
+
+    this.data = {
+      labels: ['Jan 1', 'Jan 5', 'Jan 15', 'Feb 12'],
+      datasets: [
+        {
+          backgroundColor: '#42A5F5',
+          borderColor: '#1E88E5',
+          data: this.barchartData
+        }
+      ]
     }
+  }
 
   ngOnInit() {
     this.type = this.route.snapshot.params['type'];
+    this.listSalesReportValues();
   }
 
-  public barChartOptions: any = {
-    scaleShowVerticalLines: false,
-    responsive: true
-  };
+  // getRollingValue(label:string) : number{
+  //  let valueModel =  this.tempLabelData.find(item => item.label === label);
+  //  return parseFloat(valueModel.value);
+  // }
 
-  listFormValues() {    
+  updateBarChartData(label,newValue:number) {
+   let itemModel : any =  this.tempLabelData.find(item => item.label === label)
+   itemModel.value = parseFloat(itemModel.value) + newValue;
+   //console.log("item index",index);
+    //let index: any = this.tempLabelData.indexOf(itemData);
+    //console.log("index",index);
+    // if (index !== -1) {
+    //   this.tempLabelData[index].value = newValue;
+    // }
+  }
+
+  listSalesReportValues() {
     let tempReportData: any[] = [];
-    let formFieldsData: any[] = [];
-    let sum: number = 0;
+    let sum: number = 0;    
+    let labelItem :string = "";
+    let valueItem : number = 0;
 
-    this.busy = this.orderServiceApi.getOrderItemsDateRange(this.dateFrom,this.dateTo)
+    this.busy = this.orderServiceApi.getOrderItemsDateRange(this.dateFrom, this.dateTo)
       .subscribe(
       res => {
-        
+        if(res.length > 0) {
+          for (var i = 0; i < res.length; i++) {
+
+            labelItem = moment(res[i].addedDate).format("MMM Do");
+
+            if(this.tempLabelData.find(item => item.label === labelItem)===undefined) {
+               //add new item
+               this.tempLabelData.push({
+                  label : labelItem,
+                  value : res[i].amount
+               });
+            }else{
+               //valueItem = this.getRollingValue(labelItem) + parseFloat(res[i].amount);
+               //console.log("valueitem",valueItem);
+               //update existing item
+               this.updateBarChartData(labelItem,parseFloat(res[i].amount));
+            }
+          }
+        }
+        console.log("labels",this.tempLabelData);
+        //console.log("valueitem",valueItem);
+        // this.barChartData.push({
+        //   data : 
+        // });
         // for (var i = 0; i < res.length; i++) {
         //   if (res[i].formId == this.id) {
         //     this.formName = res[i].form.title;
@@ -73,7 +123,7 @@ export class SalesReportComponent implements OnInit {
         //     sum = 0;
         //   }
         // }
-        
+
         // for (let i = 0; i < this.extractedTempData.length; i++) {
         //   if (this.parseQuestionExists(this.extractedTempData[i].question.trim()) === false) {
         //     this.saveChartData(this.extractedTempData[i].question.trim(), this.parseAllAnswers(this.extractedTempData[i].question.trim()));
@@ -95,7 +145,7 @@ export class SalesReportComponent implements OnInit {
         //   barChartValues = [];
         // }
         // this.barChartData = this.chartValues[2].metrics;
-       
+
       }, err => {
         console.log(err);
         return;

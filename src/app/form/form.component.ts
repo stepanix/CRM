@@ -147,7 +147,7 @@ export class FormComponent implements OnInit {
       this.FormQuestions[index].question = this.QuestionModel.question;
       this.FormQuestions[index].SelectedQuestionTypeModel = this.QuestionModel.SelectedQuestionTypeModel;
     }
-    console.log(this.QuestionModel.question);
+    //console.log(this.QuestionModel.question);
     this.TempQuestionModel = {};
     this.QuestionModel.id = null;
     this.hideQuestionDialog();
